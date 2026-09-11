@@ -1,0 +1,14 @@
+.landing {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* Los títulos de sección desbordan a propósito el contenedor de 1320px
+   * (reglas laterales de 1440px), igual que en la landing original. */
+  overflow-x: hidden;
+  background-color: var(--landing-surface-page);
+  color: var(--landing-text-default);
+}
+
+.main {
+  flex: 1;
+}

@@ -1,0 +1,81 @@
+/* Misma superficie y radio que las tarjetas de "Accesos directos" de la landing:
+ * gris claro sobre sección blanca, sin trazos de color. */
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 26px;
+  border-radius: var(--landing-radius-shortcut);
+  background-color: var(--landing-surface-muted);
+}
+
+.title {
+  margin-bottom: var(--space-6);
+  padding: var(--space-2);
+  color: var(--color-accent);
+  font-size: var(--landing-font-size-title);
+  font-weight: var(--font-weight-semibold);
+  line-height: 28.008px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.fieldset {
+  padding: 0;
+  border: none;
+  margin: 0;
+}
+
+.legend {
+  color: var(--landing-text-body);
+  font-size: var(--landing-font-size-body);
+  line-height: var(--landing-line-height-body);
+}
+
+.radios {
+  display: flex;
+  gap: var(--space-8);
+  margin-top: var(--space-2);
+}
+
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--landing-text-body);
+  cursor: pointer;
+}
+
+.radio input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--color-accent);
+}
+
+.error {
+  margin-top: var(--space-1);
+  color: var(--feedback-danger-text);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+.disclaimer {
+  margin-top: var(--space-2);
+  color: var(--text-subtle);
+  font-size: var(--landing-font-size-meta);
+  text-align: center;
+}
+
+.submit {
+  align-self: center;
+  min-width: 175px;
+}
+
+.successText {
+  margin-bottom: var(--space-6);
+  color: var(--landing-text-body);
+  line-height: var(--line-height-normal);
+}

@@ -1,0 +1,175 @@
+.hero {
+  position: relative;
+  height: var(--landing-hero-height);
+}
+
+.viewport {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  position: relative;
+  display: flex;
+  flex: 0 0 100%;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Contenedor centrado de 1320px que comparten el contenido del banner y la
+ * tarjeta de login, para que ambos compartan la misma grilla. */
+.slideContainer,
+.overlayContainer {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--landing-container-max);
+  height: 100%;
+  padding-inline: var(--landing-container-pad);
+}
+
+.slideContent {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100%;
+}
+
+.slideLogo {
+  max-width: var(--slide-logo-max);
+  height: 72px;
+  margin-bottom: var(--space-3);
+  object-fit: contain;
+  object-position: left;
+}
+
+.slideTitle {
+  max-width: var(--slide-title-max);
+  height: 52px;
+  object-fit: contain;
+  object-position: left;
+}
+
+.dots {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.dot,
+.dotActive {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background-color: var(--landing-dot-idle);
+}
+
+.dotActive {
+  background-color: var(--landing-dot-active);
+}
+
+.overlayContainer {
+  pointer-events: none;
+}
+
+.overlayInner {
+  position: relative;
+  height: 100%;
+}
+
+.loginSlot {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 350px;
+  height: 420px;
+  transform: translateY(-50%);
+  pointer-events: auto;
+}
+
+/* --- Mobile ---------------------------------------------------------------
+ * El banner crece a 800px, el contenido se centra y baja 96px desde el borde
+ * superior, y la tarjeta de login queda centrada sobre el banner: se apoya en
+ * su mitad vertical y desborda hacia la sección siguiente, igual que el
+ * original. */
+@media (max-width: 900px) {
+  .hero {
+    height: var(--landing-hero-height-mobile);
+  }
+
+  .slide {
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .slideContainer,
+  .overlayContainer {
+    padding-inline: 0;
+  }
+
+  .slideContent {
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 96px;
+  }
+
+  .slideLogo {
+    max-width: var(--slide-logo-max-mobile);
+    height: auto;
+    margin-bottom: var(--space-4);
+    object-position: center;
+  }
+
+  .slideTitle {
+    max-width: var(--slide-title-max-mobile);
+    height: auto;
+    object-position: center;
+  }
+
+  .dots {
+    bottom: 35px;
+  }
+
+  .loginSlot {
+    top: 50%;
+    right: auto;
+    left: 50%;
+    justify-content: center;
+    width: 302px;
+    max-width: calc(100% - 32px);
+    height: auto;
+    padding-block: var(--space-8);
+    transform: translate(-50%, -50%);
+  }
+}

@@ -1,0 +1,67 @@
+/* El bloque se ancla al centro del viewport y desborda la caja de la sección:
+ * las reglas laterales llegan más allá del contenedor de 1320px. */
+.heading {
+  position: relative;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--landing-heading-rule-width);
+  max-width: 100vw;
+  padding-top: var(--space-2);
+  margin-block: 52px;
+  transform: translateX(-50%);
+}
+
+.rule {
+  flex: 1;
+  height: 0;
+  border: none;
+  border-bottom: 4.66667px solid var(--color-accent);
+  margin: 0;
+  opacity: 1;
+}
+
+.rule:first-child {
+  margin-right: var(--space-4);
+}
+
+.rule:last-child {
+  margin-left: var(--space-4);
+}
+
+.title {
+  margin-inline: 120px;
+  color: var(--color-accent);
+  font-size: var(--landing-font-size-display);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--landing-line-height-display);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* En mobile las reglas laterales dejan de ser elásticas: pasan a dos trazos
+ * cortos de 30px a los lados del título, con el bloque a lo ancho del viewport. */
+@media (max-width: 900px) {
+  .heading {
+    justify-content: space-between;
+    width: 100vw;
+    padding-top: 0;
+    margin-block: var(--space-8);
+  }
+
+  .rule {
+    flex: 0 0 30px;
+    border-bottom-width: 2.66667px;
+  }
+
+  .rule:first-child,
+  .rule:last-child {
+    margin: 0;
+  }
+
+  .title {
+    margin-inline: var(--space-2);
+    font-size: var(--landing-font-size-display-mobile);
+  }
+}

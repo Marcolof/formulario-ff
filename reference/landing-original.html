@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)https://micorreo.correoargentino.com.ar/landing -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script async="" src="./landing-original_files/fbevents.js"></script><script type="text/javascript" async="" src="./landing-original_files/js"></script><script type="text/javascript" async="" src="./landing-original_files/js(1)"></script><script type="text/javascript" async="" src="./landing-original_files/js(2)"></script><script type="text/javascript" async="" src="./landing-original_files/js(3)"></script><script async="" src="./landing-original_files/gtm.js"></script><script id="f5_cspm">(function(){var f5_cspm={f5_p:'GAEDHLLIHIKJPCJDEECFCAENMPNLKIJPOGIJKJNCPHAMJJMLGIMMDBNBFBEDGGHLNBBBMIIFAAJKKCNNPKLAKFMNAAIJAOIGHAKFDNONFKIODFNFODGHDJPECNHIEPGG',setCharAt:function(str,index,chr){if(index>str.length-1)return str;return str.substr(0,index)+chr+str.substr(index+1);},get_byte:function(str,i){var s=(i/16)|0;i=(i&15);s=s*32;return((str.charCodeAt(i+16+s)-65)<<4)|(str.charCodeAt(i+s)-65);},set_byte:function(str,i,b){var s=(i/16)|0;i=(i&15);s=s*32;str=f5_cspm.setCharAt(str,(i+16+s),String.fromCharCode((b>>4)+65));str=f5_cspm.setCharAt(str,(i+s),String.fromCharCode((b&15)+65));return str;},set_latency:function(str,latency){latency=latency&0xffff;str=f5_cspm.set_byte(str,40,(latency>>8));str=f5_cspm.set_byte(str,41,(latency&0xff));str=f5_cspm.set_byte(str,35,2);return str;},wait_perf_data:function(){try{var wp=window.performance.timing;if(wp.loadEventEnd>0){var res=wp.loadEventEnd-wp.navigationStart;if(res<60001){var cookie_val=f5_cspm.set_latency(f5_cspm.f5_p,res);window.document.cookie='f5avr0190951970aaaaaaaaaaaaaaaa_cspm_='+encodeURIComponent(cookie_val)+';path=/;'+'';}
+return;}}
+catch(err){return;}
+setTimeout(f5_cspm.wait_perf_data,100);return;},go:function(){var chunk=window.document.cookie.split(/\s*;\s*/);for(var i=0;i<chunk.length;++i){var pair=chunk[i].split(/\s*=\s*/);if(pair[0]=='f5_cspm'&&pair[1]=='1234')
+{var d=new Date();d.setTime(d.getTime()-1000);window.document.cookie='f5_cspm=;expires='+d.toUTCString()+';path=/;'+';';setTimeout(f5_cspm.wait_perf_data,100);}}}}
+f5_cspm.go();}());</script>
+    
+    <link rel="icon" type="image/x-icon" href="https://micorreo.correoargentino.com.ar/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://micorreo.correoargentino.com.ar/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://micorreo.correoargentino.com.ar/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://micorreo.correoargentino.com.ar/favicon-16x16.png">
+    <link rel="manifest" href="https://micorreo.correoargentino.com.ar/site.webmanifest">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src &#39;self&#39;; script-src &#39;self&#39; &#39;unsafe-inline&#39; &#39;unsafe-eval&#39; https://f.wcentrix.com https://wcentrix.net https://www.googletagmanager.com https://www.google-analytics.com https://cdn.scarabresearch.com https://connect.facebook.net https://googleads.g.doubleclick.net https://www.googleadservices.com https://www.google.com https://www.gstatic.com; style-src &#39;self&#39; &#39;unsafe-inline&#39;; img-src &#39;self&#39; data: https:; font-src &#39;self&#39; data: https:; connect-src &#39;self&#39; https://ms-mocks-production.up.railway.app http://localhost:3005 https://f.wcentrix.com https://wcentrix.net https:; frame-src &#39;self&#39; https://f.wcentrix.com https://wcentrix.net https://www.googletagmanager.com https://www.facebook.com https://connect.facebook.net https://td.doubleclick.net https://www.google.com">
+    <title>MiCorreo</title>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){window.dataLayer.push(arguments);}
+      window.gtag = window.gtag || gtag;
+    </script>
+    <script>
+      // Detectar errores de módulos de Vite antes de que React cargue
+      window.addEventListener('error', function(event) {
+        var errorMsg = event.message || '';
+        var errorSource = (event.filename || '').toLowerCase();
+        
+        if (
+          errorMsg.includes('504') ||
+          errorMsg.includes('Outdated Optimize Dep') ||
+          errorMsg.includes('Failed to fetch dynamically imported module') ||
+          errorSource.includes('node_modules/.vite') ||
+          errorSource.includes('@vite/client')
+        ) {
+          console.warn('Error de módulo detectado, limpiando cache y recargando...');
+          // Limpiar cache de service worker si existe
+          if ('caches' in window) {
+            caches.keys().then(function(names) {
+              names.forEach(function(name) {
+                caches.delete(name);
+              });
+            });
+          }
+          // Recargar con parámetro para evitar cache
+          setTimeout(function() {
+            var url = window.location.href.split('?')[0];
+            window.location.href = url + (url.includes('?') ? '&' : '?') + 'reload=' + Date.now();
+          }, 100);
+        }
+      }, true);
+      
+      // Detectar cuando se vuelve a la página desde cache
+      window.addEventListener('pageshow', function(event) {
+        if (event.persisted) {
+          // Verificar si el root está vacío después de un momento
+          setTimeout(function() {
+            var root = document.getElementById('root');
+            if (root && (!root.hasChildNodes() || root.innerHTML.trim() === '')) {
+              console.warn('Root vacío detectado después de back navigation, recargando...');
+              var url = window.location.href.split('?')[0];
+              window.location.href = url + (url.includes('?') ? '&' : '?') + 'reload=' + Date.now();
+            }
+          }, 200);
+        }
+      });
+      
+      // Detectar errores de recursos (scripts, links)
+      document.addEventListener('error', function(event) {
+        var target = event.target;
+        if (target && (target.tagName === 'SCRIPT' || target.tagName === 'LINK')) {
+          var src = target.src || target.href || '';
+          if (src.includes('node_modules/.vite') || src.includes('@vite/client')) {
+            console.warn('Error cargando recurso de Vite, recargando...');
+            setTimeout(function() {
+              var url = window.location.href.split('?')[0];
+              window.location.href = url + (url.includes('?') ? '&' : '?') + 'reload=' + Date.now();
+            }, 100);
+          }
+        }
+      }, true);
+    </script>
+    <script type="module" crossorigin="" src="./landing-original_files/index-CNRjQ3IE.js"></script>
+    <link rel="stylesheet" crossorigin="" href="./landing-original_files/index-eXR3zonD.css">
+  <link rel="manifest" href="https://micorreo.correoargentino.com.ar/manifest.webmanifest"><style data-emotion="css-global" data-s=""></style><style data-emotion="css-global" data-s=""></style><style data-emotion="css-global" data-s=""></style><style data-emotion="css-global" data-s=""></style><style data-emotion="css" data-s=""></style><script type="text/javascript" id="wcchat_script" async="" src="./landing-original_files/wcchat.v6.js"></script><script>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-PXH9MFPR');
+      </script><script async="" src="./landing-original_files/js(4)"></script><style type="text/css">.styles_button_main__2rvIi {
+  height: 50px;
+  width: 155px;
+  border-radius: 25px;
+  background-color: #494d53;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  margin: 10px;
+  padding: 0 5px 0 0;
+  border: none;
+  cursor: pointer;
+  transition: all ease-in-out 200ms;
+  bottom: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  z-index: 100;
+}
+
+.styles_only_icon__27Rrq {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  padding: 0;
+  min-width: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.styles_only_icon__27Rrq .styles_button_text__2fM2J {
+  display: none;
+}
+
+.styles_only_icon__27Rrq .styles_button_icon__PYERy {
+  position: relative;
+  transform: none !important;
+  right: auto;
+  top: auto;
+  margin: auto;
+}
+
+.styles_initLoadMain__1cZMr {
+  width: 50px;
+}
+
+.styles_initLoadMain__1cZMr .styles_button_text__2fM2J {
+  opacity: 0;
+}
+.styles_button_right__1tP84 {
+  right: 0;
+}
+
+.styles_button_left__VEVz8 {
+  left: 0;
+}
+
+.styles_button_main__2rvIi:focus {
+  outline: none;
+}
+.styles_button_main__2rvIi:hover {
+  background-color: #595d63;
+}
+
+.styles_button_main__2rvIi .styles_button_icon__PYERy {
+  flex-shrink: 0;
+  fill: currentColor;
+  display: flex;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transition: transform ease-in 200ms;
+  transform: translateX(-104px)
+}
+
+.styles_initLoadBtn__sUYaK {
+  transform: translateX(0px) !important;
+}
+
+
+.styles_button_main__2rvIi .styles_button_icon__PYERy::before {
+  content: '';
+  display: block;
+  width:100%;
+  height: 100%;
+  background-color: #000;
+  border-radius: 50%;
+  opacity: .1;
+}
+
+.styles_button_main__2rvIi .styles_button_icon__PYERy svg {
+  width: inherit;
+  height: inherit;
+  position: inherit;
+  display: block;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.styles_button_main__2rvIi .styles_button_icon__PYERy .styles_button_icon_rotate__1XAlI {
+  animation: styles_spin__6y_8G 650ms both infinite cubic-bezier(0.32, 0.32, 0.68, 0.67);
+}
+
+.styles_button_main__2rvIi .styles_button_text__2fM2J {
+  width: 100px;
+  height: 50px;
+  font-size: 14px;
+  padding: 0 5px;
+  position: absolute;
+  right: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.styles_button_main__2rvIi .styles_button_text__2fM2J span {
+  display: block;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.styles_button_main__2rvIi .styles_image_tab__xD5r7 {
+  position: absolute;
+  bottom: 100%;
+  width: 90%;
+  left: 20px;
+  max-width: 180px;
+  max-height: 180px;
+}
+/* .button_main .image_tab_right {
+  left: 20px;
+}
+.button_main .image_tab_left {
+  right: 20px;
+} */
+
+.styles_window_main__3OPOR {
+  position: fixed;
+  bottom: 0;
+  background: transparent;
+  height: 520px;
+  width: 100%;
+  max-width: 670px;
+  overflow: hidden;
+  transition: transform ease-in-out 250ms;
+  margin: 0 7px;
+  z-index: 9999;
+}
+
+.styles_window_main_disabled__1tNkK {
+  pointer-events: none;
+}
+
+.styles_window_left__1-DF9 {
+  left: 0;
+  transform: translateX(-50%);
+}
+
+.styles_window_right__2AH_j {
+  right: -10px;
+  transform: translateX(50%);
+}
+
+.styles_show_faqs__4wJfj {
+  transform: translateX(0%) !important;
+}
+
+.styles_frame_main__1Tgye {
+  margin: 0;
+  background-color: transparent;
+  display: block;
+  position: absolute;
+  width: 100%;
+  max-width: 670px;
+  z-index: 9999;
+  height: 520px;
+  bottom: 0;
+  -webkit-user-select: none;
+          user-select: none;
+}
+
+.styles_window_hidden__3uTF0 {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.styles_frame_left__MF47I {
+  left: 0;
+}
+
+.styles_fame_right__1TomB {
+  right: 0;
+}
+
+.styles_window_main__3OPOR .styles_frame_main__1Tgye > iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media (max-width: 600px) {
+  .styles_window_main__3OPOR {
+    transform: translate(0,0);
+  }
+  .styles_window_main__3OPOR, .styles_frame_main__1Tgye {
+    height: 100%;
+    margin: 0;
+  }
+  .styles_button_main__2rvIi {
+    width: 50px;
+    padding: 0;
+    justify-content: center;
+  }
+  .styles_button_main__2rvIi .styles_button_text__2fM2J {
+    display: none;
+  }
+  .styles_button_main__2rvIi .styles_button_icon__PYERy {
+    transform: translateX(0);
+  }
+
+  .styles_button_main__2rvIi .styles_image_tab__xD5r7 {
+    display: none;
+  }
+  .styles_window_right__2AH_j, .styles_window_left__1-DF9 {
+    left: 0;
+    right: 0;
+  }
+}
+
+.styles_slideIn__1Hvh3 {
+  animation: styles_slideIn__1Hvh3 500ms both;
+}
+
+.styles_slideOut__3QutE {
+  animation: styles_slideOut__3QutE 500ms both;
+}
+
+@keyframes styles_slideIn__1Hvh3 {
+  0% {
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+    opacity: 0;
+  }
+  100% {
+    transform: translateZ(0);
+    opacity: 1;
+  }
+}
+
+@keyframes styles_slideOut__3QutE {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+
+  100% {
+    visibility: hidden;
+    transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes styles_spin__6y_8G {
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
+}
+</style><script type="text/javascript" async="" src="./landing-original_files/f.txt"></script><script type="text/javascript" async="" src="./landing-original_files/f(1).txt"></script><script type="text/javascript" async="" src="./landing-original_files/f(2).txt"></script><script type="text/javascript" async="" src="./landing-original_files/f(3).txt"></script></head>
+  <body><noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PXH9MFPR"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe>
+      </noscript>
+    <div id="root"><div class="MuiBox-root css-imfgc9"><div class="MuiBox-root css-i0eesc"><header class="MuiPaper-root MuiPaper-elevation MuiPaper-elevation4 MuiAppBar-root MuiAppBar-colorPrimary MuiAppBar-positionSticky css-1xwfoc7" id="navbar" style="--Paper-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);"><div class="MuiToolbar-root MuiToolbar-regular css-sfzb0f"><div class="MuiBox-root css-ldh6pm"><div class="MuiBox-root css-70qvj9"><a href="https://micorreo.correoargentino.com.ar/landing" style="display: inline-flex; text-decoration: none;"><img src="./landing-original_files/logo-mi-correo.svg" alt="Correo Argentino MiCorreo" style="height: 28px; width: 197px; cursor: pointer;"></a></div><div class="MuiBox-root css-thflsa"><div class="no-logged-menu MuiBox-root css-k008qs"><a class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1ls00oe" tabindex="0" href="https://www.correoargentino.com.ar/MiCorreo/public/primeros-pasos">Integraciones</a><a class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1ls00oe" tabindex="0" href="https://micorreo.correoargentino.com.ar/landing">Iniciar sesión</a><a class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1ls00oe" tabindex="0" href="https://micorreo.correoargentino.com.ar/register">Registrarme</a></div><div class="logged-menu MuiBox-root css-aq7b8v"><a class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-iuyp81" tabindex="0" href="https://www.correoargentino.com.ar/MiCorreo/public/envioCla"><span class="MuiButton-icon MuiButton-startIcon MuiButton-iconSizeMedium css-cveorv"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-ukn93e" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z"></path></svg></span>Nuevo envío</a><div class="MuiBox-root css-j0ozid"><div class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-179opmf">U</div><div class="MuiBox-root css-1cpe6k5"><p class="MuiTypography-root MuiTypography-body1 css-1t4ypoq">Hola, Usuario</p><button class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1sneacu" tabindex="0" type="button">Ver más<span class="MuiButton-icon MuiButton-endIcon MuiButton-iconSizeMedium css-1g78ho2"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-q7mezt" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6z"></path></svg></span></button></div></div></div></div></div></div></header><main class="MuiBox-root css-1rr4qq7"><div class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-row css-owaiz0" id="scroll-container"><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 css-j5005a"><div class="MuiBox-root css-phxlkw"><div class="MuiBox-root css-1kxonj9"><div class="MuiBox-root css-18osjr4"><div class="MuiBox-root css-cheqf"><div class="MuiBox-root css-14l6kpm"><img class="MuiBox-root css-ip5mle" src="./landing-original_files/banner-1.webp" alt="background"><div class="MuiBox-root css-1a19peu"><div class="MuiBox-root css-1qo60y8"><img class="MuiBox-root css-3xb6zx" src="./landing-original_files/logo-paqar.svg" alt="top"><img class="MuiBox-root css-1c49lq" src="./landing-original_files/banner-title-1.webp" alt="bottom"></div></div></div><div class="MuiBox-root css-14l6kpm"><img class="MuiBox-root css-ip5mle" src="./landing-original_files/banner-2.webp" alt="background"><div class="MuiBox-root css-1a19peu"><div class="MuiBox-root css-1qo60y8"><img class="MuiBox-root css-3xb6zx" src="./landing-original_files/logo-paqar.svg" alt="top"><img class="MuiBox-root css-1c49lq" src="./landing-original_files/banner-title-1.webp" alt="bottom"></div></div></div><div class="MuiBox-root css-14l6kpm"><img class="MuiBox-root css-ip5mle" src="./landing-original_files/banner-3.webp" alt="background"><div class="MuiBox-root css-1a19peu"><div class="MuiBox-root css-1qo60y8"><img class="MuiBox-root css-1l6i34t" src="./landing-original_files/mis_comunicaciones_digitales.png" alt="top"><img class="MuiBox-root css-ex56id" src="./landing-original_files/banner-title-2.webp" alt="bottom"></div></div></div><div class="MuiBox-root css-14l6kpm"><img class="MuiBox-root css-ip5mle" src="./landing-original_files/banner-1.webp" alt="background"><div class="MuiBox-root css-1a19peu"><div class="MuiBox-root css-1qo60y8"><img class="MuiBox-root css-3xb6zx" src="./landing-original_files/logo-paqar.svg" alt="top"><img class="MuiBox-root css-1c49lq" src="./landing-original_files/banner-title-1.webp" alt="bottom"></div></div></div></div><div class="MuiBox-root css-1jutd6g"><button class="MuiBox-root css-nlc37i" aria-label="Ir al step 1"></button><button class="MuiBox-root css-gx1uuo" aria-label="Ir al step 2"></button><button class="MuiBox-root css-nlc37i" aria-label="Ir al step 3"></button></div></div><div class="MuiBox-root css-1a19peu"><div class="MuiBox-root css-1f8sh1y"><div class="MuiBox-root css-y44brl"><div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1tfrlvb" style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"><div class="MuiBox-root css-videh6"><div class="MuiBox-root css-10ib5jr"><p class="MuiTypography-root MuiTypography-body1 css-1ox78gu">Ingresá a tu cuenta</p></div><form class="MuiBox-root css-4rmlxi" data-gtm-form-interact-id="0"><div class="MuiBox-root css-1htcaow"><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-w5j88"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-s3mw81"><input aria-invalid="false" id=":r7:" name="email" placeholder="Correo electrónico" type="text" class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-rhlof0" value="marcoloforte@gmail.com" data-gtm-form-interact-field-id="0"><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-ierwxd"><legend class="css-w4cd9x"><span class="notranslate" aria-hidden="true">​</span></legend></fieldset></div></div><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-y6yuyt"><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall MuiInputBase-adornedEnd css-gwiezp"><input aria-invalid="false" id=":r8:" name="password" placeholder="Contraseña" type="password" class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall MuiInputBase-inputAdornedEnd css-ay3493" value="" data-gtm-form-interact-field-id="1"><div class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeSmall css-1jy8w45"><button class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-caqai2" tabindex="0" type="button"><svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-q7mezt" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7M2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2m4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3z"></path></svg></button></div><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-ierwxd"><legend class="css-w4cd9x"><span class="notranslate" aria-hidden="true">​</span></legend></fieldset></div></div><div class="MuiBox-root css-1e4bvvt"><p class="MuiTypography-root MuiTypography-body2 css-1eft274">¿Olvidaste tu contraseña?</p></div><div class="MuiBox-root css-kl1xo3"><button class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorSecondary css-tm5cfw" tabindex="0" type="submit">Ingresar<span class="MuiTouchRipple-root css-4mb1j7"></span></button></div></div></form><div class="MuiBox-root css-15r83f5"><div class="MuiBox-root css-8gtc62"></div><span class="MuiBox-root css-l4hamt">¿Aún no tenés cuenta?</span><span class="MuiBox-root css-15q1jz1">Registrarme</span></div></div></div></div></div></div></div><div class="MuiBox-root css-0" id="gestion-devolucion"><div class="MuiBox-root css-1k8j3s3"><div class="MuiBox-root css-8zfu2q"><div class="MuiBox-root css-22u9a9"><div class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-row css-14hy2kf"><div class="MuiBox-root css-9uwscc"><p class="MuiTypography-root MuiTypography-body1 css-akpg1l">Gestionar Devolución</p><p class="MuiTypography-root MuiTypography-body1 css-1m4oxso">Ingresá el código de seguimiento del paquete que querés devolver.</p><p class="MuiTypography-root MuiTypography-body1 css-uta1gt">Recordá que el paquete debe estar entregado para poder realizar la devolución.</p><div class="MuiBox-root css-1fme0w6"><div class="MuiBox-root css-k0sogd"><div class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1mgco4l"><label class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeSmall MuiInputLabel-outlined css-ponk9q" data-shrink="false" for=":rb:" id=":rb:-label">Código de seguimiento</label><div class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-sizeSmall css-ykv4vv"><input aria-invalid="false" id=":rb:" type="text" class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputSizeSmall css-rhlof0" value=""><fieldset aria-hidden="true" class="MuiOutlinedInput-notchedOutline css-ierwxd"><legend class="css-81qg8w"><span>Código de seguimiento</span></legend></fieldset></div></div><button class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover MuiLink-button css-1pvi0yt">¿Dónde encuentro mi código de seguimiento?</button></div><button class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorSecondary MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorSecondary css-wmc1sl" tabindex="0" type="button">Continuar</button></div></div></div></div></div></div></div></div></div><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 css-j5005a"><div class="MuiBox-root css-1hz5u1"><div class="MuiBox-root css-wgd4tv"><hr class="MuiDivider-root MuiDivider-fullWidth css-1a82zz3"><h2 class="MuiTypography-root MuiTypography-h2 css-1loklcg">Conocé nuestros servicios</h2><hr class="MuiDivider-root MuiDivider-fullWidth css-p4l01t"></div><div class="MuiBox-root css-8zfu2q"><div class="MuiBox-root css-22u9a9"><div class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-row MuiGrid-spacing-xs-13 css-12xwlno"><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 css-1kog50i"><div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ah5tvx" style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"><div class="MuiCardContent-root css-bs7zy2"><div class="MuiBox-root css-117nb00"><img src="./landing-original_files/logo-paqar.svg" alt="/assets/logo-paqar.svg" style="width: 100%; height: 100%; display: block; margin: 0px auto;"></div><p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-57t4lp">Paq.ar es la solución logística que potencia tu eCommerce. Simplificá tus envíos y enfocate en vender con los precios más convenientes del mercado.</p><a class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1g8ikei" tabindex="0" href="https://micorreo.correoargentino.com.ar/landing#scroll-container"><p class="MuiTypography-root MuiTypography-body1 css-7j43s2">Ingresá</p></a></div><div class="MuiBox-root css-jxdydw"><img class="MuiBox-root css-1d2rgud" src="./landing-original_files/horizontal-card-image-1.svg" alt="/assets/logo-paqar.svg"></div></div></div><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 css-1kog50i"><div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-7i5q9z" style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"><div class="MuiCardContent-root css-1wdtpna"><div class="MuiBox-root css-1fbm0pd"><img src="./landing-original_files/mis_comunicaciones_digitales.png" alt="/assets/mis_comunicaciones_digitales.png" style="width: 100%; height: 100%; display: block; margin: 0px auto;"></div><p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-57t4lp">Hacé, pagá y enviá online tus envíos postales de forma rápida y segura. Mis Comunicaciones Digitales es una plataforma de imposición electrónica con acceso web seguro que permite a los usuarios registrados imponer virtualmente sus envíos postales.</p><a class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1g8ikei" tabindex="0" href="https://miscomunicacionesdigitales.com.ar/"><p class="MuiTypography-root MuiTypography-body1 css-7j43s2">Ingresá</p></a></div><div class="MuiBox-root css-jxdydw"><img class="MuiBox-root css-1d2rgud" src="./landing-original_files/horizontal-card-image-2.svg" alt="/assets/mis_comunicaciones_digitales.png"></div></div></div><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 css-1kog50i"><div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ah5tvx" style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"><div class="MuiCardContent-root css-bs7zy2"><div class="MuiBox-root css-1aunavg"><img src="./landing-original_files/logo-punto-correo.svg" alt="/assets/logo-punto-correo.svg" style="width: 100%; height: 100%; display: block; margin: 0px auto;"></div><p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-57t4lp">Transformate en un Punto Correo y mejorá tus ingresos. Sumáte a nuestra red para admitir y entregar paquetería eCommerce.</p><a class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1g8ikei" tabindex="0" href="https://www.correoargentino.com.ar/MiCorreo/public/puntopaqar"><p class="MuiTypography-root MuiTypography-body1 css-7j43s2">Conocer más</p></a></div><div class="MuiBox-root css-jxdydw"><img class="MuiBox-root css-1d2rgud" src="./landing-original_files/horizontal-card-image-3.svg" alt="/assets/logo-punto-correo.svg"></div></div></div><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 css-1kog50i"><div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-7i5q9z" style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"><div class="MuiCardContent-root css-1wdtpna"><div class="MuiBox-root css-e6w00e"><img src="./landing-original_files/logo-rotulador.svg" alt="/assets/logo-rotulador.svg" style="width: 100%; height: 100%; display: block; margin: 0px auto;"></div><p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-57t4lp">Ahorrá tiempo y esfuerzo confeccionando tus etiquetas de manera rápida, precisa y profesional para luego abonarlas en cualquiera de nuestras sucursales.</p><a class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1g8ikei" tabindex="0" href="https://www.correoargentino.com.ar/MiCorreo/public/regisadic"><p class="MuiTypography-root MuiTypography-body1 css-7j43s2">Generar rótulo</p></a></div><div class="MuiBox-root css-jxdydw"><img class="MuiBox-root css-1d2rgud" src="./landing-original_files/horizontal-card-image-4.svg" alt="/assets/logo-rotulador.svg"></div></div></div><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 css-1kog50i"><div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-ah5tvx" style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"><div class="MuiCardContent-root css-bs7zy2"><div class="MuiBox-root css-wgnb0e"><img src="./landing-original_files/logo-oficios-judiciales.svg" alt="/assets/logo-oficios-judiciales.svg" style="width: 100%; height: 100%; display: block; margin: 0px auto;"></div><p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-57t4lp">Realizá el pago de tus Oficios Judiciales completamente online de forma simple y segura.</p><a class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-1g8ikei" tabindex="0" href="https://www.correoargentino.com.ar/MiCorreo/public/oficiosJudiciales"><p class="MuiTypography-root MuiTypography-body1 css-7j43s2">Ingresá</p></a></div><div class="MuiBox-root css-jxdydw"><img class="MuiBox-root css-1d2rgud" src="./landing-original_files/horizontal-card-image-5.svg" alt="/assets/logo-oficios-judiciales.svg"></div></div></div></div></div></div></div></div><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 css-j5005a"><div class="MuiBox-root css-1t306rk"><div class="MuiBox-root css-wgd4tv"><hr class="MuiDivider-root MuiDivider-fullWidth css-1a82zz3"><h2 class="MuiTypography-root MuiTypography-h2 css-1loklcg">Accesos directos</h2><hr class="MuiDivider-root MuiDivider-fullWidth css-p4l01t"></div><div class="MuiBox-root css-11o6bod"><div class="MuiBox-root css-22u9a9"><div class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-row MuiGrid-spacing-xs-3 MuiGrid-spacing-sm-4 MuiGrid-spacing-md-12 css-1voqhjb"><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-6 css-2b3n7b"><div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-tkwu7u" style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"><div class="MuiCardContent-root css-c7p9wz"><h3 class="MuiTypography-root MuiTypography-h3 css-rvvwz3">Seguimiento de envíos</h3><div class="MuiBox-root css-wdsbk7"><div class="MuiBox-root css-17frbil"><img class="MuiBox-root css-50tym3" src="./landing-original_files/landing-icon-1.svg" alt="Seguimiento de envíos"></div><div class="MuiBox-root css-17qjl7j"><p class="MuiTypography-root MuiTypography-body1 css-1t0mgk3">Hacé el seguimiento de tus envíos de forma práctica y ágil.</p><a class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-noenhe" tabindex="0" href="https://www.correoargentino.com.ar/formularios/e-commerce" target="_blank" rel="noopener noreferrer"><p class="MuiTypography-root MuiTypography-body1 css-1uea6bs">Buscar envíos</p></a></div></div></div></div></div><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 MuiGrid-grid-sm-12 MuiGrid-grid-md-6 css-2b3n7b"><div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-tkwu7u" style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"><div class="MuiCardContent-root css-c7p9wz"><h3 class="MuiTypography-root MuiTypography-h3 css-rvvwz3">Sucursales</h3><div class="MuiBox-root css-wdsbk7"><div class="MuiBox-root css-17frbil"><img class="MuiBox-root css-vq4sqv" src="./landing-original_files/landing-icon-2.svg" alt="Sucursales"></div><div class="MuiBox-root css-17qjl7j"><p class="MuiTypography-root MuiTypography-body1 css-1t0mgk3">Buscá tu sucursal más cercana y conocé todos sus servicios.</p><a class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorPrimary css-noenhe" tabindex="0" href="https://www.correoargentino.com.ar/formularios/sucursales" target="_blank" rel="noopener noreferrer"><p class="MuiTypography-root MuiTypography-body1 css-1uea6bs">Buscar sucursales</p></a></div></div></div></div></div></div></div></div></div></div><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 css-j5005a"><div class="MuiBox-root css-1pl7xj3"><div class="MuiBox-root css-wgd4tv"><hr class="MuiDivider-root MuiDivider-fullWidth css-1a82zz3"><h2 class="MuiTypography-root MuiTypography-h2 css-1loklcg">¿Por qué elegirnos?</h2><hr class="MuiDivider-root MuiDivider-fullWidth css-p4l01t"></div><div class="MuiBox-root css-1zxx3g"><div class="MuiBox-root css-22u9a9"><div class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-row MuiGrid-spacing-xs-1 MuiGrid-spacing-sm-1 MuiGrid-spacing-lg-2 css-1uft9o2"><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-rruxup"><div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1mvi57y" style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"><div class="MuiBox-root css-5uxyq9"><div class="MuiCardContent-root css-dyyh9g"><h4 class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1li966j"></h4><p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-v9e7t0">Tenemos el precio más bajo.</p></div><img class="MuiBox-root css-1embiuj" src="./landing-original_files/landing-icon-3.svg"></div></div></div><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-rruxup"><div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1mvi57y" style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"><div class="MuiBox-root css-5uxyq9"><div class="MuiCardContent-root css-dyyh9g"><h4 class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1li966j"></h4><p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-v9e7t0">¡Llegamos a dónde los demás no llegan!</p></div><img class="MuiBox-root css-p94l8t" src="./landing-original_files/landing-icon-4.svg"></div></div></div><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-rruxup"><div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1mvi57y" style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"><div class="MuiBox-root css-5uxyq9"><div class="MuiCardContent-root css-dyyh9g"><h4 class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1li966j"></h4><p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-v9e7t0">Simple, rápido y cómodo</p></div><img class="MuiBox-root css-jhjgb" src="./landing-original_files/landing-icon-5.svg"></div></div></div><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-rruxup"><div class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1mvi57y" style="--Paper-shadow: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);"><div class="MuiBox-root css-5uxyq9"><div class="MuiCardContent-root css-dyyh9g"><h4 class="MuiTypography-root MuiTypography-h4 MuiTypography-gutterBottom css-1li966j"></h4><p class="MuiTypography-root MuiTypography-body1 MuiTypography-gutterBottom css-v9e7t0">Atención personalizada.</p></div><img class="MuiBox-root css-1fk4vf3" src="./landing-original_files/landing-icon-6.svg"></div></div></div></div></div></div></div></div><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 css-j5005a"><div class="MuiBox-root css-0"><div class="MuiBox-root css-1kzd8f8"><div class="MuiBox-root css-8zfu2q"><div class="MuiBox-root css-22u9a9"><div class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-row MuiGrid-spacing-xs-4 css-1huplwv"><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-12yzjn2"><div class="MuiBox-root css-8atqhb"><p class="MuiTypography-root MuiTypography-body1 css-17ts1pd">ACCESOS</p><div class="MuiStack-root css-m0zy8c"><a class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-w5cddz" href="https://www.correoargentino.com.ar/MiCorreo/public/faqs"><span class="MuiTypography-root MuiTypography-body1 css-k60lcq">Preguntas frecuentes</span></a><a class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-w5cddz" href="https://www.correoargentino.com.ar/MiCorreo/public/terminosycondiciones"><span class="MuiTypography-root MuiTypography-body1 css-k60lcq">Términos y condiciones</span></a><a class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-w5cddz" href="https://www.correoargentino.com.ar/"><span class="MuiTypography-root MuiTypography-body1 css-k60lcq">Sitio web institucional</span></a></div></div></div><hr class="MuiDivider-root MuiDivider-fullWidth css-z7x781"><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-1uyz5kq"><div class="MuiBox-root css-8atqhb"><p class="MuiTypography-root MuiTypography-body1 css-17ts1pd">CONTACTO</p><div class="MuiStack-root css-m0zy8c"><a class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-w5cddz" href="https://www.correoargentino.com.ar/MiCorreo/public/contacto"><span class="MuiTypography-root MuiTypography-body1 css-k60lcq">Atención al cliente</span></a></div></div></div><hr class="MuiDivider-root MuiDivider-fullWidth css-z7x781"><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-6mrc62"><div class="MuiBox-root css-8atqhb"><p class="MuiTypography-root MuiTypography-body1 css-17ts1pd">REDES SOCIALES</p><div class="MuiStack-root css-1puubmx"><a class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1uk3xsy" href="https://www.facebook.com/CorreoOficialSA"><img class="MuiBox-root css-1oyziew" src="./landing-original_files/icon-social-facebook.svg" alt="Facebook"></a><a class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1uk3xsy" href="https://www.instagram.com/correooficialsa"><img class="MuiBox-root css-1oyziew" src="./landing-original_files/icon-social-instagram.svg" alt="Instagram"></a><a class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1uk3xsy" href="https://x.com/CorreoOficialSA"><img class="MuiBox-root css-1oyziew" src="./landing-original_files/icon-social-twitter.svg" alt="Twitter"></a><a class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1uk3xsy" href="https://www.tiktok.com/@correooficialsa"><img class="MuiBox-root css-1oyziew" src="./landing-original_files/icon-social-tiktok.svg" alt="TikTok"></a><a class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1uk3xsy" href="https://www.youtube.com/c/CorreoOficialSA"><img class="MuiBox-root css-1oyziew" src="./landing-original_files/icon-social-youtube.svg" alt="YouTube"></a><a class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineHover css-1uk3xsy" href="https://www.linkedin.com/company/correo-argentino"><img class="MuiBox-root css-1oyziew" src="./landing-original_files/icon-social-linkedin.svg" alt="Linkedin"></a></div></div></div><hr class="MuiDivider-root MuiDivider-fullWidth css-z7x781"><div class="MuiGrid-root MuiGrid-direction-xs-row MuiGrid-grid-xs-12 css-gvrfxj"><div class="MuiBox-root css-dvxtzn"><img src="./landing-original_files/logo-mi-correo.svg" alt="Correo Argentino MiCorreo" style="height: 48px; width: 242px; cursor: default;"><span class="MuiTypography-root MuiTypography-subtitle1 css-1xo3yij">Correo Oficial de la<span class="MuiBox-root css-11ltpb0"> República Argentina</span><span class="MuiBox-root css-x72vvc"><span class="MuiBox-root css-10q9jzs"><span class="MuiBox-root css-13o7eu2">Todos los derechos</span><span class="MuiBox-root css-13o7eu2">reservados</span></span><span class="MuiBox-root css-u5d1ce"> - Todos los derechos reservados</span></span></span></div></div></div></div></div></div></div></div></div><button class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-td9pdv" tabindex="0" type="button"><img src="./landing-original_files/chatBotButton.svg" alt="Chatbot" style="width: 52px; height: 52px; border-radius: 50%; display: block; filter: none;"></button></main></div></div></div>
+  
+
+
+<div id="wcx-chat"><button class="styles_button_main__2rvIi styles_only_icon__27Rrq styles_window_hidden__3uTF0" style="background-color: rgb(21, 38, 99);"><span class="styles_button_icon__PYERy"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.999 511.999"><path d="M372.29 50.758H28.831C12.933 50.758 0 63.691 0 79.588v206.056c0 15.897 12.933 28.831 28.831 28.831h22.271v76.71a12.08 12.08 0 0020.619 8.541l85.251-85.25h17.104c6.671 0 12.078-5.407 12.078-12.078 0-6.672-5.409-12.079-12.078-12.079 0 0-22.69.016-22.927.04a12.03 12.03 0 00-7.722 3.498l-68.169 68.169s-.021-60.392-.06-60.705c-.545-6.166-5.717-11.002-12.024-11.002H28.831a4.679 4.679 0 01-4.674-4.674V79.588a4.679 4.679 0 014.674-4.674H372.29a4.679 4.679 0 014.674 4.674v79.055c0 6.671 5.409 12.078 12.078 12.078s12.078-5.407 12.078-12.078V79.588c0-15.897-12.933-28.83-28.83-28.83z"></path><path d="M483.169 198.492H242.754c-15.897 0-28.831 12.933-28.831 28.831v140.57c0 15.897 12.933 28.831 28.831 28.831h150.514l60.98 60.98a12.075 12.075 0 0013.163 2.618 12.08 12.08 0 007.456-11.159v-52.44h8.301c15.897 0 28.831-12.933 28.831-28.831v-140.57c.001-15.897-12.932-28.83-28.83-28.83zm4.675 169.401a4.68 4.68 0 01-4.674 4.674h-20.376c-6.356 0-11.554 4.912-12.031 11.147-.031.264-.051 36.29-.051 36.29l-43.854-43.855c-.046-.046-.094-.089-.14-.135a9.54 9.54 0 00-.489-.445 12.02 12.02 0 00-7.951-3.003H242.754a4.679 4.679 0 01-4.674-4.674v-140.57a4.679 4.679 0 014.674-4.674H483.17a4.68 4.68 0 014.674 4.674v140.571z"></path><path d="M362.964 285.53c-6.667 0-12.078 5.411-12.078 12.078s5.411 12.078 12.078 12.078c6.668 0 12.078-5.411 12.078-12.078s-5.411-12.078-12.078-12.078zm-52.492-154.919H90.65c-6.67 0-12.078 5.407-12.078 12.078s5.409 12.078 12.078 12.078h219.822c6.67 0 12.078-5.407 12.078-12.078s-5.408-12.078-12.078-12.078zm-136.397 79.854H90.65c-6.67 0-12.078 5.407-12.078 12.078 0 6.671 5.409 12.078 12.078 12.078h83.425c6.671 0 12.078-5.407 12.078-12.078s-5.408-12.078-12.078-12.078zm132.762 75.065c-6.666 0-12.078 5.411-12.078 12.078s5.412 12.078 12.078 12.078c6.668 0 12.078-5.411 12.078-12.078s-5.41-12.078-12.078-12.078zm112.242 0c-6.667 0-12.078 5.411-12.078 12.078s5.411 12.078 12.078 12.078c6.668 0 12.078-5.411 12.078-12.078s-5.411-12.078-12.078-12.078z"></path></svg></span></button><div class="styles_window_main__3OPOR styles_window_hidden__3uTF0 styles_window_main_disabled__1tNkK styles_window_right__2AH_j"><div class="styles_frame_main__1Tgye " id="4591bc6a40274298864337974582b6a2"></div></div></div>
+<script type="text/javascript" id="" charset="">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","2495133914338351");fbq("track","PageView");</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2495133914338351&amp;ev=PageView&amp;noscript=1"></noscript>
+<script type="text/javascript" id="" charset="">var cntrData={cntr_revenue:decodeURIComponent("%pcost\x3d!;"),cntr_transactionId:decodeURIComponent("%pord\x3d!;"),u1:decodeURIComponent("%pu1\x3d!;"),u2:decodeURIComponent("%pu2\x3d!;"),u3:decodeURIComponent("%pu3\x3d!;"),u4:decodeURIComponent("%pu4\x3d!;"),u5:decodeURIComponent("%pu5\x3d!;"),src:decodeURIComponent("%psrc\x3d!;"),cat:decodeURIComponent("%pcat\x3d!;"),type:decodeURIComponent("%ptype\x3d!;"),cntr_url:decodeURIComponent("%p~oref\x3d!?")};</script>
+<script id="" text="" charset="" type="text/javascript" src="./landing-original_files/up.js"></script>
+<script type="text/javascript" id="" charset="">!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version="2.0",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");fbq("init","1069055105692750");fbq("track","PageView");</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1069055105692750&amp;ev=PageView&amp;noscript=1"></noscript>
+</body></html>

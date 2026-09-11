@@ -1,0 +1,131 @@
+.section {
+  padding: var(--space-8) 64px 96px;
+  background-color: var(--landing-surface-plain);
+}
+
+.container {
+  max-width: var(--landing-container-max);
+  padding-inline: 38px;
+  margin-inline: auto;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 96px;
+  padding-block: var(--space-4);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  flex: 0 1 calc((100% - 96px) / 2);
+  padding: 26px;
+  border-radius: var(--landing-radius-shortcut);
+  background-color: var(--landing-surface-muted);
+}
+
+.title {
+  padding: var(--space-2);
+  color: var(--color-accent);
+  font-size: var(--landing-font-size-title);
+  font-weight: var(--font-weight-semibold);
+  line-height: 28.008px;
+}
+
+.row {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.iconBox {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex: 0 0 159px;
+}
+
+.iconBox img {
+  width: 69px;
+  height: 98px;
+  object-fit: contain;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+}
+
+.body {
+  margin-bottom: var(--space-2);
+  color: var(--color-accent);
+  font-size: var(--landing-font-size-lead);
+  line-height: var(--landing-line-height-body);
+}
+
+.cta {
+  margin-block: var(--space-2);
+  text-decoration: none;
+}
+
+.cta p {
+  color: var(--color-accent);
+  font-size: var(--landing-font-size-cta);
+  font-weight: var(--font-weight-semibold);
+  line-height: 27px;
+}
+
+@media (max-width: 900px) {
+  .section {
+    padding: 0 0 var(--space-12);
+  }
+
+  .container {
+    padding-inline: var(--space-6);
+  }
+
+  .list {
+    gap: var(--space-6);
+  }
+
+  .card {
+    flex: 1 1 100%;
+    gap: var(--space-6);
+    padding: 22px;
+  }
+
+  .title {
+    font-size: var(--landing-font-size-title-mobile);
+    line-height: 21.006px;
+  }
+
+  .row {
+    gap: var(--space-3);
+  }
+
+  .iconBox {
+    flex: 0 0 78px;
+  }
+
+  .iconBox img {
+    width: 38px;
+    height: 53px;
+  }
+
+  .body {
+    margin-bottom: var(--space-1);
+    font-size: var(--landing-font-size-body-mobile);
+    line-height: var(--landing-line-height-body-mobile);
+  }
+
+  .cta {
+    margin-block: var(--space-1);
+  }
+
+  .cta p {
+    font-size: var(--landing-font-size-body-mobile);
+    line-height: 24.5px;
+  }
+}

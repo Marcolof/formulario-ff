@@ -1,0 +1,83 @@
+/* ============================================================================
+ * prototype.tokens.css — tokens del módulo Prototipo navegable
+ * ----------------------------------------------------------------------------
+ * Compartidos por todas las versiones del prototipo. La v1 replica el layout
+ * original; las versiones siguientes proponen otro front pero consumen estos
+ * mismos tokens, que son el lenguaje visual de MiCorreo.
+ *
+ * La landing pública de MiCorreo está construida con MUI + emotion y usa una
+ * escala propia que NO coincide con la del portal logueado (`styles/tokens.css`,
+ * heredado de la maqueta de Paquetería Internacional). Estos tokens capturan
+ * esa escala midiendo los estilos computados de
+ * https://micorreo.correoargentino.com.ar/landing (2026-09-10, viewport 1440).
+ *
+ * Regla de capas: acá sólo se declaran tokens de la landing. Los primitivos de
+ * marca se reutilizan de `tokens.css` y no se redefinen.
+ * ========================================================================= */
+
+/* Se engancha a un atributo y no a una clase de CSS Module para que el nombre
+ * del selector no dependa del hash del build. */
+[data-module='prototype'] {
+  /* --- Colores propios de la landing ------------------------------------ */
+  --landing-text-default: #1a1a1a; /* texto por defecto del theme MUI */
+  --landing-text-body: var(--correo-near-black); /* copy de tarjetas */
+  --landing-surface-muted: var(--grey-150); /* #f4efef — servicios / accesos */
+  --landing-surface-plain: var(--white);
+  --landing-surface-page: var(--surface-page); /* #fafafa */
+  --landing-field-border: rgba(0, 0, 0, 0.23); /* outline MUI */
+  --landing-field-label: #9e9e9e;
+  --landing-icon-muted: #6c757d; /* ojo de contraseña */
+  --landing-login-scrim: rgba(33, 37, 41, 0.6);
+  --landing-login-divider: #84868c;
+  --landing-dot-idle: #e0e0e0;
+  --landing-dot-active: var(--white);
+  --landing-footer-text: var(--grey-800); /* #212529 */
+
+  /* --- Layout ------------------------------------------------------------ */
+  --landing-header-height: 60px;
+  --landing-header-height-mobile: 54px;
+  --landing-hero-height-mobile: 800px;
+  --landing-gutter-mobile: 16px;
+  --landing-container-max: 1320px;
+  --landing-container-pad: 20px;
+  --landing-nav-max: 1200px;
+  --landing-hero-height: 600px;
+  --landing-heading-rule-width: 1440px;
+
+  /* --- Tipografía -------------------------------------------------------- */
+  /* La landing pide pesos 450/500/600 sobre Gilroy. No existe un .ttf de 450:
+   * el matching de CSS lo resuelve al 500, así que se tokeniza como 500. */
+  --landing-font-size-display: 34px; /* h2 de sección */
+  --landing-font-size-login-title: 28px;
+  --landing-font-size-title: 24px; /* h3 de acceso directo */
+  --landing-font-size-lead: 20px;
+  --landing-font-size-cta: 18px;
+  --landing-font-size-body: 16px;
+  --landing-font-size-meta: 14px;
+
+  /* Debajo de 900px la landing original baja toda la escala tipográfica. */
+  --landing-font-size-display-mobile: 19px;
+  --landing-font-size-login-title-mobile: 23px;
+  --landing-font-size-title-mobile: 18px;
+  --landing-font-size-lead-mobile: 18px;
+  --landing-font-size-body-mobile: 14px;
+  --landing-line-height-body-mobile: 16.8px;
+
+  --landing-line-height-display: 40.8px;
+  --landing-line-height-body: 24px;
+
+  /* --- Formas ------------------------------------------------------------ */
+  --landing-radius-control: 8px; /* botones de navbar, inputs */
+  --landing-radius-pill: 24px; /* CTA Ingresar / Continuar */
+  --landing-radius-media: 20px; /* imagen de tarjeta de servicio */
+  --landing-radius-login: 18px;
+  --landing-radius-shortcut: 30px;
+
+  /* --- Elevación --------------------------------------------------------- */
+  --landing-shadow-appbar: 0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+
+  /* --- Capas ------------------------------------------------------------- */
+  --landing-z-header: 1100;
+  --landing-z-chat: 4500;
+}

@@ -1,0 +1,32 @@
+/* Botón primario de la landing: pastilla amarilla con texto azul. Las medidas
+ * salen de "Continuar" (40px) y "Ingresar" (49px) de la landing original. */
+
+.md,
+.lg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px var(--space-4);
+  border-radius: var(--landing-radius-pill);
+  background-color: var(--surface-brand);
+  color: var(--text-on-brand);
+  text-align: center;
+  transition: background-color var(--transition-fast);
+}
+
+.md {
+  height: 40px;
+  font-weight: var(--font-weight-semibold);
+  line-height: 28px;
+}
+
+.lg {
+  height: 49px;
+  font-size: var(--landing-font-size-cta);
+  line-height: 31.5px;
+}
+
+.md:hover,
+.lg:hover {
+  background-color: var(--button-primary-bg-hover);
+}

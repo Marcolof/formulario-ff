@@ -1,0 +1,223 @@
+schema_version: "0.3.1"
+last_updated: "2026-09-10"
+
+project:
+  name: "FORMULARIO FF"
+  client: "Correo Argentino"
+  scenario: "Nueva página de Fulfillment con formulario de contacto dentro del ecosistema MiCorreo, más mejoras parciales de la landing"
+  local_root: "."
+
+origin:
+  mode: local-folder
+  external_repository:
+    url: null
+    ref: null
+    access: read-only
+    classification: null
+    imported_at: null
+    local_snapshot: null
+    source_manifest: null
+    import_map: null
+
+strategy:
+  current_focus: "Acceso a Fulfillment y página con el formulario de contacto, resueltos con el diseño actual dentro de la v1"
+  intervention: "greenfield-local"
+  recommended_next:
+    - "Leer 'Solicitud Inicial_Formulario FF_10092026.docx' (fuera de la carpeta de trabajo, sólo lectura)"
+    - "Definir arquitectura de información de la página Fulfillment antes de diseño visual"
+    - "Armar la versión 2 del prototipo: front nuevo sobre los tokens y componentes del módulo"
+  deferred:
+    - "Menú de usuario logueado de la landing (oculto en el DOM sin sesión)"
+    - "Scripts de terceros: GTM, Meta Pixel, chat de Wcentrix"
+
+knowledge:
+  confirmed:
+    - "La única carpeta con permisos de lecto-escritura es 'Formulario FF claude'"
+    - "El HTML guardado en 'html reference' no conserva los estilos: la landing usa MUI + emotion (CSS inyectado por JS) y falta el chunk landing-template-*.js"
+    - "Los estilos de la réplica se obtuvieron de los estilos computados de https://micorreo.correoargentino.com.ar/landing (2026-09-10, viewport 1440x900, sesión sin loguear)"
+    - "La landing declara Gilroy sin @font-face; el prototipo la embebe desde los .ttf del proyecto de Envío Internacional"
+    - "El bundle original de MiCorreo sólo renderiza si se lo sirve en la ruta /landing"
+  assumptions:
+    - "El campo 'Número de cliente' sólo se muestra y se exige si responde 'Sí' a '¿Ya sos cliente de MiCorreo?'. Implementado así; el wireframe lo mostraba siempre visible. A validar con el área solicitante"
+    - "La lista de rubros del formulario es provisoria"
+    - "Los assets de marca de Fulfillment (logo e ilustración) son provisorios: se dibujaron con la paleta de MiCorreo hasta que el cliente entregue los oficiales"
+    - "No se crea una landing institucional paralela; sí una página de Fulfillment dentro de MiCorreo"
+  open_questions:
+    - "Ubicación y formato del acceso a Fulfillment en la landing"
+    - "Arquitectura final y balance contenido/formulario de la página Fulfillment"
+    - "Listado definitivo de rubros y validaciones por campo"
+
+sources:
+  - id: envio-internacional
+    kind: local-project
+    path: "C:/MLOF 01/VORTEX/CORREO ARGENTINO/Envios internacionales/Envio internacional CLAUDE"
+    access: read-only
+    used_for: "tokens.css, globals.css, fuentes Gilroy, convención de estructura"
+  - id: html-reference
+    kind: saved-page
+    path: "C:/MLOF 01/VORTEX/CORREO ARGENTINO/Formulario FF/html reference"
+    access: read-only
+    local_copy: "reference/landing-original.html"
+    used_for: "assets de la landing y estructura del DOM"
+  - id: landing-produccion
+    kind: public-url
+    url: "https://micorreo.correoargentino.com.ar/landing"
+    access: read-only
+    captured_at: "2026-09-10"
+    used_for: "estilos computados reales — fuente de verdad de la réplica"
+  - id: solicitud-inicial
+    kind: document
+    path: "C:/MLOF 01/VORTEX/CORREO ARGENTINO/Formulario FF/Solicitud Inicial_Formulario FF_10092026.docx"
+    access: read-only
+    used_for: "requerimiento del cliente — aún no leído"
+
+architecture:
+  mode: monorepo-single-build
+  build_root: "."
+  hub_route: "/"
+  deep_linking: required
+  module_style_isolation: required
+  notes: "Build único en la raíz, puerto 4320. El Hub es la home y cada módulo cuelga de una ruta interna. Tres ámbitos de estilo aislados: tokens.css (:root), shell.tokens.css ([data-shell]) y landing.tokens.css ([data-module='landing'])."
+  routes:
+    - path: "/"
+      module: hub
+    - path: "/prototipo"
+      module: prototype
+    - path: "/prototipo/landing-micorreo"
+      module: prototype
+    - path: "/documentacion"
+      module: documentation
+    - path: "/documentacion/:docId"
+      module: documentation
+    - path: "/landing"
+      module: null
+      note: "HTML original guardado, servido por middleware de Vite. Sólo en desarrollo."
+
+documentation:
+  source_mode: source-documents
+  module_path: "documentation"
+  canonical_source: "documentation/00-INDICE.md"
+  external_sources:
+    - "contexto_inicial_formulario_fulfillment.md"
+  change_log: "documentation/05-REGISTRO-DE-CAMBIOS.md"
+
+frontend:
+  source_mode: from-scratch
+  scratch_input: "html reference + estilos computados de la landing en producción"
+  module_path: "src/modules/prototype"
+  canonical_source: "src/modules/prototype/landing"
+  external_sources:
+    - "Envio internacional CLAUDE (tokens y fuentes)"
+  change_log: "documentation/05-REGISTRO-DE-CAMBIOS.md"
+  responsive:
+    status: replicated
+    breakpoint: "900px (md de MUI); el original tiene además un escalón en 600px que la v1 no replica"
+    navigation_strategy: "Hamburguesa con panel desplegable bajo el header, como el original"
+    wide_table_strategy: not-applicable
+
+capabilities:
+  prototype: "implementación directa con Vite + React + TypeScript + CSS Modules"
+  documentation: "Markdown en documentation/"
+
+modules:
+  hub:
+    status: approved
+    route: "/"
+    path: "src/modules/hub"
+    children: []
+    notes: "Sólo muestra tarjetas de módulos con landing real; presentation no aparece."
+  documentation:
+    status: approved
+    route: "/documentacion"
+    path: "src/modules/documentation"
+    canonical_content: "documentation/"
+    children:
+      - name: "Contexto"
+        route: "/documentacion/contexto"
+        path: "documentation/01-CONTEXTO.md"
+        status: approved
+      - name: "Fuentes"
+        route: "/documentacion/fuentes"
+        path: "documentation/02-FUENTES.md"
+        status: approved
+      - name: "Color y tokens"
+        route: "/documentacion/color-y-tokens"
+        path: "documentation/03-COLOR-Y-TOKENS.md"
+        status: approved
+      - name: "Réplica de la landing"
+        route: "/documentacion/replica-landing"
+        path: "documentation/04-REPLICA-LANDING.md"
+        status: approved
+      - name: "Registro de cambios"
+        route: "/documentacion/registro-de-cambios"
+        path: "documentation/05-REGISTRO-DE-CAMBIOS.md"
+        status: approved
+      - name: "Arquitectura y rutas"
+        route: "/documentacion/arquitectura-y-rutas"
+        path: "documentation/06-ARQUITECTURA-Y-RUTAS.md"
+        status: approved
+      - name: "Formulario Fulfillment"
+        route: "/documentacion/formulario-fulfillment"
+        path: "documentation/07-FORMULARIO-FULFILLMENT.md"
+        status: review
+  prototype:
+    status: review
+    fidelity: high
+    route: "/prototipo"
+    path: "src/modules/prototype"
+    children:
+      - name: "Versión 1 — layout original + Fulfillment"
+        route: "/prototipo/v1"
+        path: "src/modules/prototype/v1"
+        status: review
+      - name: "Página Fulfillment con formulario de contacto"
+        route: "/prototipo/v1/fulfillment"
+        path: "src/modules/prototype/v1/fulfillment"
+        status: review
+        note: "Assets de marca provisorios; lista de rubros y copy final pendientes."
+      - name: "Versión 2 — propuesta"
+        route: null
+        path: null
+        status: absent
+        note: "Front nuevo sobre los tokens y componentes del módulo. Sin definir."
+    extraction:
+      required: true
+      status: partial
+      entrypoint: "src/modules/prototype/v1/LandingPage.tsx"
+      standalone_command: "npm run dev"
+      shared_dependencies:
+        - "src/styles/tokens.css"
+        - "src/styles/globals.css"
+        - "src/modules/prototype/prototype.tokens.css"
+      adapters: []
+      module_guide: "documentation/04-REPLICA-LANDING.md"
+  presentation:
+    status: absent
+    route: null
+    path: "presentation"
+    children: []
+
+figma:
+  status: none
+  source: none
+  sync: not-required-yet
+
+design_system:
+  status: partial
+  source: "tokens.css heredado de Envio internacional CLAUDE + landing.tokens.css propio del módulo"
+
+delivery:
+  local_first: true
+  local_status: verified
+  repository: null
+  repository_status: none
+  remote_repository_creation: user-only
+  local_git_init: pending-confirmation
+  remote_connection: user-provided-url-only
+  push_policy: explicit
+  branch: null
+  vercel_project: null
+  public_url: null
+  status: local-only
+  last_verified: "2026-09-10"
+  create_vercel_project: false

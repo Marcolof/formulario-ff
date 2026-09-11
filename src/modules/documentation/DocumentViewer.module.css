@@ -1,0 +1,46 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.download,
+.back {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding-inline: var(--space-5);
+  border-radius: var(--shell-radius-chip);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+
+.download {
+  background-color: var(--shell-surface-brand);
+  color: var(--shell-text-strong);
+}
+
+.back {
+  border: var(--border-width-thin) solid var(--shell-border);
+  color: var(--shell-text-strong);
+}
+
+.download:hover,
+.back:hover {
+  text-decoration: none;
+}
+
+.content {
+  padding: var(--space-8);
+  border: var(--border-width-thin) solid var(--shell-border);
+  border-radius: var(--shell-radius-card);
+  background-color: var(--shell-surface-card);
+  color: var(--shell-text-body);
+  font-family: ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', monospace;
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}

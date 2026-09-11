@@ -1,0 +1,134 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: var(--landing-z-header);
+  display: flex;
+  flex-direction: column;
+  min-height: var(--landing-header-height);
+  background-color: var(--surface-brand);
+  box-shadow: var(--landing-shadow-appbar);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: var(--landing-nav-max);
+  min-height: var(--landing-header-height);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+.burger {
+  display: none;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+}
+
+.brand img {
+  width: 197px;
+  height: 28px;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+.menuLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  padding: 6px var(--space-4);
+  border-radius: var(--landing-radius-control);
+  background-color: var(--surface-brand);
+  color: var(--text-on-brand);
+  font-size: var(--landing-font-size-body);
+  font-weight: var(--font-weight-medium);
+  line-height: 28px;
+  text-decoration: none;
+  transition: background-color var(--transition-fast);
+}
+
+.menuLink:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  text-decoration: none;
+}
+
+.drawer,
+.drawerOpen {
+  display: none;
+}
+
+/* --- Mobile ---------------------------------------------------------------
+ * Debajo de 900px el original reemplaza el menú por una hamburguesa, oculta el
+ * logo y despliega los accesos en un panel amarillo bajo el header. */
+@media (max-width: 900px) {
+  .header {
+    min-height: var(--landing-header-height-mobile);
+  }
+
+  .toolbar {
+    justify-content: flex-start;
+    min-height: var(--landing-header-height-mobile);
+    padding-inline: var(--space-4);
+    margin-left: var(--space-1);
+  }
+
+  .burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 38px;
+    padding: var(--space-3);
+    margin-left: calc(-1 * var(--space-3));
+    border-radius: 6px;
+  }
+
+  .burger img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .brand,
+  .menu {
+    display: none;
+  }
+
+  .drawer,
+  .drawerOpen {
+    position: absolute;
+    top: var(--landing-header-height-mobile);
+    right: 0;
+    left: 0;
+    z-index: 1200;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--transition-base);
+  }
+
+  .drawerOpen {
+    grid-template-rows: 1fr;
+  }
+
+  .drawerInner {
+    background-color: var(--surface-brand);
+    overflow: hidden;
+  }
+
+  .drawerLink {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: var(--space-3) var(--space-6);
+    color: var(--text-on-brand);
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+  }
+}

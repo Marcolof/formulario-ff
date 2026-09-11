@@ -1,0 +1,25 @@
+.button {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  z-index: var(--landing-z-chat);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-full);
+}
+
+.button img {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-full);
+}
+
+@media (max-width: 900px) {
+  .button {
+    right: var(--space-4);
+    bottom: var(--space-4);
+  }
+}

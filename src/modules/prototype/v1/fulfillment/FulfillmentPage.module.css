@@ -1,0 +1,282 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--landing-surface-page);
+  color: var(--landing-text-default);
+}
+
+/* --- Hero ----------------------------------------------------------------
+ * Único bloque con fondo azul: es el encabezado que entregó el cliente en el
+ * flyer. El resto de la pantalla usa las superficies de la landing. */
+
+.hero {
+  position: relative;
+  background-color: var(--color-accent);
+  overflow: hidden;
+}
+
+.heroInner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  max-width: var(--landing-container-max);
+  padding: var(--space-10) var(--landing-container-pad);
+  margin-inline: auto;
+}
+
+.heroCopy {
+  flex: 1 1 55%;
+}
+
+.heroTitle {
+  color: var(--surface-brand);
+  font-size: 72px;
+  font-weight: var(--font-weight-heavy);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.heroSubtitle {
+  max-width: 30ch;
+  margin-top: var(--space-4);
+  color: var(--text-inverse);
+  font-size: var(--landing-font-size-title);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+.heroMedia {
+  flex: 0 1 42%;
+}
+
+.heroMedia img {
+  width: 100%;
+  height: auto;
+}
+
+/* Cinta diagonal: nace fuera del borde superior derecho y cruza la esquina. */
+.ribbon {
+  position: absolute;
+  top: 46px;
+  right: -70px;
+  width: 320px;
+  padding-block: var(--space-2);
+  background-color: var(--surface-brand);
+  color: var(--color-accent);
+  font-size: 30px;
+  font-weight: var(--font-weight-heavy);
+  text-align: center;
+  transform: rotate(28deg);
+}
+
+/* --- Cuerpo: listas + formulario ----------------------------------------- */
+
+.body {
+  background-color: var(--landing-surface-plain);
+}
+
+.bodyInner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-12);
+  max-width: var(--landing-container-max);
+  padding: var(--space-12) var(--landing-container-pad);
+  margin-inline: auto;
+}
+
+.blocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  flex: 1 1 56%;
+}
+
+.formColumn {
+  flex: 1 1 40%;
+  position: sticky;
+  top: calc(var(--landing-header-height) + var(--space-6));
+}
+
+/* Título de bloque: sin pastilla ni trazo, en el negro del sistema. */
+.blockTitle {
+  margin-bottom: var(--space-2);
+  color: var(--text-primary);
+  font-size: var(--landing-font-size-title);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.feature {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding-block: var(--space-5);
+}
+
+.feature + .feature {
+  border-top: var(--border-width-thin) solid var(--border-subtle);
+}
+
+.featureIcon {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: var(--color-accent);
+}
+
+.featureTitle {
+  margin-bottom: var(--space-1);
+  color: var(--color-accent);
+  font-size: var(--landing-font-size-lead);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-snug);
+}
+
+.featureBody {
+  color: var(--landing-text-body);
+  font-size: var(--landing-font-size-body);
+  line-height: var(--line-height-normal);
+}
+
+.featureBody em {
+  font-style: italic;
+  font-weight: var(--font-weight-semibold);
+}
+
+/* --- Beneficios ----------------------------------------------------------
+ * Mismo ancho que el cuerpo y la misma superficie que las tarjetas de
+ * "Accesos directos": gris claro, radio 30, sin borde. */
+
+.benefits {
+  padding: 0 var(--landing-container-pad) var(--space-12);
+  background-color: var(--landing-surface-plain);
+}
+
+.benefitsInner {
+  max-width: calc(var(--landing-container-max) - var(--landing-container-pad) * 2);
+  padding: 26px;
+  border-radius: var(--landing-radius-shortcut);
+  background-color: var(--landing-surface-muted);
+  margin-inline: auto;
+}
+
+.benefitList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-6);
+  list-style: none;
+  padding: 0;
+  margin-top: var(--space-6);
+}
+
+.benefit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+
+.benefitIcon {
+  color: var(--color-accent);
+}
+
+.benefit p {
+  color: var(--color-accent);
+  font-size: var(--landing-font-size-body);
+  line-height: var(--line-height-snug);
+}
+
+.benefit strong {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* --- Cierre --------------------------------------------------------------
+ * Una frase centrada sobre el fondo de página, sin banda de color: el footer
+ * amarillo viene inmediatamente después. */
+
+.closing {
+  padding: var(--space-12) var(--landing-container-pad);
+  background-color: var(--landing-surface-page);
+  color: var(--color-accent);
+  font-size: var(--landing-font-size-title);
+  line-height: 1.35;
+  text-align: center;
+}
+
+.closing strong {
+  font-weight: var(--font-weight-semibold);
+}
+
+/* --- Mobile -------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .heroInner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+    padding: var(--space-8) var(--landing-gutter-mobile);
+  }
+
+  .heroTitle {
+    font-size: 44px;
+  }
+
+  .heroSubtitle {
+    font-size: var(--landing-font-size-lead-mobile);
+  }
+
+  .heroMedia {
+    align-self: center;
+    width: 80%;
+  }
+
+  .ribbon {
+    top: 18px;
+    right: -18px;
+    width: 168px;
+    padding-block: var(--space-1);
+    font-size: 14px;
+    transform: rotate(22deg);
+  }
+
+  .bodyInner {
+    flex-direction: column;
+    gap: var(--space-10);
+    padding: var(--space-8) var(--landing-gutter-mobile);
+  }
+
+  .blocks,
+  .formColumn {
+    flex: none;
+    width: 100%;
+  }
+
+  .formColumn {
+    position: static;
+  }
+
+  .blockTitle {
+    font-size: var(--landing-font-size-title-mobile);
+  }
+
+  .benefits {
+    padding: 0 var(--landing-gutter-mobile) var(--space-8);
+  }
+
+  .benefitList {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .closing {
+    padding-block: var(--space-8);
+    font-size: var(--landing-font-size-lead-mobile);
+  }
+}

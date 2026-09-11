@@ -1,0 +1,80 @@
+.section {
+  padding-block: var(--space-10);
+  background-color: var(--landing-surface-muted);
+}
+
+.container {
+  max-width: var(--landing-container-max);
+  padding-inline: 90px;
+  margin-inline: auto;
+}
+
+.list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+}
+
+/* El alto de la tarjeta es fijo en el original: se mide igual (212.365px) a
+ * 375 y a 1440, con contenidos de distinta altura. Sin él, la sección queda
+ * 30px corta en escritorio y 287px corta en mobile. */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  flex: 0 1 calc((100% - 48px) / 4);
+  max-width: 285px;
+  min-height: 212.365px;
+  padding: var(--space-2);
+}
+
+/* El bloque de texto tiene alto fijo para que los íconos, que difieren en
+ * tamaño entre tarjetas, arranquen todos en la misma línea. */
+.body {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  height: 52px;
+  margin-inline: var(--space-8);
+  color: var(--color-accent);
+  font-size: var(--landing-font-size-lead);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--landing-line-height-body);
+  text-align: center;
+}
+
+.icon {
+  object-fit: contain;
+}
+
+/* En mobile las cuatro tarjetas se apilan en una sola columna angosta, con el
+ * contenedor recortado a 60px por lado. */
+@media (max-width: 900px) {
+  .section {
+    padding-block: var(--space-4);
+  }
+
+  .container {
+    padding-inline: 60px;
+  }
+
+  .list {
+    gap: var(--space-2);
+  }
+
+  .card {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .body {
+    height: auto;
+    min-height: 20.79px;
+    margin-inline: 0;
+    font-size: var(--landing-font-size-body-mobile);
+    line-height: var(--landing-line-height-body-mobile);
+  }
+}

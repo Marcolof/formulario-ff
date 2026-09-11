@@ -1,0 +1,34 @@
+/* ============================================================================
+ * shell.tokens.css — tokens del chrome del producto (Hub y landings de módulo)
+ * ----------------------------------------------------------------------------
+ * Son los tokens de la navegación que envuelve a los módulos, no los de un
+ * módulo concreto. El módulo Landing tiene los suyos en
+ * `modules/prototype/landing/landing.tokens.css` y no se mezclan con estos.
+ * ========================================================================= */
+
+[data-shell='formulario-ff'] {
+  --shell-surface-page: #f7f7f8;
+  --shell-surface-card: var(--white);
+  --shell-surface-brand: var(--correo-yellow);
+  --shell-border: #e3e3e6;
+  --shell-border-strong: var(--correo-blue);
+
+  --shell-text-strong: var(--correo-blue);
+  --shell-text-body: #3f3f46;
+  --shell-text-muted: #71717a;
+
+  --shell-radius-card: 16px;
+  --shell-radius-chip: 999px;
+  --shell-shadow-card: 0 1px 2px rgba(16, 24, 40, 0.06), 0 8px 24px rgba(16, 24, 40, 0.06);
+
+  --shell-header-height: 64px;
+  --shell-content-max: 1120px;
+
+  /* Estados de artefacto — se leen como etiqueta, no como semáforo. */
+  --shell-state-draft-bg: #f4f4f5;
+  --shell-state-draft-text: #52525b;
+  --shell-state-review-bg: #fff4d1;
+  --shell-state-review-text: #7a5a00;
+  --shell-state-approved-bg: #e3f3e8;
+  --shell-state-approved-text: #256b3d;
+}
