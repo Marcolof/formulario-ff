@@ -18,9 +18,20 @@ type BaseProps = {
 type FieldProps = BaseProps & {
   value: string
   type?: string
+  maxLength?: number
+  inputMode?: 'text' | 'numeric' | 'tel' | 'email'
 }
 
-export function OutlinedField({ id, label, value, error, type = 'text', onChange }: FieldProps) {
+export function OutlinedField({
+  id,
+  label,
+  value,
+  error,
+  type = 'text',
+  maxLength,
+  inputMode,
+  onChange,
+}: FieldProps) {
   return (
     <Wrapper id={id} error={error}>
       <input
@@ -29,6 +40,8 @@ export function OutlinedField({ id, label, value, error, type = 'text', onChange
         className={error ? styles.controlError : styles.control}
         value={value}
         placeholder=" "
+        maxLength={maxLength}
+        inputMode={inputMode}
         aria-invalid={error ? true : undefined}
         aria-describedby={error ? `${id}-error` : undefined}
         onChange={(event) => onChange(event.target.value)}

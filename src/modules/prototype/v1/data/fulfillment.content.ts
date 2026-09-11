@@ -86,8 +86,10 @@ export const form = {
 }
 
 /**
- * Listado provisorio: el requerimiento pide el campo pero todavía no define los
- * rubros. Reemplazar cuando el área solicitante entregue la lista definitiva.
+ * Listado provisorio: el documento formal pide que sea "el mismo desplegable
+ * que en MiCorreo al crear una nueva cuenta", que todavía no se relevó. Se
+ * mantiene este listado de referencia y la opción "Otros" con texto libre,
+ * que sí está definida. Reemplazar cuando se releve el desplegable real.
  */
 export const rubros = [
   'Indumentaria y calzado',
@@ -99,5 +101,7 @@ export const rubros = [
   'Juguetería y bebés',
   'Librería y papelería',
   'Automotor y repuestos',
-  'Otro',
+  'Otros',
 ]
+
+export const RUBRO_OTROS = 'Otros'

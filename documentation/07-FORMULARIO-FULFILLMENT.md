@@ -12,70 +12,77 @@ y el botón es [`Button`](../src/modules/prototype/v1/components/Button.tsx), lo
 usa la landing. La tarjeta que los contiene usa la superficie y el radio de las tarjetas de
 "Accesos directos".
 
-Cada dato está marcado como **confirmado** (viene del requerimiento), **hipótesis** (decisión
-de diseño a validar) o **pendiente** (falta definición del área solicitante).
+Cada dato está marcado como **confirmado** (viene del documento formal de requerimiento),
+**hipótesis** (decisión de diseño a validar) o **pendiente** (falta definición del área
+solicitante). La sección [Fuentes](#fuentes) al final detalla de dónde sale cada versión del
+requerimiento.
 
 ## Campos
 
-| # | Campo | Tipo | Obligatorio | Origen |
-|---|---|---|---|---|
-| 1 | Nombre de la empresa | Texto | Sí | Confirmado |
-| 2 | Nombre y apellido | Texto | Sí | Confirmado |
-| 3 | Mail | Email | Sí | Confirmado |
-| 4 | Celular | Teléfono | Sí | Confirmado |
-| 5 | Rubro de la empresa | Selección | Sí | Confirmado (lista **pendiente**) |
-| 6 | ¿Ya sos cliente de MiCorreo? | Sí / No | Sí | Confirmado |
-| 7 | Número de cliente | Texto | Condicional | Confirmado, con dependencia **hipótesis** |
+| # | Campo | Obligatorio | Formato |
+|---|---|---|---|
+| 1 | Nombre de la empresa / Razón social | **No** | Máx. 40 caracteres, alfanumérico + `. - / & ´` |
+| 2 | Nombre y apellido | Sí | Máx. 60 caracteres, sólo letras |
+| 3 | Mail | Sí | Mismo formato que MiCorreo |
+| 4 | Celular | Sí | Dos campos: código de área (2 a 4 dígitos) + celular (6 a 8 dígitos); la suma debe dar 10 dígitos |
+| 5 | Rubro de la empresa | Sí | Desplegable (lista **pendiente** de relevar) + "Otros" con texto libre, máx. 30 caracteres |
+| 6 | ¿Ya sos cliente de MiCorreo? | Sí | Sí / No |
+| 7 | Número de cliente | **No** | Hasta 10 dígitos numéricos. Aparece sólo si responde "Sí" a la pregunta 6 |
 
-El wireframe marca cada campo con asterisco, pero al ser todos obligatorios el asterisco no
-distingue nada. La pantalla usa el campo outlined del sistema, que lleva el nombre del campo
-como label flotante y no admite el asterisco sin romper ese patrón. **Pendiente de
-definición:** si hace falta indicar la obligatoriedad de forma explícita, lo natural sería
-una aclaración única arriba del formulario.
+Todos confirmados por el documento formal de requerimiento (`Solicitud Inicial_Formulario
+FF`, v1.0). Antes de esa lectura, el prototipo tenía tres datos distintos: pedía "Nombre de
+la empresa" como obligatorio, "Celular" como un solo campo libre, y "Número de cliente" como
+obligatorio al responder "Sí" — los tres corregidos para reflejar el documento.
 
 ### Dependencia del campo 7
 
 > ¿Ya sos cliente de MiCorreo?
 
-- **No** → el campo *Número de cliente* no se muestra ni se pide.
-- **Sí** → el campo aparece y pasa a ser obligatorio.
+- **No** → el campo *Número de cliente* no se muestra.
+- **Sí** → el campo aparece, pero sigue sin ser obligatorio.
 
-**Hipótesis.** El wireframe entregado muestra el campo siempre visible; el documento de
-requerimiento describe la dependencia. Se implementó la dependencia porque reduce fricción
-para quien todavía no es cliente, que es justamente el público que el formulario busca
-captar. **Falta confirmarlo con el área solicitante.**
+La visibilidad condicional está confirmada por el documento ("En caso de que seleccione 'Sí'
+debe abrir un input..."). Que no sea obligatorio también está confirmado, por la lista
+explícita de excepciones a la obligatoriedad general.
+
+### Rubro "Otros"
+
+Al elegir "Otros" se abre un campo de texto libre (máx. 30 caracteres, sólo letras) para que
+la persona indique su rubro. El desplegable en sí debería ser "el mismo que en MiCorreo al
+crear una nueva cuenta" — **pendiente**: no se relevó ese desplegable real, así que se
+mantiene una lista de referencia con 9 rubros más "Otros".
 
 ### Fuera del alcance inicial
 
-CUIT, plataforma de eCommerce y volumen estimado de envíos se mencionan en el documento del
-cliente como posibles, pero **no forman parte del requerimiento** y no se incorporaron.
+CUIT, plataforma de eCommerce y volumen estimado de envíos se mencionan en el documento como
+datos que podrían evaluarse más adelante, pero **no forman parte de este requerimiento** y no
+se incorporaron.
 
 ## Validaciones
 
 | Campo | Regla | Mensaje |
 |---|---|---|
-| Nombre de la empresa | No vacío | "Ingresá el nombre de la empresa." |
-| Nombre y apellido | No vacío | "Ingresá tu nombre y apellido." |
-| Mail | No vacío | "Ingresá tu mail." |
-| Mail | Formato `algo@dominio.ext` | "Revisá el formato del mail." |
-| Celular | No vacío | "Ingresá tu celular." |
-| Celular | 8 a 20 caracteres, dígitos y `+ - ( )` | "Ingresá un celular válido." |
+| Nombre de la empresa | Si se completa: patrón válido | "Máximo 40 caracteres. Se admiten letras, números y . - / & ´" |
+| Nombre y apellido | No vacío, patrón válido | "Ingresá tu nombre y apellido." / "Máximo 60 caracteres, sólo letras." |
+| Mail | No vacío, formato `algo@dominio.ext` | "Ingresá tu mail." / "Revisá el formato del mail." |
+| Código de área | No vacío, 2 a 4 dígitos | "Ingresá el código de área." / "2 a 4 dígitos." |
+| Celular | No vacío, 6 a 8 dígitos, suma con el código de área = 10 | "Ingresá tu celular." / "6 a 8 dígitos." / "Código de área + celular deben sumar 10 dígitos." |
 | Rubro | Opción elegida | "Elegí el rubro de la empresa." |
+| Rubro "Otros" | No vacío, patrón válido, sólo si se eligió "Otros" | "Ingresá el rubro." / "Máximo 30 caracteres, sólo letras." |
 | ¿Ya sos cliente? | Opción elegida | "Indicá si ya sos cliente de MiCorreo." |
-| Número de cliente | No vacío **si** respondió Sí | "Ingresá tu número de cliente." |
+| Número de cliente | Si se completa: hasta 10 dígitos numéricos | "Hasta 10 dígitos numéricos." |
 
 **Momento de validación.** No se valida mientras la persona completa por primera vez: recién
 al apretar *Enviar* se muestran todos los errores juntos. A partir de ahí, cada campo se
-revalida al editarlo, para que el error desaparezca apenas se corrige.
-
-**Pendiente:** reglas de formato definitivas de celular (¿se pide característica?, ¿se acepta
-el 15?) y si el número de cliente tiene un largo o formato fijo.
+revalida al editarlo, para que el error desaparezca apenas se corrige. Código de área,
+celular y número de cliente filtran cualquier caracter que no sea dígito a medida que se
+escribe.
 
 ## Estados
 
 | Estado | Qué se ve |
 |---|---|
-| Inicial | Campos vacíos, sin errores. *Número de cliente* oculto. |
+| Inicial | Campos vacíos, sin errores. *Número de cliente* y *rubro "Otros"* ocultos. |
 | Error de campo | Borde rojo, `aria-invalid`, mensaje debajo asociado por `aria-describedby`. |
 | Enviado con éxito | La tarjeta se reemplaza por el mensaje de agradecimiento y un botón para cargar otra consulta. |
 
@@ -93,20 +100,20 @@ y el comportamiento ante fallo todavía no está definido.
 | Confirmación (título) | ¡Gracias por contactarnos! |
 | Confirmación (cuerpo) | Recibimos tus datos. Un asesor comercial de Correo Argentino se va a comunicar con vos a la brevedad. |
 
-**Pendiente:** el copy final, incluido el mensaje de confirmación, no está aprobado. El texto
-de confirmación es una propuesta: dice qué pasó y qué va a pasar después, sin prometer plazos
-que nadie confirmó.
+**Pendiente confirmado por el documento formal:** "El texto definitivo deberá ser
+definido/validado por el área solicitante" — el mensaje de confirmación sigue siendo una
+propuesta de trabajo, no un texto aprobado.
 
 ## Rubros
 
-Lista **provisoria**, definida para poder probar el campo:
+Lista de referencia, no la definitiva:
 
 Indumentaria y calzado · Electrónica y tecnología · Hogar y muebles · Salud y belleza ·
 Alimentos y bebidas · Deportes y aire libre · Juguetería y bebés · Librería y papelería ·
-Automotor y repuestos · Otro
+Automotor y repuestos · Otros
 
 Vive en [`fulfillment.content.ts`](../src/modules/prototype/v1/data/fulfillment.content.ts).
-Reemplazarla cuando el área solicitante entregue la definitiva.
+Reemplazarla cuando se releve el desplegable real de rubros de MiCorreo.
 
 ## Accesibilidad
 
@@ -125,5 +132,20 @@ control.
 Del requerimiento, todavía sin resolver en el prototipo porque no hay backend:
 
 - almacenamiento de los datos en base;
-- reporte semanal;
-- eventos de Google Analytics — falta definir cuáles y en qué momento del recorrido.
+- reporte semanal (frecuencia y destinatario son parametrizables, según el documento);
+- eventos de Google Analytics — a definir con el área de Analytics/Marketing.
+
+## Fuentes
+
+- `contexto_inicial_formulario_fulfillment.md`: resumen informal, usado para el primer punto
+  de partida del proyecto.
+- **`Solicitud Inicial_Formulario FF_10092026.docx`** (Google Doc, v1.0, 10/09/2026): el
+  documento formal del área de Marketing Digital. Es la fuente que definió los campos,
+  validaciones y obligatoriedad de esta versión. De ahí salió también el flyer y un wireframe
+  de tres pantallas, usados como referencia de contenido — el layout final de esta pantalla
+  no replica ese wireframe punto por punto.
+
+El documento formal también fija un criterio de aceptación (URL pública propia para la página
+de Fulfillment, preparada para UTM) y sugiere evaluar un acceso posterior a MiCorreo después
+del envío. Son definiciones de arquitectura de entrega, no de este formulario, y quedan fuera
+del alcance de este documento.

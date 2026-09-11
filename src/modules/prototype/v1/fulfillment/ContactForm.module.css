@@ -23,6 +23,20 @@
   gap: var(--space-4);
 }
 
+/* Celular se pide como dos campos: código de área + número. */
+.phoneRow {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.phoneArea {
+  flex: 0 0 108px;
+}
+
+.phoneNumber {
+  flex: 1;
+}
+
 .fieldset {
   padding: 0;
   border: none;

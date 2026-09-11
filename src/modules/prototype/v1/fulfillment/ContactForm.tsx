@@ -2,15 +2,17 @@ import { useState } from 'react'
 
 import { Button } from '../components/Button'
 import { OutlinedField, OutlinedSelect } from '../components/OutlinedField'
-import { form, rubros } from '../data/fulfillment.content'
+import { form, RUBRO_OTROS, rubros } from '../data/fulfillment.content'
 import styles from './ContactForm.module.css'
 
 type Values = {
   empresa: string
   nombre: string
   mail: string
+  codigoArea: string
   celular: string
   rubro: string
+  rubroOtro: string
   esCliente: 'si' | 'no' | ''
   numeroCliente: string
 }
@@ -19,35 +21,67 @@ const EMPTY: Values = {
   empresa: '',
   nombre: '',
   mail: '',
+  codigoArea: '',
   celular: '',
   rubro: '',
+  rubroOtro: '',
   esCliente: '',
   numeroCliente: '',
 }
 
 const MAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
-const CELULAR_PATTERN = /^[\d\s()+-]{8,20}$/
+// Nombre de la empresa: alfanumérico + los símbolos que pide el documento.
+const EMPRESA_PATTERN = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.\-/&´]{1,40}$/
+const NOMBRE_PATTERN = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,60}$/
+const CODIGO_AREA_PATTERN = /^\d{2,4}$/
+const CELULAR_PATTERN = /^\d{6,8}$/
+const RUBRO_OTRO_PATTERN = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,30}$/
+const NUMERO_CLIENTE_PATTERN = /^\d{1,10}$/
 
 function validate(values: Values): Partial<Record<keyof Values, string>> {
   const errors: Partial<Record<keyof Values, string>> = {}
 
-  if (!values.empresa.trim()) errors.empresa = 'Ingresá el nombre de la empresa.'
+  // Nombre de la empresa / Razón social: no es obligatorio, según excepción
+  // explícita del documento formal.
+  if (values.empresa.trim() && !EMPRESA_PATTERN.test(values.empresa.trim())) {
+    errors.empresa = 'Máximo 40 caracteres. Se admiten letras, números y . - / & ´'
+  }
+
   if (!values.nombre.trim()) errors.nombre = 'Ingresá tu nombre y apellido.'
+  else if (!NOMBRE_PATTERN.test(values.nombre.trim()))
+    errors.nombre = 'Máximo 60 caracteres, sólo letras.'
 
   if (!values.mail.trim()) errors.mail = 'Ingresá tu mail.'
   else if (!MAIL_PATTERN.test(values.mail.trim())) errors.mail = 'Revisá el formato del mail.'
 
+  if (!values.codigoArea.trim()) errors.codigoArea = 'Ingresá el código de área.'
+  else if (!CODIGO_AREA_PATTERN.test(values.codigoArea.trim()))
+    errors.codigoArea = '2 a 4 dígitos.'
+
   if (!values.celular.trim()) errors.celular = 'Ingresá tu celular.'
-  else if (!CELULAR_PATTERN.test(values.celular.trim()))
-    errors.celular = 'Ingresá un celular válido.'
+  else if (!CELULAR_PATTERN.test(values.celular.trim())) errors.celular = '6 a 8 dígitos.'
+  else if (values.codigoArea.trim().length + values.celular.trim().length !== 10)
+    errors.celular = 'Código de área + celular deben sumar 10 dígitos.'
 
   if (!values.rubro) errors.rubro = 'Elegí el rubro de la empresa.'
+  if (values.rubro === RUBRO_OTROS) {
+    if (!values.rubroOtro.trim()) errors.rubroOtro = 'Ingresá el rubro.'
+    else if (!RUBRO_OTRO_PATTERN.test(values.rubroOtro.trim()))
+      errors.rubroOtro = 'Máximo 30 caracteres, sólo letras.'
+  }
+
   if (!values.esCliente) errors.esCliente = 'Indicá si ya sos cliente de MiCorreo.'
 
-  // El número de cliente sólo se pide a quien ya es cliente. Hipótesis de
-  // trabajo registrada en la documentación funcional, pendiente de validar.
-  if (values.esCliente === 'si' && !values.numeroCliente.trim())
-    errors.numeroCliente = 'Ingresá tu número de cliente.'
+  // Número de cliente: aparece si responde "Sí", pero el documento lo excluye
+  // explícitamente de los campos obligatorios. Sólo se valida el formato si
+  // se completa.
+  if (
+    values.esCliente === 'si' &&
+    values.numeroCliente.trim() &&
+    !NUMERO_CLIENTE_PATTERN.test(values.numeroCliente.trim())
+  ) {
+    errors.numeroCliente = 'Hasta 10 dígitos numéricos.'
+  }
 
   return errors
 }
@@ -58,10 +92,19 @@ export function ContactForm() {
   const [submitted, setSubmitted] = useState(false)
   const [sent, setSent] = useState(false)
 
+  // Actualización funcional: evita que dos cambios de campo en el mismo
+  // evento (ver "Otros" de rubro, abajo) se pisen por leer el mismo `values`
+  // ya obsoleto del closure del render.
+  const applyChange = (patch: (prev: Values) => Values) => {
+    setValues((prev) => {
+      const next = patch(prev)
+      if (submitted) setErrors(validate(next))
+      return next
+    })
+  }
+
   const set = (field: keyof Values) => (value: string) => {
-    const next = { ...values, [field]: value }
-    setValues(next)
-    if (submitted) setErrors(validate(next))
+    applyChange((prev) => ({ ...prev, [field]: value }))
   }
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -100,9 +143,10 @@ export function ContactForm() {
       <form className={styles.form} onSubmit={handleSubmit} noValidate>
         <OutlinedField
           id="ff-empresa"
-          label="Nombre de la empresa"
+          label="Nombre de la empresa / Razón social"
           value={values.empresa}
           error={errors.empresa}
+          maxLength={40}
           onChange={set('empresa')}
         />
         <OutlinedField
@@ -110,6 +154,7 @@ export function ContactForm() {
           label="Nombre y apellido"
           value={values.nombre}
           error={errors.nombre}
+          maxLength={60}
           onChange={set('nombre')}
         />
         <OutlinedField
@@ -120,22 +165,59 @@ export function ContactForm() {
           error={errors.mail}
           onChange={set('mail')}
         />
-        <OutlinedField
-          id="ff-celular"
-          label="Celular"
-          type="tel"
-          value={values.celular}
-          error={errors.celular}
-          onChange={set('celular')}
-        />
+
+        <div className={styles.phoneRow}>
+          <div className={styles.phoneArea}>
+            <OutlinedField
+              id="ff-codigo-area"
+              label="Código de área"
+              type="tel"
+              inputMode="numeric"
+              value={values.codigoArea}
+              error={errors.codigoArea}
+              maxLength={4}
+              onChange={(value) => set('codigoArea')(value.replace(/\D/g, ''))}
+            />
+          </div>
+          <div className={styles.phoneNumber}>
+            <OutlinedField
+              id="ff-celular"
+              label="Celular"
+              type="tel"
+              inputMode="numeric"
+              value={values.celular}
+              error={errors.celular}
+              maxLength={8}
+              onChange={(value) => set('celular')(value.replace(/\D/g, ''))}
+            />
+          </div>
+        </div>
+
         <OutlinedSelect
           id="ff-rubro"
           label="Rubro de la empresa"
           value={values.rubro}
           error={errors.rubro}
           options={rubros}
-          onChange={set('rubro')}
+          onChange={(value) =>
+            applyChange((prev) => ({
+              ...prev,
+              rubro: value,
+              rubroOtro: value === RUBRO_OTROS ? prev.rubroOtro : '',
+            }))
+          }
         />
+
+        {values.rubro === RUBRO_OTROS ? (
+          <OutlinedField
+            id="ff-rubro-otro"
+            label="Contanos el rubro"
+            value={values.rubroOtro}
+            error={errors.rubroOtro}
+            maxLength={30}
+            onChange={set('rubroOtro')}
+          />
+        ) : null}
 
         <fieldset className={styles.fieldset}>
           <legend className={styles.legend}>¿Ya sos cliente de MiCorreo?</legend>
@@ -165,9 +247,12 @@ export function ContactForm() {
           <OutlinedField
             id="ff-numero-cliente"
             label="Número de cliente"
+            type="tel"
+            inputMode="numeric"
             value={values.numeroCliente}
             error={errors.numeroCliente}
-            onChange={set('numeroCliente')}
+            maxLength={10}
+            onChange={(value) => set('numeroCliente')(value.replace(/\D/g, ''))}
           />
         ) : null}
 
