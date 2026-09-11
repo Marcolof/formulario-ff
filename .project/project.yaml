@@ -209,15 +209,16 @@ design_system:
 delivery:
   local_first: true
   local_status: verified
-  repository: null
-  repository_status: none
+  repository: "https://github.com/Marcolof/formulario-ff"
+  repository_status: connected
   remote_repository_creation: user-only
-  local_git_init: pending-confirmation
+  local_git_init: done
   remote_connection: user-provided-url-only
   push_policy: explicit
-  branch: null
-  vercel_project: null
-  public_url: null
-  status: local-only
-  last_verified: "2026-09-10"
+  branch: main
+  vercel_project: "formulario-ff (marcos-projects-c934fa75)"
+  public_url: "https://formulario-ff.vercel.app"
+  status: deployed
+  last_verified: "2026-09-11"
   create_vercel_project: false
+  notes: "El repositorio ya tenía la integración de Vercel conectada (deploy automático en cada push a main). Se agregó vercel.json con rewrite a index.html porque, sin él, recargar una ruta interna de la SPA daba 404. Verificado: las 6 rutas de la app y una ruta inexistente devuelven 200 en producción."
