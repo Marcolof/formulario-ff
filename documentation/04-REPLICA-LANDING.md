@@ -82,63 +82,70 @@ cinco. Es la única que enlaza dentro del prototipo en vez de salir a un sitio e
 
 ### Página de Fulfillment
 
-Sigue el flyer entregado por el cliente como referencia de contenido, y el wireframe como
-referencia de estructura: el flyer es vertical y de lectura corrida, y la pantalla lo
-reorganiza en dos columnas para que el formulario quede visible desde el principio, sin
-obligar a recorrer todo el contenido antes de poder completarlo.
+Sigue el diseño de Figma "Mi Correo 2.0", nodo `13217:34295` ("Fulfillment/Formulario
+default"). El contenido de las listas sigue siendo el del flyer del cliente; la estructura,
+los textos de la portada y del formulario y el tratamiento visual salen del diseño.
 
 | Bloque | Contenido |
 |---|---|
-| Hero | Fondo azul, título en amarillo, bajada y cinta "Próximamente" en diagonal |
-| ¿Qué incluye nuestro fulfillment? | Almacenamiento, pedidos y distribución |
-| Distribución rápida y confiable | CABA y Corredor Norte AMBA, Resto de AMBA, Resto del país |
-| Formulario | Columna derecha, pegajosa en escritorio — ver [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md) |
-| Beneficios para tu negocio | Cuatro beneficios, dentro de una tarjeta del mismo ancho que el cuerpo |
-| Cierre | "Nos ocupamos de todo, vos enfocate en hacer crecer tu negocio." |
+| Portada | Fondo gris `#f2f2f2` con las esquinas inferiores redondeadas: chip "FULFILLMENT", título "Vos vendés. Nosotros hacemos que llegue.", bajada, prueba social y foto del centro logístico |
+| ¿Qué incluye nuestro fulfillment? | Almacenamiento, pedidos y distribución, con íconos en caja celeste |
+| Formulario | Columna derecha, tarjeta blanca con sombra — ver [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md) |
+| Beneficios para tu negocio | Cuatro tarjetas crema `#fbf4d3` |
+| Distribución rápida y confiable | Sección azul con íconos en caja de borde blanco y el mapa de cobertura |
 
-En mobile las dos columnas se apilan: primero el contenido, después el formulario.
+En mobile las columnas se apilan: la foto debajo del texto de la portada, el contenido antes
+que el formulario, los beneficios en dos columnas (una sola por debajo de 560px) y el mapa
+centrado debajo de la lista.
 
-### Qué se reutiliza del sistema
+**Verificación contra Figma** (viewport 1366):
 
-El flyer del cliente es una pieza gráfica, no una pantalla: tiene pastillas de color, trazos
-amarillos y círculos de fondo que no existen en MiCorreo. La pantalla toma su contenido pero
-lo resuelve con lo que el sistema ya tiene:
+| Elemento | Figma | Prototipo |
+|---|---|---|
+| Portada | 546 | 541 |
+| Cuerpo | 649 | 651 |
+| Beneficios | 278 | 278 |
+| Distribución | 457 | 457 |
+| Tarjeta del formulario | 500×553 | 500×555 |
+| Mapa | 277×337 | 277×337 |
 
-| En el flyer | En la pantalla |
-|---|---|
-| Títulos dentro de pastillas azules y amarillas | Título en el negro del sistema (`--text-primary`), sin contenedor |
-| Caja de beneficios con borde amarillo | Tarjeta gris `--landing-surface-muted` con radio 30, la misma de "Accesos directos" |
-| Banda azul de cierre | Frase centrada sobre el fondo de página: el footer amarillo viene enseguida |
-| Íconos ilustrados en círculos de color | Íconos [Lucide](https://lucide.dev) en azul institucional, sin círculo |
+El footer no se compara: es el de la landing replicada (281px, medido contra producción), no
+el componente de Figma (307px).
 
-El único bloque que conserva el fondo azul es el hero, porque es el encabezado que entregó el
-cliente.
+**Pendiente:** la cifra "Más de 3.000 negocios ya confían" viene del diseño. Hay que
+confirmarla con el área solicitante antes de publicar.
 
-Además, el formulario no inventa controles: usa los mismos que la landing.
+### Tokens y componentes
+
+Los valores del diseño sin equivalente en el sistema se agregaron a `prototype.tokens.css`
+con prefijo `--ff-`: superficies, textos secundarios, radios y la sombra de la tarjeta.
+Donde había primitiva de marca se reutilizó: el gris de la portada es `--grey-100` y el
+borde de los campos, `--grey-300`.
+
+El formulario no inventa controles: usa los mismos que la landing, en una variante propia
+del diseño.
 
 | Componente | Dónde vive | Quién lo usa |
 |---|---|---|
-| `OutlinedField` / `OutlinedSelect` | `v1/components/` | "Gestionar Devolución" y el formulario de Fulfillment |
-| `Button` | `v1/components/` | "Continuar", "Ingresar" y "Enviar" |
+| `OutlinedField` / `OutlinedSelect` | `v1/components/` | "Gestionar Devolución" (variante por defecto) y el formulario de Fulfillment (`variant="form"`) |
+| `Button` | `v1/components/` | "Continuar" y "Ingresar" (`md`, `lg`) y "Enviar" (`pill`) |
 
-Ambos se extrajeron de la landing replicada, midiendo su render: el input outlined con label
-flotante y la pastilla amarilla con texto azul. Al extraerlos se verificó que la réplica
-siguiera dando las mismas alturas por sección y que los botones conservaran sus medidas
-(120×40 y 175×49).
+Ambos se extrajeron de la landing replicada, midiendo su render. Las variantes del formulario
+se agregaron sin tocar la variante por defecto, así que la réplica conserva sus medidas.
 
-**Assets provisorios.** Fulfillment todavía no tiene identidad propia entregada. Hasta que
-llegue del cliente:
+Los íconos son de [Lucide](https://lucide.dev), vía `lucide-react`: el diseño usa los íconos
+de la librería "Design System", que es el set Lucide.
 
-- los íconos de las listas y de los beneficios son de **Lucide**, no del set ilustrado del
-  cliente. Se eligieron por consistencia y para no dibujar íconos a mano;
-- el logo de la tarjeta es un lockup tipográfico, no un archivo de marca. Reproduce el
-  tratamiento de los logos existentes —pastilla azul `#152663` con el nombre en itálica
-  blanca— midiendo el asset de Oficios Judiciales: caja de 50px de alto, radio de 10px,
-  24px de aire lateral y versal de 17px, es decir unos 24px de cuerpo. Se mantiene
-  "Fulfillment" en caja alta y baja, como lo escribe el cliente en el flyer, aunque los dos
-  logos con este tratamiento estén en mayúsculas;
-- la ilustración de la caja se dibujó con la paleta de MiCorreo, reemplazando la fotografía
-  del flyer.
+**Assets.**
+
+- `centro-logistico.png` (foto de la portada), `map.png` (mapa de cobertura) y `clients.svg`
+  (prueba social) se entregaron junto con el diseño.
+- El logo de la tarjeta de Fulfillment en la landing sigue siendo un lockup tipográfico, no
+  un archivo de marca. Reproduce el tratamiento de los logos existentes —pastilla azul
+  `#152663` con el nombre en itálica blanca— midiendo el asset de Oficios Judiciales: caja
+  de 50px de alto, radio de 10px, 24px de aire lateral y versal de 17px, es decir unos 24px
+  de cuerpo. Se mantiene "Fulfillment" en caja alta y baja, como lo escribe el cliente en el
+  flyer, aunque los dos logos con este tratamiento estén en mayúsculas.
 
 Se corrigió además un error de tipeo del flyer: "Gestión depedidos" → "Gestión de pedidos".
 

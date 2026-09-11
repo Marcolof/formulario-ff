@@ -1,8 +1,11 @@
 /* Botón primario de la landing: pastilla amarilla con texto azul. Las medidas
- * salen de "Continuar" (40px) y "Ingresar" (49px) de la landing original. */
+ * salen de "Continuar" (40px) y "Ingresar" (49px) de la landing original.
+ * `pill` es el botón `rounded` M del Design System (44px, borde de 2px) que
+ * usa el formulario de Fulfillment en Figma. */
 
 .md,
-.lg {
+.lg,
+.pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -26,7 +29,18 @@
   line-height: 31.5px;
 }
 
+.pill {
+  height: 44px;
+  padding: 0 var(--space-6);
+  border: var(--border-width-base) solid var(--surface-brand);
+  border-radius: var(--radius-pill);
+  font-size: var(--landing-font-size-body);
+  font-weight: var(--font-weight-semibold);
+  line-height: normal;
+}
+
 .md:hover,
-.lg:hover {
+.lg:hover,
+.pill:hover {
   background-color: var(--button-primary-bg-hover);
 }

@@ -38,14 +38,17 @@
 
 .select,
 .selectError {
+  padding-right: 36px;
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--icon-enabled) 50%),
-    linear-gradient(135deg, var(--icon-enabled) 50%, transparent 50%);
-  background-position:
-    calc(100% - 18px) 17px,
-    calc(100% - 13px) 17px;
-  background-size: 5px 5px;
-  background-repeat: no-repeat;
+}
+
+.chevron {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  color: var(--icon-enabled);
+  pointer-events: none;
+  transform: translateY(-50%);
 }
 
 /* El label reposa centrado en el campo vacío y sube al borde superior al
@@ -81,4 +84,33 @@
   color: var(--feedback-danger-text);
   font-size: var(--font-size-xs);
   line-height: var(--line-height-snug);
+}
+
+/* --- Variante del formulario de Fulfillment ------------------------------ */
+
+.formVariant .control,
+.formVariant .select {
+  padding-inline: 10px;
+  border-color: var(--ff-field-border);
+  border-radius: var(--ff-field-radius);
+}
+
+.formVariant .select {
+  padding-right: 36px;
+}
+
+.formVariant .controlError,
+.formVariant .selectError {
+  padding-inline: 10px;
+  border-radius: var(--ff-field-radius);
+}
+
+.formVariant .control:focus,
+.formVariant .select:focus {
+  border-color: var(--color-accent);
+}
+
+.formVariant .field label {
+  left: 10px;
+  color: var(--ff-text-secondary);
 }

@@ -122,6 +122,7 @@ export function ContactForm() {
         <p className={styles.successText}>{form.success.body}</p>
         <Button
           type="button"
+          size="pill"
           className={styles.submit}
           onClick={() => {
             setValues(EMPTY)
@@ -139,10 +140,12 @@ export function ContactForm() {
   return (
     <aside className={styles.card}>
       <h2 className={styles.title}>{form.title}</h2>
+      <p className={styles.subtitle}>{form.subtitle}</p>
 
       <form className={styles.form} onSubmit={handleSubmit} noValidate>
         <OutlinedField
           id="ff-empresa"
+          variant="form"
           label="Nombre de la empresa / Razón social"
           value={values.empresa}
           error={errors.empresa}
@@ -151,6 +154,7 @@ export function ContactForm() {
         />
         <OutlinedField
           id="ff-nombre"
+          variant="form"
           label="Nombre y apellido"
           value={values.nombre}
           error={errors.nombre}
@@ -159,7 +163,8 @@ export function ContactForm() {
         />
         <OutlinedField
           id="ff-mail"
-          label="Mail"
+          variant="form"
+          label="Correo electrónico"
           type="email"
           value={values.mail}
           error={errors.mail}
@@ -170,7 +175,8 @@ export function ContactForm() {
           <div className={styles.phoneArea}>
             <OutlinedField
               id="ff-codigo-area"
-              label="Código de área"
+              variant="form"
+              label="Cod. área"
               type="tel"
               inputMode="numeric"
               value={values.codigoArea}
@@ -182,6 +188,7 @@ export function ContactForm() {
           <div className={styles.phoneNumber}>
             <OutlinedField
               id="ff-celular"
+              variant="form"
               label="Celular"
               type="tel"
               inputMode="numeric"
@@ -195,6 +202,7 @@ export function ContactForm() {
 
         <OutlinedSelect
           id="ff-rubro"
+          variant="form"
           label="Rubro de la empresa"
           value={values.rubro}
           error={errors.rubro}
@@ -211,6 +219,7 @@ export function ContactForm() {
         {values.rubro === RUBRO_OTROS ? (
           <OutlinedField
             id="ff-rubro-otro"
+            variant="form"
             label="Contanos el rubro"
             value={values.rubroOtro}
             error={errors.rubroOtro}
@@ -246,6 +255,7 @@ export function ContactForm() {
         {values.esCliente === 'si' ? (
           <OutlinedField
             id="ff-numero-cliente"
+            variant="form"
             label="Número de cliente"
             type="tel"
             inputMode="numeric"
@@ -256,10 +266,10 @@ export function ContactForm() {
           />
         ) : null}
 
-        <p className={styles.disclaimer}>{form.disclaimer}</p>
-        <Button type="submit" className={styles.submit}>
+        <Button type="submit" size="pill" className={styles.submit}>
           {form.submit}
         </Button>
+        <p className={styles.disclaimer}>{form.disclaimer}</p>
       </form>
     </aside>
   )

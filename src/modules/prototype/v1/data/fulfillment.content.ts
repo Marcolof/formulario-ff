@@ -9,9 +9,10 @@ import {
 } from 'lucide-react'
 
 export const hero = {
-  ribbon: 'Próximamente',
-  title: 'Fulfillment',
-  subtitle: 'Solución integral de almacenamiento y distribución para tu eCommerce',
+  chip: 'FULFILLMENT',
+  title: 'Vos vendés. Nosotros hacemos que llegue.',
+  subtitle: 'Una experiencia simple y humana para conectar tu marca con clientes de todo el país.',
+  proof: 'Más de 3.000 negocios ya confían',
 }
 
 export const includes = {
@@ -41,17 +42,17 @@ export const distribution = {
     {
       icon: Warehouse,
       title: 'CABA y Corredor Norte AMBA',
-      body: 'Entrega <strong>en el día</strong> al precio del <em>PAQ.AR</em> Clásico Zona 1.',
+      body: 'Entrega en el día al precio del PAQ.AR Clásico Zona 1.',
     },
     {
       icon: ClipboardList,
       title: 'Resto de AMBA',
-      body: 'Entrega al <strong>día siguiente</strong>.',
+      body: 'Entrega al día siguiente.',
     },
     {
       icon: Truck,
       title: 'Resto del país',
-      body: '<em>PAQ.AR</em> Clásico o <em>PAQ.AR</em> Prioritario para Zonas 2, 3 y 4.',
+      body: 'PAQ.AR Clásico o PAQ.AR Prioritario para Zonas 2, 3 y 4.',
     },
   ],
 }
@@ -59,25 +60,17 @@ export const distribution = {
 export const benefits = {
   title: 'Beneficios para tu negocio',
   items: [
-    { icon: BadgeDollarSign, lead: 'Reducí costos', body: 'operativos y logísticos' },
-    { icon: Timer, lead: 'Ganá tiempo', body: 'y enfocate en vender más' },
-    {
-      icon: ThumbsUp,
-      lead: 'Mejorá la experiencia',
-      body: 'de tus clientes con entregas rápidas y confiables',
-    },
-    { icon: PackageCheck, lead: 'Escalá tu negocio', body: 'sin preocuparte por la logística' },
+    { icon: BadgeDollarSign, text: 'Reducí costos operativos y logísticos' },
+    { icon: Timer, text: 'Ganá tiempo y enfocate en vender más' },
+    { icon: ThumbsUp, text: 'Mejorá la experiencia de tus clientes con entregas rápidas y confiables' },
+    { icon: PackageCheck, text: 'Escalá tu negocio sin preocuparte por la logística' },
   ],
 }
 
-export const closing = {
-  lead: 'Nos ocupamos de todo,',
-  highlight: 'vos enfocate en hacer crecer tu negocio.',
-}
-
 export const form = {
-  title: 'Completá el formulario',
-  disclaimer: 'Tus datos están seguros',
+  title: 'Quiero empezar',
+  subtitle: 'Completá tus datos y te ayudamos a encontrar la mejor opción.',
+  disclaimer: 'Tus datos están protegidos.',
   submit: 'Enviar',
   success: {
     title: '¡Gracias por contactarnos!',

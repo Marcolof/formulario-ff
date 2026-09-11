@@ -1,20 +1,26 @@
-/* Misma superficie y radio que las tarjetas de "Accesos directos" de la landing:
- * gris claro sobre sección blanca, sin trazos de color. */
+/* Tarjeta blanca con sombra, según Figma 13217:34525 ("Formulario"). */
 .card {
   display: flex;
   flex-direction: column;
-  padding: 26px;
-  border-radius: var(--landing-radius-shortcut);
-  background-color: var(--landing-surface-muted);
+  gap: var(--space-4);
+  padding: 28px;
+  border-radius: var(--ff-radius-card);
+  background-color: var(--white);
+  box-shadow: var(--ff-card-shadow);
 }
 
 .title {
-  margin-bottom: var(--space-6);
-  padding: var(--space-2);
-  color: var(--color-accent);
+  color: var(--text-primary);
   font-size: var(--landing-font-size-title);
-  font-weight: var(--font-weight-semibold);
-  line-height: 28.008px;
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+}
+
+.subtitle {
+  color: var(--ff-text-hint);
+  font-size: var(--landing-font-size-meta);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
 }
 
 .form {
@@ -44,8 +50,9 @@
 }
 
 .legend {
-  color: var(--landing-text-body);
+  color: var(--text-primary);
   font-size: var(--landing-font-size-body);
+  font-weight: var(--font-weight-regular);
   line-height: var(--landing-line-height-body);
 }
 
@@ -55,17 +62,22 @@
   margin-top: var(--space-2);
 }
 
+/* Interlineado "normal": en Figma la fila de opciones mide 20px, lo que
+ * mide el radio. Heredando el 1.5 del body quedaba 4px más alta. */
 .radio {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  color: var(--landing-text-body);
+  color: var(--text-primary);
+  font-size: var(--landing-font-size-body);
+  line-height: normal;
   cursor: pointer;
 }
 
 .radio input {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
   accent-color: var(--color-accent);
 }
 
@@ -76,20 +88,24 @@
   line-height: var(--line-height-snug);
 }
 
+.submit {
+  width: 100%;
+}
+
 .disclaimer {
-  margin-top: var(--space-2);
-  color: var(--text-subtle);
-  font-size: var(--landing-font-size-meta);
+  color: var(--ff-text-hint);
+  font-size: 11px;
+  line-height: normal;
   text-align: center;
 }
 
-.submit {
-  align-self: center;
-  min-width: 175px;
-}
-
 .successText {
-  margin-bottom: var(--space-6);
   color: var(--landing-text-body);
   line-height: var(--line-height-normal);
+}
+
+@media (max-width: 900px) {
+  .card {
+    padding: var(--space-6);
+  }
 }

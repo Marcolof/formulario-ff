@@ -80,4 +80,19 @@
   /* --- Capas ------------------------------------------------------------- */
   --landing-z-header: 1100;
   --landing-z-chat: 4500;
+
+  /* --- Página Fulfillment -------------------------------------------------
+   * Diseño de Figma "Mi Correo 2.0", nodo 13217:34295. Reutilizan primitivas
+   * de marca donde existen; los que no tienen equivalente se declaran acá. */
+  --ff-content-max: 1100px;
+  --ff-hero-surface: var(--grey-100); /* #f2f2f2 */
+  --ff-icon-surface: #eaf1ff;
+  --ff-benefit-surface: #fbf4d3;
+  --ff-text-secondary: #474747;
+  --ff-text-hint: #667085;
+  --ff-field-border: var(--grey-300); /* #d9d9d9 */
+  --ff-field-radius: 4px;
+  --ff-radius-card: 24px;
+  --ff-radius-icon: 14px;
+  --ff-card-shadow: 0 12px 32px rgba(21, 42, 105, 0.09);
 }
