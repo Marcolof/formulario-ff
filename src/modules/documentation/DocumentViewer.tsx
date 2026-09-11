@@ -34,12 +34,12 @@ export function DocumentViewer() {
       breadcrumb={{ label: 'Documentación', to: '/documentacion' }}
     >
       <div className={styles.toolbar}>
-        <a className={styles.download} href={downloadUrl} download={doc.fileName}>
-          Descargar {doc.fileName}
-        </a>
         <Link className={styles.back} to="/documentacion">
           Volver al listado
         </Link>
+        <a className={styles.download} href={downloadUrl} download={doc.fileName}>
+          Descargar {doc.fileName}
+        </a>
       </div>
       <pre className={styles.content}>{doc.content}</pre>
     </ModuleLayout>
