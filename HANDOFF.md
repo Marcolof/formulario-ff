@@ -156,8 +156,10 @@ con acceso a Fulfillment y una página con formulario de contacto. Cliente: Corr
     capítulo "Flujo Funcional" describe el recorrido pantalla por pantalla. Vive en la carpeta
     padre, junto al otro `.docx` (se movió ahí desde Downloads el 14-09-2026).
     **Dos cosas de ese documento que NO hay que reabrir:**
-    - El **reCAPTCHA** que pide queda fuera del alcance de UX por decisión del usuario:
-      resuelve por detrás y no hay nada que mostrar en pantalla. No agregarlo al prototipo.
+    - El **reCAPTCHA** que pide **va a existir** — no está descartado ni postergado. Pero
+      **no es tema de UX**: lo resuelve desarrollo. Acá no se diseña, no se documenta y no se
+      agrega al prototipo. Mismo criterio que GTM, Meta Pixel y el chat de terceros de la
+      landing. No lo levantes como pendiente.
     - El documento incluye capturas del propio prototipo y una imagen vieja de la landing;
       **no son observaciones a registrar** — el usuario pidió omitirlas.
   - `Solicitud Inicial_Formulario FF_10092026.docx` (v1.0) y el Google Doc

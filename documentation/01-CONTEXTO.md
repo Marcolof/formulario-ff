@@ -97,17 +97,21 @@ qué se fueron está en [05-REGISTRO-DE-CAMBIOS.md](05-REGISTRO-DE-CAMBIOS.md).
 3. Resolver los límites de longitud que hoy contradicen al documento formal — ver
    [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md).
 
-## Requisitos del documento fuera del alcance de UX
+## Requisitos del documento que no son de UX
+
+Los siguientes puntos del requerimiento **van a existir**: no están descartados ni
+postergados. Simplemente no son tema de este rol, así que este proyecto no los diseña ni los
+documenta.
 
 - **Google reCAPTCHA.** El documento (v1.2) pide reutilizar "el mecanismo de Google reCAPTCHA
   actualmente utilizado en la plataforma" para proteger el formulario de accesos
-  automatizados. **Queda fuera del alcance** por decisión del usuario del proyecto
-  (14/09/2026): resuelve por detrás y no hay nada que UX tenga que mostrar por ahora. No se
-  agrega al prototipo.
-- **URL `/FF`.** Ver la sección anterior: es un requisito de entrega, no del prototipo.
+  automatizados. Lo resuelve **desarrollo**. Es el mismo criterio con el que la réplica de la
+  landing no porta GTM, Meta Pixel ni el chat de terceros.
+- **URL `/FF`, base de datos, reporte semanal y eventos de Analytics.** Requisitos de entrega
+  y de backend, no de la pantalla.
 
-El **aviso sobre el almacenamiento de datos** que pide el mismo párrafo del documento sí está
-resuelto: es el texto debajo del botón "Enviar".
+Lo que sí es de UX y ya está resuelto: el **aviso sobre el almacenamiento de datos** que pide
+el mismo párrafo del documento — el texto debajo del botón "Enviar".
 
 ## Pendientes de definición
 
