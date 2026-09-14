@@ -258,11 +258,14 @@
   line-height: 1.05;
 }
 
+/* El diseño de Figma dibuja este detalle en 13px regular. Se sube a 14px medium
+ * por pedido del usuario (14-09-2026): a 13px quedaba demasiado chico para
+ * leerse cómodo. El título de cada beneficio se mantiene en 16px bold. */
 .benefitBody {
   color: var(--ffv3-navy);
   font-family: var(--ffv3-font-display);
-  font-size: 13px;
-  font-weight: var(--font-weight-regular);
+  font-size: var(--landing-font-size-meta);
+  font-weight: var(--font-weight-medium);
   line-height: 1.15;
 }
 

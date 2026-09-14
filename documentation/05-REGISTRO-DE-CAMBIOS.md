@@ -69,8 +69,9 @@ ningún caso cambia lo que se ve en la v1.
 | Reset de scroll | `app/ScrollToTop.tsx` | Reacciona sólo al cambio de ruta, ya no al del hash: en la v2 el hash abre y cierra el modal, y cerrarlo mandaba la página arriba. |
 | Rutas | `app/router.tsx` | Se suman `/prototipo/v2` y `/prototipo/v2/fulfillment`. La segunda monta la misma página de Fulfillment. |
 
-Lo nuevo de la v2 vive en `src/modules/prototype/v2/`. El detalle funcional está en
-[08-PROPUESTA-V2.md](08-PROPUESTA-V2.md).
+Lo nuevo de la v2 vivía en `src/modules/prototype/v2/`. Su documento funcional
+(`08-PROPUESTA-V2.md`) se eliminó junto con la versión el 14/09/2026 — el razonamiento
+sobrevive en esta misma página, más abajo.
 
 ## Rediseño del bloque central de la v2 (11/09/2026)
 
@@ -117,7 +118,7 @@ Figma `13284:7345`. El detalle funcional está en [08-PROPUESTA-V3.md](08-PROPUE
 | Lógica del formulario | `v1/fulfillment/useContactForm.ts` (nuevo) | Los campos, las validaciones y el momento de validación salen de `ContactForm` a un hook propio. Lo usan la pantalla de la v1/v2 y la de la v3, que tienen el mismo formulario con distinto layout. `ContactForm` queda sólo con su marcado. |
 | CTA de servicios | `v1/components/ServicesSection.tsx` | La prop `actions` (que convertía el CTA en botón para abrir el visor) se reemplaza por `hrefs`, que sólo cambia el destino. El CTA vuelve a ser siempre un enlace, que es lo que corresponde ahora que navega a una pantalla. |
 | Rutas | `app/router.tsx` | Se suma `/prototipo/v3/fulfillment`. |
-| Tipografía | `index.html` | Se carga **Poppins** desde Google Fonts: la pide el diseño de la v3. El resto del proyecto sigue usando sólo Gilroy, embebida desde `src/assets/fonts`. |
+| Tipografía | `index.html` | Se cargaba **Poppins** desde Google Fonts, que es lo que pide el diseño de la v3. **Retirada el 14-09-2026**, ver más abajo: toda la pantalla usa Gilroy. |
 | Asset | `src/assets/img/banner ff formulario.png` | Imagen del hero, provista por el cliente. Se usa tal cual. |
 
 Lo nuevo de la v3 vive en `src/modules/prototype/v3/fulfillment/`, con su propia capa de
@@ -152,7 +153,7 @@ tarjeta de Fulfillment). El sistema de tokens (`src/styles/tokens.css`) ya defin
 en ningún lado — es el que corresponde acá.
 
 Se agregó `.tertiary` a
-[`Button.module.css`](../src/modules/prototype/v1/components/Button.module.css), la hoja
+[`Button.module.css`](../src/modules/prototype/v3/components/Button.module.css), la hoja
 compartida de botones del sistema, y se aplicó con `composes` (CSS Modules) desde los tres
 lugares que tienen este tipo de CTA, en vez de repetir la regla:
 
@@ -179,12 +180,18 @@ producción real en este detalle.**
 protegidos." —el texto genérico del diseño de Figma— a "La información ingresada será
 almacenada únicamente para gestionar tu solicitud y poder contactarte.", a pedido del
 usuario. Es un dato compartido en
-[`fulfillment.content.ts`](../src/modules/prototype/v1/data/fulfillment.content.ts), así que
+[`fulfillment.content.ts`](../src/modules/prototype/v3/data/fulfillment.content.ts), así que
 cambió solo en las tres versiones. De paso, se corrigió una mención vieja a "de Correo
 Argentino" que había quedado en el texto de confirmación de
 [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md) (el código ya estaba
 actualizado; sólo la documentación había quedado atrás). Verificado en v1 y v3, en una línea,
 sin desbordar la tarjeta.
+
+Más tarde, el mismo día, ese texto **pasó de 11px a 14px** a pedido del usuario: a 11px
+quedaba demasiado chico para un aviso sobre el uso de datos personales. Es la regla
+`.disclaimer` de
+[`FulfillmentForm.module.css`](../src/modules/prototype/v3/fulfillment/FulfillmentForm.module.css);
+sigue entrando en una línea en escritorio.
 
 ## Color de foco de inputs y selects, en todo el sistema (14/09/2026)
 
@@ -193,7 +200,7 @@ usado por las dos variantes (`landing` y `form`) en las tres versiones— estaba
 con `--color-accent` (el azul de marca), en vez del token del sistema para foco de inputs:
 `--border-focus` (`--blue-focus: #2196f3`), ya definido en `tokens.css` pero sin usar en
 ningún lado. Corregido en las dos reglas de foco de
-[`OutlinedField.module.css`](../src/modules/prototype/v1/components/OutlinedField.module.css)
+[`OutlinedField.module.css`](../src/modules/prototype/v3/components/OutlinedField.module.css)
 (feedback del usuario, con referencia del token del Design System: "Inputs/Stroke/input-
 stroke-focus"). Alcanza a todos los inputs y selects del formulario de Fulfillment (v1, v2 y
 v3) y al campo de "Gestionar Devolución" de la landing. Verificado con clic real en el
@@ -214,7 +221,7 @@ escritorio (una y dos columnas) y mobile. Ver
 Tres pedidos del usuario sobre la misma pantalla:
 
 1. **Texto de confirmación.** `form.success.body`, en
-   [`fulfillment.content.ts`](../src/modules/prototype/v1/data/fulfillment.content.ts), pasa
+   [`fulfillment.content.ts`](../src/modules/prototype/v3/data/fulfillment.content.ts), pasa
    de "...un asesor comercial **de Correo Argentino** se va a comunicar..." a "...un asesor
    comercial se va a comunicar...". Es un dato compartido por las tres versiones, así que el
    cambio se propaga solo.
@@ -324,3 +331,142 @@ solicitante antes de desarrollo.
 Los valores dejan de estar escritos a mano en el JSX: `useContactForm` exporta `TEXTO_MAX`,
 `RUBRO_OTRO_MAX` y `NUMERO_CLIENTE_LARGO`, y `FulfillmentForm` los usa como `maxLength`. Así
 el patrón de validación y el tope del campo no pueden quedar desalineados.
+
+## Módulo Presentación (14/09/2026)
+
+Primer pedido de una nueva sesión de trabajo (traspaso de cuenta). Se invocó la skill
+`presentacion-proyecto` y se agregó un módulo "Presentación" al Hub.
+
+| Qué | Dónde | Cambio |
+|---|---|---|
+| Deck | `public/presentacion/presentacion.html` | Nuevo. HTML autocontenido (CSS y JS inline), capturas reales del prototipo y fuentes Gilroy locales. No es una ruta de React: se sirve como archivo estático de Vite bajo la misma URL. |
+| Capturas | `public/presentacion/assets/screens/*.png` | Nuevas. Tomadas con Chrome headless contra el prototipo real en `localhost:4320`, no simuladas. |
+| Landing del módulo | `src/modules/presentation/PresentationHome.tsx` | Nuevo, mismo patrón que `PrototypeHome`/`DocumentationHome` (`ModuleLayout`). |
+| Rutas | `src/app/router.tsx` | Se suma `/presentacion`. |
+| Hub | `src/modules/hub/hub.modules.ts` | Se suma la tarjeta del módulo. |
+| Carpeta vacía `presentation/` en la raíz | — | Eliminada: había quedado de un placeholder anterior y ya no correspondía a dónde vive el módulo real (`public/presentacion/` + `src/modules/presentation/`). No estaba trackeada por git. |
+
+**Dos bugs encontrados y corregidos en el camino:**
+
+- **En el deck:** el script sólo leía `location.hash` una vez, al cargar. Un cambio de hash
+  sin recarga completa de página (pegar otra URL con `#N` en la barra, o cualquier script que
+  haga `location.hash = ...`) no movía el slide. Se agregó un listener de `hashchange`. Es un
+  bug heredado de `deck-template.html`, la plantilla de la skill.
+- **En el Hub** (`HubPage.tsx`, no relacionado con la skill): había un bloque de texto fijo
+  ("Todavía sin contenido — Presentación. La carpeta existe pero no hay un deck todavía...")
+  que no salía de `hub.modules.ts`, sino hardcodeado en el JSX. Al agregar el módulo real, ese
+  texto pasó a ser falso. Se retiró junto con sus estilos (`.pending`/`.pendingTitle` en
+  `HubPage.module.css`).
+
+**Cómo se armaron las tres capturas de la pantalla de Fulfillment sin recortar imágenes a
+mano:** en vez de tres archivos PNG recortados, se tomó una sola captura de página completa
+(1440×2200, con la duración de `--virtual-time-budget` de Chrome headless ajustada para que
+el fundido por scroll de `useReveal` termine antes de la captura) y se la reutiliza tres veces
+con `object-position: top / center 54% / bottom` en el `<img>` de cada slide. Cada posición
+recorta, por matemática de `object-fit: cover`, una "ventana" de 900px reales dentro de la
+imagen de 2200px — sin necesitar un editor de imágenes.
+
+### Alcance del deck, acotado el mismo día
+
+El primer armado tenía 16 slides y recorría **el proyecto entero**: el Hub, la landing del
+módulo Prototipo, la propuesta, el módulo de Documentación y un documento de ejemplo.
+
+El usuario corrigió el enfoque: **el Hub y los módulos son la maqueta con la que se muestra el
+trabajo al cliente y al equipo, no el tema de la presentación.** El deck tiene que hablar
+únicamente del **requerimiento** y de **cómo se ven las propuestas finales**.
+
+Quedó en **10 slides**:
+
+| # | Slide | Bloque |
+|---|---|---|
+| 1 | Portada | — |
+| 2 | Qué se pidió: una página de Fulfillment dentro de MiCorreo | Requerimiento |
+| 3 | El flujo esperado, en cuatro momentos | Requerimiento |
+| 4 | Los siete campos del formulario, y qué queda fuera del alcance | Requerimiento |
+| 5 | Divider: "La propuesta final" | — |
+| 6 | El acceso desde la landing | Propuesta |
+| 7 | La página: hero y servicios | Propuesta |
+| 8 | El formulario | Propuesta |
+| 9 | Beneficios y cierre de la página | Propuesta |
+| 10 | Lo que falta definir | — |
+
+**Qué se eliminó:** los seis slides de andamiaje (divider del Hub, captura del Hub, divider
+del Prototipo, captura de la landing del módulo, divider de Documentación, captura del índice
+de documentos y captura de un documento), más las cinco capturas que sólo ellos usaban
+(`01-hub.png`, `02-prototipo.png`, `03-v3-landing.png`, `05-documentacion.png`,
+`06-documento-v3.png`).
+
+**Qué se agregó:** tres slides de requerimiento, tomados de
+[01-CONTEXTO.md](01-CONTEXTO.md) y [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md)
+—objetivo, flujo esperado y campos—, y una captura nueva del **acceso** a Fulfillment en la
+landing (`landing-acceso.png`). La captura anterior de la landing mostraba el hero, no la
+tarjeta de Fulfillment, que es justamente lo que el slide tiene que mostrar.
+
+Las capturas pasaron de 2,3 MB a **888 KB**, en dos archivos.
+
+**Cómo se recortó `landing-acceso.png`:** la landing mide 4522px de alto y la tarjeta de
+Fulfillment está cerca de los 2900px. En vez de capturar la página entera (varios MB) y
+recortarla con CSS, se creó un HTML temporal en `public/` que embebe la ruta en un `<iframe>`
+de alto completo desplazado con `top` negativo, dentro de una caja de 1440×900 con
+`overflow: hidden`; se captura ese archivo con Chrome headless y se lo borra. Sirve para
+recortar cualquier franja de una página larga sin editor de imágenes.
+
+## La tipografía pasa a ser la del sistema (14/09/2026)
+
+El diseño de Figma de la pantalla de Fulfillment usa **Poppins** en el hero, los encabezados
+de columna y los beneficios. Se implementó así, pero quedó registrado como **hipótesis**: era
+la única tipografía fuera del sistema y la única dependencia externa del proyecto.
+
+El usuario lo confirmó: **la tipografía es Gilroy**, la del sistema. Poppins queda descartada.
+
+| Qué | Dónde | Cambio |
+|---|---|---|
+| Familia de display | `v3/fulfillment/fulfillment.tokens.css` | `--ffv3-font-display` pasa de `'Poppins', 'Gilroy', system-ui` a `'Gilroy', system-ui`. Un solo lugar: el token lo consumen los seis bloques de display de la pantalla. |
+| Carga de la fuente | `index.html` | Se retiran el `<link>` a Google Fonts y sus dos `preconnect`. |
+
+**El token se conserva** en vez de borrarlo y escribir la familia a mano en los seis lugares
+que lo usan: sigue marcando cuáles son las piezas de "display" de esta pantalla, por si más
+adelante se decide otra fuente.
+
+**Sin fallback sintético:** los pesos que usa la pantalla —400, 500 y 700— existen los tres en
+la Gilroy embebida (`globals.css` declara de 300 a 800), así que el navegador no tiene que
+simular ningún peso.
+
+**Dos efectos secundarios, los dos buenos:**
+
+- El proyecto **ya no depende de ningún recurso externo**: no hay pedidos a `fonts.googleapis.com`
+  ni a `fonts.gstatic.com`. Antes, sin conexión, la pantalla caía a Gilroy igual — pero recién
+  después de esperar a que fallara el pedido.
+- La pantalla queda **consistente con el resto del producto**, que ya usaba sólo Gilroy.
+
+El alto de la página no cambió (sigue en 2200px a 1440 de ancho), así que las tres tomas que
+el deck de presentación recorta de la captura con `object-position` siguen sirviendo sin
+recalcular. La captura sí se rehízo, para que muestre la tipografía real.
+
+## Tipografía del panel de beneficios (14/09/2026)
+
+Pedido del usuario: el detalle de cada beneficio quedaba **demasiado chico** para leerse
+cómodo.
+
+| Elemento | Antes | Ahora |
+|---|---|---|
+| Título del beneficio ("Reducí costos") | 16px bold | **Sin cambio** — ya cumplía |
+| Detalle ("operativos y logísticos") | 13px regular | **14px medium** |
+
+El diseño de Figma dibuja el detalle en 13px regular; esta es una divergencia deliberada por
+legibilidad, no un error de implementación. El título ya estaba en 16px bold
+(`--landing-font-size-body` + `--font-weight-bold`), así que no hizo falta tocarlo.
+
+El 13px estaba escrito a mano; ahora usa `--landing-font-size-meta`, que ya valía 14px. Un
+valor suelto menos.
+
+**Efecto sobre el deck de presentación:** el texto más grande hace que el detalle más largo
+("de tus clientes con entregas rápidas y confiables") pase a tres líneas, y con él crece el
+alto del panel. La página pasó de **2200 a 2323px**, así que hubo que rehacer la captura
+`fulfillment-full.png` y recalcular el recorte del slide del formulario: `object-position`
+pasó de `center 54%` a `center 52%`. Los otros dos recortes (`top` y `bottom`) siguen
+sirviendo sin cambios.
+
+Conviene recordar la cuenta, porque se repite cada vez que cambia el alto de esa pantalla:
+con una ventana de 900px sobre una imagen de alto `H`, el porcentaje que centra una franja
+que empieza en `y` es `(y - 450 + alto_franja / 2) / (H - 900)`.

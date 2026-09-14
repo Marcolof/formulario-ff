@@ -23,10 +23,16 @@
   --ffv3-hint: #667085;
 
   /* --- Tipografía ----------------------------------------------------------
-   * El diseño usa Poppins en el hero, los encabezados de columna y los
-   * beneficios; Gilroy en los servicios, el formulario y el cierre. Poppins se
-   * carga desde Google Fonts en index.html y cae en Gilroy si no está. */
-  --ffv3-font-display: 'Poppins', 'Gilroy', system-ui, sans-serif;
+   * Toda la pantalla usa Gilroy, la tipografía del sistema. El diseño de Figma
+   * dibuja el hero, los encabezados de columna y los beneficios con Poppins,
+   * pero el usuario confirmó (2026-09-14) que la tipografía definitiva es la
+   * del sistema: se descartó Poppins y con ella la única dependencia de Google
+   * Fonts que tenía el proyecto.
+   *
+   * El token se conserva —en vez de borrarlo y escribir la familia a mano en
+   * los seis lugares que lo usan— porque sigue marcando cuáles son las piezas
+   * de "display" de esta pantalla, por si más adelante se decide otra fuente. */
+  --ffv3-font-display: 'Gilroy', system-ui, sans-serif;
   --ffv3-hero-title: 61px;
   --ffv3-hero-subtitle: 23px;
   --ffv3-hero-title-mobile: 40px;

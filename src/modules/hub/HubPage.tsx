@@ -38,14 +38,6 @@ export function HubPage() {
             </li>
           ))}
         </ul>
-
-        <section className={styles.pending}>
-          <h2 className={styles.pendingTitle}>Todavía sin contenido</h2>
-          <p>
-            <strong>Presentación.</strong> La carpeta existe pero no hay un deck todavía, así
-            que no tiene tarjeta: el Hub sólo muestra módulos con una landing real.
-          </p>
-        </section>
       </main>
 
       <footer className={styles.footer}>

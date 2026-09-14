@@ -24,9 +24,10 @@ strategy:
   intervention: "greenfield-local"
   recommended_next:
     - "Confirmar con el área solicitante los tres límites de longitud que contradicen al documento formal: razón social y nombre a 64 (documento: 40 y 60), mail a 64 y número de cliente de 10 dígitos exactos (documento: 'hasta' 10)"
-    - "Confirmar si la tipografía Poppins de la v3 es definitiva o un borrador del diseño: es la única fuente fuera del sistema actual"
     - "Validar el texto del mensaje de confirmación del formulario"
     - "Optimizar 'banner ff formulario.png' (5,4 MB, versión confirmada por el usuario el 2026-09-14) antes de cualquier publicación real"
+    - "Validar con el usuario el guion y las capturas del deck de presentación (public/presentacion/presentacion.html), primera versión sin revisar"
+    - "Las capturas del deck (public/presentacion/assets/screens/, 888 KB en dos archivos) están sin optimizar; conviene comprimirlas si el deck se comparte fuera de este entorno"
   deferred:
     - "Menú de usuario logueado de la landing (oculto en el DOM sin sesión)"
     - "Scripts de terceros: GTM, Meta Pixel, chat de Wcentrix"
@@ -45,7 +46,7 @@ knowledge:
     - "Las versiones v1 (layout original con el formulario en una columna) y v2 (carrusel de servicios en panel navy) se borraron el 2026-09-14 a pedido del usuario, que ya tenía copia de seguridad. Lo que la v3 usaba se movió con git mv a v3/ (components, data, useContactForm, LandingPage.module.css); el resto se eliminó junto con sus rutas y el documento 08-PROPUESTA-V2.md"
     - "La réplica de la landing no se duplica para las propuestas: los componentes compartidos reciben props opcionales con el valor de la landing original por defecto, y la piel propia de cada variante se aísla con un atributo"
     - "La v3 se reformuló por completo el 14/09/2026: se descartó el visor con el flyer estático y pasó a ser un front integrado con pantalla propia de Fulfillment, según el diseño de Figma 13284:7345"
-    - "La pantalla de la v3 mantiene la barra de navegación superior y el footer de la landing; todo lo demás es un front propio (navy #14245d y #192b69, Poppins, íconos en círculo)"
+    - "La pantalla de la v3 mantiene la barra de navegación superior y el footer de la landing; todo lo demás es un front propio (navy #14245d y #192b69, íconos en círculo). La tipografía es Gilroy, la del sistema"
     - "En la v3 el formulario va a dos columnas en escritorio y a una sola en responsive, y al enviarse muestra un mensaje de éxito con ícono que conserva la altura de la tarjeta (pedido del usuario, 2026-09-14)"
     - "En la v3 la imagen del hero no se muestra en pantallas de hasta 900px: queda sólo el mensaje"
     - "Hay una sola pantalla de Fulfillment: la de la v3, con front propio"
@@ -61,17 +62,22 @@ knowledge:
     - "En la pantalla de Fulfillment de la v3, el cambio de los campos al estado de éxito —y la vuelta con 'Cargar otra consulta'— es una transición en dos pasos en cada sentido (salida animada, luego entrada animada), no un reemplazo directo (feedback del usuario, 2026-09-14, en dos pedidos seguidos). Bug encontrado y corregido en el camino: un useEffect con [sent, phase] como dependencias se autocancelaba el timer al cambiar de fase; se corrigió dejando sólo [sent] para la ida, y la vuelta usa su propio timer en el handler del botón"
     - "El orden de los campos del formulario cambió: 'Rubro de la empresa' pasa a ir donde estaba el teléfono, y el teléfono baja a donde estaba el rubro (feedback del usuario, 2026-09-14). Sólo cambió el orden en el JSX; las reglas y validaciones siguen en useContactForm, sin tocar"
     - "El color de foco de todos los inputs y selects (OutlinedField/OutlinedSelect, las dos variantes) pasó de --color-accent a --border-focus (#2196f3), el token de foco del sistema que ya existía en tokens.css sin usarse (feedback del usuario, con referencia del Design System, 2026-09-14). Alcanza a todo el sistema"
-    - "El texto debajo del botón 'Enviar' (form.disclaimer) cambió de 'Tus datos están protegidos.' a 'La información ingresada será almacenada únicamente para gestionar tu solicitud y poder contactarte.' (feedback del usuario, 2026-09-14). Dato compartido en fulfillment.content.ts"
+    - "El texto debajo del botón 'Enviar' (form.disclaimer) cambió de 'Tus datos están protegidos.' a 'La información ingresada será almacenada únicamente para gestionar tu solicitud y poder contactarte.' (feedback del usuario, 2026-09-14). Dato compartido en fulfillment.content.ts. Después se agrandó de 11px a 14px (.disclaimer en FulfillmentForm.module.css, feedback del usuario, 2026-09-14)"
     - "En la pantalla de Fulfillment de la v3, cada sección menos el hero aparece con un fundido hacia arriba la primera vez que entra en pantalla, con un hook propio (useReveal.ts, IntersectionObserver, sin librerías). El hero se ve completo desde el arranque (feedback del usuario, 2026-09-14)"
+    - "Se agregó el módulo Presentación al Hub (2026-09-14), primer pedido del usuario tras releer el estado del proyecto. El deck (public/presentacion/presentacion.html) es un HTML autocontenido con capturas reales del prototipo, generado con la skill presentacion-proyecto y servido como archivo estático bajo la misma URL y el mismo build — no es una ruta de React"
+    - "Al armar el módulo Presentación se encontró y corrigió un bloque fijo en HubPage.tsx ('Todavía sin contenido — Presentación') que ya no era cierto una vez agregado el módulo: no era un dato derivado, sino texto hardcodeado (2026-09-14)"
+    - "ALCANCE DEL DECK (pedido del usuario, 2026-09-14): la presentación habla únicamente del requerimiento y de cómo se ven las propuestas finales. El Hub, las landings de módulo y la documentación son el andamiaje de la maqueta con la que se muestra el trabajo al cliente y al equipo — NO son tema de la presentación. Se eliminaron los seis slides que los mostraban y el deck pasó de 16 a 10 slides"
+    - "Panel Beneficios de la v3 (pedido del usuario, 2026-09-14): el detalle de cada beneficio pasa de 13px regular a 14px medium, por legibilidad; el título ya estaba en 16px bold y no se tocó. Es una divergencia deliberada del diseño de Figma, que dibuja el detalle en 13px. El cambio subió el alto de la pantalla de 2200 a 2323px, así que se rehizo la captura del deck y el recorte del slide del formulario pasó de 54% a 52%"
+    - "TIPOGRAFÍA RESUELTA (confirmado por el usuario, 2026-09-14): la pantalla de Fulfillment usa Gilroy, la tipografía del sistema. El diseño de Figma la dibuja con Poppins en el hero, los encabezados de columna y los beneficios, pero esa era una hipótesis sin confirmar y quedó descartada. Se cambió el token --ffv3-font-display y se retiró la carga de Google Fonts de index.html: el proyecto ya no depende de ningún recurso externo. El layout no cambió de alto (2200px), así que las capturas del deck siguen usando los mismos recortes"
   assumptions:
     - "El logo de Fulfillment de la tarjeta de servicios es provisorio: es un lockup tipográfico dibujado con la paleta de MiCorreo, hasta que el cliente entregue el asset oficial"
     - "No se crea una landing institucional paralela; sí una página de Fulfillment dentro de MiCorreo"
-    - "v3: Poppins puede ser una tipografía de borrador del diseño; es la única fuera del sistema actual y se carga desde Google Fonts"
     - "v3: los seis servicios se modelan agrupados por columna, y no como una lista que se acomoda sola, para que en mobile cada encabezado quede con sus propios servicios"
   open_questions:
     - "Si los límites de longitud de 64 caracteres y el número de cliente de 10 dígitos exactos reemplazan a lo que dice el documento formal"
     - "Texto definitivo del mensaje de confirmación del formulario"
     - "Comportamiento ante error de envío real, cuando exista backend (el caso simulado sólo muestra la forma del error)"
+    - "El guion y las capturas del deck de presentación (10 slides) todavía no fueron validados por el usuario"
 
 sources:
   - id: envio-internacional
@@ -123,6 +129,13 @@ sources:
     captured_at: "2026-09-14"
     origin: "provisto por el usuario del proyecto"
     used_for: "era todo el contenido de la primera propuesta de la v3, hoy descartada. Ningún front lo referencia; se conserva por si se necesita"
+  - id: capturas-presentacion
+    kind: screenshots
+    path: "public/presentacion/assets/screens/"
+    access: read-only
+    captured_at: "2026-09-14"
+    origin: "Chrome headless contra el propio prototipo corriendo en localhost:4320, no simuladas ni de otro entorno"
+    used_for: "capturas estáticas del deck de presentación. Quedan dos: 'landing-acceso.png' (la tarjeta de acceso a Fulfillment en la landing, recortada de la página completa con un iframe desplazado) y 'fulfillment-full.png' (la pantalla completa, reutilizada en tres slides con recortes CSS vía object-position). Las de Hub, Prototipo y Documentación se eliminaron al acotar el alcance del deck el 2026-09-14"
 
 architecture:
   mode: monorepo-single-build
@@ -166,7 +179,7 @@ frontend:
   canonical_source: "src/modules/prototype"
   external_sources:
     - "Envio internacional CLAUDE (tokens y fuentes)"
-    - "Google Fonts (Poppins, sólo para la pantalla de la v3)"
+    - "Ninguna: desde el 2026-09-14 el proyecto no depende de recursos externos (se retiró Google Fonts al descartar Poppins)"
   change_log: "documentation/05-REGISTRO-DE-CAMBIOS.md"
   responsive:
     status: replicated
@@ -178,6 +191,7 @@ capabilities:
   prototype: "implementación directa con Vite + React + TypeScript + CSS Modules"
   documentation: "Markdown en documentation/"
   figma-sync: "plugin de Figma (get_design_context / use_figma)"
+  presentation: "skill presentacion-proyecto (deck HTML autocontenido, capturas estáticas del prototipo real)"
 
 modules:
   hub:
@@ -185,7 +199,7 @@ modules:
     route: "/"
     path: "src/modules/hub"
     children: []
-    notes: "Sólo muestra tarjetas de módulos con landing real; presentation no aparece."
+    notes: "Sólo muestra tarjetas de módulos con landing real. Desde el 14-09-2026 son tres: Prototipo, Documentación y Presentación."
   documentation:
     status: approved
     route: "/documentacion"
@@ -239,7 +253,7 @@ modules:
         route: "/prototipo/v3/fulfillment"
         path: "src/modules/prototype/v3/fulfillment"
         status: review
-        note: "Front propio según Figma 13284:7345, con su capa de tokens. Reutiliza navbar, footer, inputs y botón. Poppins pendiente de confirmar; mensaje de confirmación pendiente de validación."
+        note: "Front propio según Figma 13284:7345, con su capa de tokens. Reutiliza navbar, footer, inputs y botón. Tipografía Gilroy, la del sistema (confirmado 2026-09-14). Mensaje de confirmación pendiente de validación."
     extraction:
       required: true
       status: partial
@@ -251,7 +265,7 @@ modules:
         - "src/styles/tokens.css"
         - "src/styles/globals.css"
         - "src/modules/prototype/prototype.tokens.css"
-        - "Poppins desde Google Fonts, declarada en index.html (sólo la pantalla de la v3)"
+        - "Gilroy, embebida desde src/assets/fonts en globals.css (sin recursos externos)"
       internal_dependencies:
         - "La pantalla de Fulfillment importa de v3/components el navbar, el footer, los controles de formulario y el botón; extraerla implica llevarlos"
         - "El formulario lee el caso de uso simulado de prototype/components/simulation.ts; fuera de PrototypeChrome el contexto devuelve 'happy' y se comporta como en producción"
@@ -261,10 +275,16 @@ modules:
         - "La vuelta al Hub está fija en PrototypeChrome, no se recibe por configuración"
       module_guide: "documentation/04-REPLICA-LANDING.md"
   presentation:
-    status: absent
-    route: null
-    path: "presentation"
-    children: []
+    status: review
+    route: "/presentacion"
+    path: "src/modules/presentation"
+    notes: "Landing del módulo (React, patrón ModuleLayout) con un CTA que abre el deck. El deck en sí (public/presentacion/presentacion.html) es un HTML autocontenido — CSS y JS inline, sin dependencias externas salvo Gilroy local — servido como archivo estático bajo la misma URL y el mismo build. No es una ruta de React ni comparte el router de la SPA; se abre en una pestaña nueva."
+    children:
+      - name: "Fulfillment: del requerimiento a la pantalla"
+        route: "/presentacion/presentacion.html"
+        path: "public/presentacion/presentacion.html"
+        status: review
+        note: "10 slides. Alcance acotado el 2026-09-14 a pedido del usuario: el deck habla SÓLO del requerimiento y de la propuesta final. El Hub, los módulos y la documentación son el andamiaje de la maqueta y quedaron fuera. Capturas reales del prototipo (public/presentacion/assets/screens/), tomadas con Chrome headless. Sin validar por el usuario todavía."
 
 figma:
   status: partial
@@ -289,6 +309,8 @@ delivery:
   public_url: "https://formulario-ff.vercel.app"
   status: deployed
   last_verified: "2026-09-14"
-  pending_push: "Ajustes posteriores a 17ae77a: imagen del hero con object-fit: cover; nuevo orden de los campos (rubro donde estaba el teléfono); color de foco de inputs y selects con --border-focus; texto debajo de 'Enviar'; retiro de las versiones v1 y v2 con todo lo que arrastra (rutas, documento 08-PROPUESTA-V2.md, tokens --ff- sin uso, documentación reescrita); menú del prototipo con panel de casos de uso; nuevos límites de longitud del formulario. Pendiente de decidir: el asset 'banner ff formulario.png' cambió en disco (4,7 MB → 5,4 MB) fuera de esta sesión, sin confirmar si es intencional — no está incluido en el commit hasta que el usuario lo confirme."
+  head_commit: "bd1a0a2"
+  pending_push: "Cambios locales sin commitear (2026-09-14): módulo Presentación completo — src/modules/presentation/, public/presentacion/ (deck + capturas + fuentes copiadas), router.tsx, hub.modules.ts, y la corrección del bloque fijo obsoleto en HubPage.tsx/.module.css. No se commiteó ni pusheó: se pide explícitamente antes de tocar git."
+  pending_push_notes: "main y origin/main siguen en bd1a0a2, que es lo que sirve hoy la URL pública. Los cambios de esta sesión son sólo locales."
   create_vercel_project: false
   notes: "El repositorio ya tenía la integración de Vercel conectada (deploy automático en cada push a main). vercel.json hace rewrite a index.html porque, sin él, recargar una ruta interna de la SPA daba 404."

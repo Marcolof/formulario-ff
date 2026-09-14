@@ -6,10 +6,65 @@ un changelog de cada commit (eso vive en `documentation/05-REGISTRO-DE-CAMBIOS.m
 
 **Última actualización:** 2026-09-14.
 
-**Estado de git:** todo lo de más abajo está commiteado y pusheado a `main`
-(`35c3309`). No hay cambios pendientes en el árbol de trabajo.
+**Estado de git:** el último commit pusheado a `main` es `bd1a0a2` (la URL pública sirve ese
+mismo commit, verificado el 14-09-2026). **Hay cambios locales sin commitear**, de la misma
+fecha: el módulo Presentación completo (ver más abajo). No se commiteó ni pusheó — se pide
+explícitamente antes de tocar git.
 
-**Cambios recientes (commiteados):**
+**Módulo nuevo — Presentación (14-09-2026, sin commitear):**
+
+Primer pedido de una nueva sesión, tras releer el estado del proyecto (hubo un traspaso de
+cuenta). Se invocó la skill `presentacion-proyecto` y se agregó un módulo "Presentación" al
+Hub, siguiendo el mismo patrón que Prototipo y Documentación (`ModuleLayout`).
+
+- El **deck** (`public/presentacion/presentacion.html`) es un HTML autocontenido — CSS y JS
+  inline, sin dependencias externas salvo Gilroy (cargada localmente desde
+  `public/presentacion/assets/fonts/`, copiada de `src/assets/fonts/`) — **no es una ruta de
+  React**: se sirve como archivo estático de Vite (`public/`), bajo la misma URL y el mismo
+  build que el resto del proyecto. Se abre en una pestaña nueva desde
+  `/presentacion` → botón "Abrir la presentación".
+- **ALCANCE — leer antes de tocar el guion.** El deck habla **únicamente del requerimiento y
+  de cómo se ven las propuestas finales**. El Hub, las landings de módulo y la documentación
+  son el **andamiaje de la maqueta** con la que le mostramos el trabajo al cliente y al
+  equipo: **no son tema de la presentación y no deben volver a aparecer en los slides.** Es un
+  pedido explícito del usuario (14-09-2026), que hizo pasar el deck de 16 a **10 slides**.
+- Los 10 slides: portada · el requerimiento · el flujo esperado (4 momentos) · los datos que
+  pide el formulario · divider "La propuesta final" · el acceso desde la landing · la página
+  (hero y servicios) · el formulario · beneficios y cierre · lo que falta definir. Las
+  capturas son del prototipo real corriendo en `localhost:4320` (Chrome headless, no
+  simuladas).
+- **Dos trucos de captura, por si hay que rehacerlas:**
+  - *La pantalla de Fulfillment* usa **una sola captura de página completa**
+    (`fulfillment-full.png`, 1440×**2323**, con `--virtual-time-budget` alto para que el
+    fade-in por scroll de `useReveal` termine antes de la captura), reutilizada en tres slides
+    con `object-position: top / center 52% / bottom`. Cada posición muestra una "ventana" de
+    900px reales dentro de la imagen completa.
+    **Ojo:** si cambia el alto de esa pantalla hay que rehacer la captura **y** recalcular el
+    porcentaje del medio. La cuenta: para centrar una franja que empieza en `y` y mide
+    `alto_franja`, sobre una imagen de alto `H`, el porcentaje es
+    `(y - 450 + alto_franja / 2) / (H - 900)`. Ya pasó dos veces: 2200px → 54%, y
+    2323px → 52% cuando creció el panel de beneficios.
+  - *El acceso en la landing* (`landing-acceso.png`) se recortó con un HTML temporal en
+    `public/` que embebe la ruta en un `<iframe>` de alto completo desplazado con `top`
+    negativo, dentro de una caja de 1440×900 con `overflow:hidden`; después se captura ese
+    archivo y se lo borra. Sirve para recortar cualquier franja de una página larga sin
+    editor de imágenes y sin una captura de varios MB.
+- **Se encontró y corrigió un bug real del template de la skill:** el deck sólo releía
+  `location.hash` una vez, al cargar — un cambio de hash sin recarga completa (pegar otra URL
+  con `#N` en la barra, o `location.hash = ...` por script) no movía el slide. Se agregó un
+  listener de `hashchange` en el script del deck. Si se vuelve a usar `deck-template.html` de
+  la skill en otro proyecto, tiene el mismo bug.
+- **Se encontró y corrigió un bug real en el Hub** (no relacionado con la skill): `HubPage.tsx`
+  tenía un bloque de texto fijo ("Todavía sin contenido — Presentación. La carpeta existe
+  pero...") que no salía de los datos de `hub.modules.ts`, sino hardcodeado. Al agregar el
+  módulo, ese texto quedó falso — se retiró junto con sus estilos en `HubPage.module.css`.
+- Registrado en `.project/project.yaml` → `modules.presentation` y `sources` (fuente
+  `capturas-presentacion`).
+- **Pendiente:** el guion y las capturas siguen sin validar por el usuario. Las dos capturas
+  pesan 888 KB en total — sin optimizar, como el resto de las imágenes del proyecto (ver la
+  nota sobre `banner ff formulario.png` más abajo).
+
+**Cambios recientes (commiteados, hasta `bd1a0a2`):**
 
 - **Limpieza grande (14-09-2026): se borraron las versiones v1 y v2; queda sólo la v3.** El
   usuario lo pidió y ya tenía copia de seguridad. Lo que la v3 usaba se movió con `git mv` a
@@ -53,7 +108,8 @@ un changelog de cada commit (eso vive en `documentation/05-REGISTRO-DE-CAMBIOS.m
   real (`computer` → `left_click`), no con `getComputedStyle` después de un `.focus()` por JS.
 - **El texto debajo de "Enviar"** (`form.disclaimer`, dato compartido) cambió de "Tus datos
   están protegidos." a "La información ingresada será almacenada únicamente para gestionar tu
-  solicitud y poder contactarte."
+  solicitud y poder contactarte.", y después pasó de **11px a 14px** (`.disclaimer` en
+  `FulfillmentForm.module.css`).
 
 - El texto de confirmación del formulario ya no menciona "de Correo Argentino" (dato
   compartido en `fulfillment.content.ts`).
@@ -102,12 +158,14 @@ con acceso a Fulfillment y una página con formulario de contacto. Cliente: Corr
 
 - **Local:** verificado (`npm run typecheck` y `npm run build` limpios; navegación, formulario
   y responsive probados en el navegador).
-- **Git:** el último commit subido es `35c3309`. Árbol de trabajo limpio, nada pendiente de
-  commitear. No hacer commit ni push sin que el usuario lo pida explícitamente ("subir a
-  github" es la frase que usa).
+- **Git:** el último commit subido es `bd1a0a2`. `main` y `origin/main` apuntan al mismo
+  commit y el árbol de trabajo está limpio: nada pendiente de commitear ni de pushear. No
+  hacer commit ni push sin que el usuario lo pida explícitamente ("subir a github" es la
+  frase que usa).
 - **Remoto:** `https://github.com/Marcolof/formulario-ff`, rama `main`. Deploy automático
   en Vercel (`formulario-ff.vercel.app`, proyecto `marcos-projects-c934fa75/formulario-ff`)
-  en cada push a `main`.
+  en cada push a `main`. **La URL pública está al día:** el 14-09-2026 se verificó que sirve
+  `bd1a0a2` (el texto debajo de "Enviar" ya se ve a 14px).
 - **Figma:** el conector funciona. El archivo es "Mi Correo 2.0"
   (fileKey `wN6vAlF1TgGc2AJdJJvsAU`), página "GDD-2735 - Formulario FF (Fulfillment)". El nodo
   vigente es **`13284:7345`** (la pantalla de Fulfillment, dibujada a 1010px de ancho); el
@@ -125,6 +183,8 @@ Monorepo, un solo build, una sola URL, puerto local **4320**.
 /prototipo/v3/fulfillment  → pantalla de Fulfillment con front propio
 /documentacion             → índice de documentos .md
 /documentacion/:docId      → un documento
+/presentacion              → landing del módulo Presentación (ruta de React)
+/presentacion/presentacion.html → el deck en sí: HTML estático servido desde public/, NO una ruta de React
 *                          → cualquier otra ruta (las viejas /v1 y /v2) vuelve al Hub
 ```
 
@@ -156,9 +216,9 @@ Para entender una entrada vieja del registro de cambios: lo que decía `v1/compo
   - La landing es la réplica de producción, sin cambios visuales; lo único que cambia es el
     destino del acceso a Fulfillment.
   - Esa pantalla es **un front distinto del sistema visual de la landing**: navy `#14245d` y
-    `#192b69`, tipografía **Poppins**, íconos de Lucide en círculos, hero con imagen propia,
-    servicios en dos columnas, formulario a dos columnas, caja de beneficios y cierre.
-    Conserva la barra superior y el footer de la landing.
+    `#192b69`, íconos de Lucide en círculos, hero con imagen propia, servicios en dos
+    columnas, formulario a dos columnas, caja de beneficios y cierre. La **tipografía es
+    Gilroy**, la del sistema (ver abajo). Conserva la barra superior y el footer de la landing.
   - Está calcada del diseño de Figma `13284:7345`, dibujado a 1010px, pero el **ancho máximo
     del contenido es 1320px** (el mismo que la landing): a 1010px se veía angosto en pantallas
     grandes (feedback del usuario). Las columnas de servicios e inputs son grillas fijas a 2,
@@ -221,9 +281,11 @@ Para entender una entrada vieja del registro de cambios: lo que decía `v1/compo
 - Íconos: **Lucide** (`lucide-react`), nunca dibujar SVGs propios ni "regenerar" íconos. El
   Figma nombra cada capa con el nombre del ícono de Lucide, así que la correspondencia sale de
   ahí.
-- Fuente: **Gilroy** en todo el proyecto. La excepción es la pantalla de Fulfillment de la v3,
-  que usa **Poppins** por diseño (se carga desde Google Fonts en `index.html`). Ubuntu es de
-  otro proyecto (MLOF Color) — no confundir.
+- Fuente: **Gilroy en todo el proyecto, sin excepciones**, embebida desde `src/assets/fonts`.
+  El diseño de Figma de la pantalla de Fulfillment pide Poppins, y durante un tiempo se cargó
+  desde Google Fonts; el usuario confirmó el 14-09-2026 que la definitiva es la del sistema,
+  así que se descartó. **El proyecto no depende de ningún recurso externo** — no vuelvas a
+  sumar una fuente de CDN. Ubuntu es de otro proyecto (MLOF Color) — no confundir.
 - No sumar dependencias para resolver algo que el navegador ya hace (`<dialog>` nativo,
   eventos de puntero, CSS Grid).
 - Antes de cambiar código existente, correr `npm run typecheck` y, si el cambio es visible,
@@ -233,8 +295,8 @@ Para entender una entrada vieja del registro de cambios: lo que decía `v1/compo
 ## Dónde seguir (recomendado, no obligatorio)
 
 1. Confirmar con el área los cuatro límites de longitud que contradicen al documento formal.
-2. Confirmar si Poppins es definitiva o un borrador del diseño de la v3.
-3. Optimizar `banner ff formulario.png`: pesa 5,4 MB, mucho para web.
+2. Optimizar `banner ff formulario.png`: pesa 5,4 MB, mucho para web.
+3. Validar con el usuario el guion del deck de presentación.
 4. Releer `.project/project.yaml` → `knowledge.open_questions` antes de tomar decisiones de
    producto nuevas: ahí está la lista viva de lo que falta definir.
 

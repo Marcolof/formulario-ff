@@ -21,7 +21,7 @@ proyecto), **hipótesis** (decisión de implementación a validar) o **pendiente
 |---|---|---|---|
 | Toda la landing | — | **Idéntica**, los mismos componentes sin variantes | Confirmado |
 | Destino del acceso a Fulfillment | La página en una columna, hoy retirada | `/prototipo/v3/fulfillment`, una pantalla propia | Confirmado |
-| Pantalla de Fulfillment | Sobre el sistema visual de la landing | Front propio: navy, Poppins, íconos en círculo | Confirmado |
+| Pantalla de Fulfillment | Sobre el sistema visual de la landing | Front propio: navy e íconos en círculo, con la tipografía del sistema | Confirmado |
 | Barra superior y footer | — | **Se mantienen** los de la landing | Confirmado |
 
 ## La pantalla
@@ -36,7 +36,9 @@ De arriba hacia abajo, como en el diseño:
    cada una. Cada servicio lleva su ícono en un círculo navy de 78px.
 3. **Formulario** — tarjeta blanca con los campos en dos columnas.
 4. **Beneficios** — caja con borde amarillo y la etiqueta "Beneficios para tu negocio" montada
-   sobre el borde superior; adentro, cuatro beneficios con ícono en círculo amarillo.
+   sobre el borde superior; adentro, cuatro beneficios con ícono en círculo amarillo, título
+   en 16px bold y detalle en 14px medium. El diseño dibuja ese detalle en 13px regular: se
+   subió por legibilidad, a pedido del usuario (14-09-2026).
 5. **Cierre** — franja navy con "Nos ocupamos de todo, vos enfocate en hacer crecer tu
    negocio."
 
@@ -153,7 +155,7 @@ cada elemento sólo anima una vez, la primera vez que aparece.
 | Decisión | Por qué | Estado |
 |---|---|---|
 | **Ancho máximo de 1320px** para el contenido | El diseño está dibujado a 1010px, pero a ese ancho en pantallas grandes el contenido quedaba angosto con mucho aire a los costados (feedback del usuario, 2026-09-14). Las columnas de servicios e inputs son grillas fijas a 2 —no se reacomodan solas—, así que ensanchar el máximo sólo ensancha las columnas, no rompe el layout. Se igualó al ancho de la landing (`--landing-container-max`) para que las pantallas del producto se sientan consistentes | Confirmado (ajustado por feedback) |
-| **Poppins** en hero, encabezados de columna y beneficios | Es lo que pide el diseño. Se carga desde Google Fonts y cae en Gilroy si no está disponible. El resto del producto usa sólo Gilroy | Hipótesis: conviene confirmar que no sea una tipografía de borrador |
+| **Gilroy** en toda la pantalla, también en hero, encabezados de columna y beneficios | El diseño de Figma los dibuja con **Poppins**, pero el usuario confirmó (14-09-2026) que la tipografía definitiva es la del sistema. Se descartó Poppins y con ella la carga de Google Fonts: el proyecto ya no depende de ningún recurso externo. Los pesos que usa la pantalla (400, 500 y 700) existen en la Gilroy embebida, así que no hay simulación sintética | **Confirmado** (14-09-2026) |
 | **Servicios agrupados** por columna en los datos | En el diseño son seis elementos que se acomodan en dos columnas. Modelados así, en mobile cada encabezado queda con sus tres servicios en vez de mezclarse | Hipótesis |
 | Navy `#14245d` y `#192b69` literales | Son los del diseño y no coinciden con los de la marca en `tokens.css`. Se dejan explícitos en la capa de tokens de la pantalla en vez de forzarlos contra tokens que no les corresponden | Hipótesis |
 | El CTA de la landing es un enlace, no un botón | Ahora navega a una pantalla: tiene que poder abrirse en otra pestaña y copiarse | Confirmado |
@@ -186,7 +188,6 @@ No cambia ninguna regla de validación. Ver
 
 ## Qué queda por validar
 
-- La tipografía Poppins, que no forma parte del sistema actual.
 - Qué hacer con la imagen del hero en mobile: hoy simplemente no se muestra.
 - El texto del mensaje de confirmación.
 - Los tres límites de longitud que contradicen al documento formal (64 caracteres y número de

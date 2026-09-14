@@ -12,7 +12,8 @@ Formulario FF claude/
 ├── index.html · vite.config.ts · package.json   # build único en la raíz
 ├── vercel.json                  # rewrite a index.html: los deep links no dan 404
 ├── documentation/               # módulo de documentación: los .md editables
-├── presentation/                # vacío por ahora
+├── public/presentacion/         # el deck de presentación: HTML autocontenido +
+│                                # capturas + fuentes, servido tal cual por Vite
 ├── reference/                   # material de origen, fuera del build
 │   └── landing-original.html    # el HTML guardado de la landing, sólo para consulta
 └── src/
@@ -36,7 +37,8 @@ Formulario FF claude/
         │       ├── LandingPage.tsx
         │       └── fulfillment/ # front propio, con su capa de tokens y el hook del
         │                        # formulario
-        └── documentation/       # lector de los .md de documentation/
+        ├── documentation/       # lector de los .md de documentation/
+        └── presentation/        # landing del módulo (React); el deck en sí no vive acá
 ```
 
 ## Mapa de rutas
@@ -49,6 +51,8 @@ Formulario FF claude/
 | `/prototipo/v3/fulfillment` | Pantalla de Fulfillment con front propio | prototype |
 | `/documentacion` | Índice de documentos | documentation |
 | `/documentacion/:docId` | Un documento, con opción de descargar el `.md` | documentation |
+| `/presentacion` | Landing del módulo: qué es el deck y un botón para abrirlo | presentation |
+| `/presentacion/presentacion.html` | El deck en sí. **No es una ruta de React**: es un archivo estático (`public/presentacion/presentacion.html`), servido tal cual por Vite. Se abre en una pestaña nueva | — |
 
 Queda **una sola propuesta, la v3** — ver [08-PROPUESTA-V3.md](08-PROPUESTA-V3.md). La v1
 (layout original con el formulario en una columna) y la v2 (carrusel de servicios en panel
@@ -57,6 +61,13 @@ sigue siendo `/prototipo/v3` para no romper enlaces ya compartidos, y porque el 
 así la propuesta.
 
 Las rutas viejas no dan error: el catch-all del router las manda al Hub.
+
+**El deck de presentación es la única excepción a "todo es una ruta de React".** Vive en
+`public/presentacion/presentacion.html`: un HTML autocontenido (CSS y JS inline, generado con
+la skill `presentacion-proyecto`), servido como archivo estático por Vite. Queda bajo la misma
+URL y el mismo build — no es un despliegue aparte — pero abrirlo hace una navegación de
+página completa, no un cambio de ruta de la SPA. Cada slide tiene su propio botón "Volver al
+hub" que apunta a `/`.
 
 Todas las rutas son deep links: se pueden abrir directamente y recargar. Desde cualquier
 punto hay regreso al Hub — en las landings de módulo por el breadcrumb, y sobre el prototipo
@@ -129,9 +140,11 @@ Fulfillment de la v3 es la excepción: tiene su propio lenguaje visual y por eso
 que sólo alcanza a esa página. Como su barra superior y su footer sí son los de la landing, esa
 página declara los dos ámbitos a la vez.
 
-**Tipografía:** Gilroy en todo el proyecto, embebida desde `src/assets/fonts`. La única
-excepción es la pantalla de Fulfillment de la v3, cuyo diseño pide **Poppins**; se carga desde
-Google Fonts en `index.html` y cae en Gilroy si no está disponible.
+**Tipografía:** Gilroy en todo el proyecto, embebida desde `src/assets/fonts`. Hasta el
+14-09-2026 la pantalla de Fulfillment era la excepción: su diseño de Figma pide **Poppins**,
+que se cargaba desde Google Fonts. Ese día el usuario confirmó que la tipografía definitiva es
+la del sistema, así que se descartó Poppins. **Ya no hay excepciones ni recursos externos:** el
+proyecto entero se sirve con sus propios archivos.
 
 ## Levantarlo
 
