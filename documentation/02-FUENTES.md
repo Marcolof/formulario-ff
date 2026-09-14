@@ -54,12 +54,14 @@ registra acá con su procedencia.
 ## 5. Figma — "Mi Correo 2.0"
 
 - **Archivo:** `wN6vAlF1TgGc2AJdJJvsAU`, página "GDD-2735 - Formulario FF (Fulfillment)".
-- **Qué se tomó:** el diseño de la página de Fulfillment (nodo `13217:34295`), hecho por el
-  propio equipo del proyecto. Es la fuente de verdad visual de esa pantalla: de ahí salen su
-  layout, sus textos y el tratamiento de los controles del formulario.
-- Los íconos son del set Lucide de la librería "Design System" del mismo archivo.
-- **Limitación actual:** el conector de Figma pide volver a autenticarse, así que hoy no se
-  puede leer ni escribir en el archivo.
+- **Qué se tomó:**
+  - **Nodo `13217:34295`** — la página de Fulfillment de las versiones 1 y 2. De ahí salen su
+    layout, sus textos y el tratamiento de los controles del formulario.
+  - **Nodo `13284:7345`** — la pantalla de Fulfillment de la versión 3, un front propio
+    dibujado a 1010px de ancho. De ahí salen su estructura, sus colores, su tipografía y el
+    nombre de cada ícono. Ver [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md).
+- Los íconos son del set Lucide de la librería "Design System" del mismo archivo: el diseño
+  nombra cada capa con el nombre del ícono de Lucide, así que la correspondencia es directa.
 
 ## 6. Imagen de referencia de la versión 2
 
@@ -71,12 +73,14 @@ registra acá con su procedencia.
   así que las medidas se derivaron de la imagen y de los tokens existentes. Conviene
   contrastarlas al recuperar el acceso.
 
-## 7. Flyer de Fulfillment
+## 7. Imágenes de Fulfillment
 
-- **Archivo:** `src/assets/img/Fulfillment.jpeg`, provisto por el usuario el 14/09/2026.
-  1010 × 1600 px, 285 KB.
-- **Qué es:** la pieza gráfica de Fulfillment con la marca "Próximamente". Es todo el
-  contenido de la versión 3: al tocar el acceso, es lo único que se muestra.
-- Se usa tal cual, sin retocar. Dice "Gestión depedidos" donde debería decir "Gestión de
-  pedidos" — está anotado en [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md) para avisar al área que
-  lo produjo.
+Las dos las entregó el usuario el 14/09/2026 y viven en `src/assets/img/`.
+
+- **`banner ff formulario.png`** — 2765 × 2248 px, 4,7 MB. Es la imagen del hero de la
+  pantalla de la versión 3. Se usa tal cual; **conviene optimizarla** antes de cualquier
+  publicación real, porque para una web es muy pesada.
+- **`Fulfillment.jpeg`** — 1010 × 1600 px, 285 KB. El flyer completo del servicio, con la
+  marca "Próximamente". Lo usaba la primera propuesta de la v3, que quedó descartada, así que
+  hoy **ningún front lo referencia**. Se conserva por si se necesita más adelante. Dice
+  "Gestión depedidos" donde debería decir "Gestión de pedidos".

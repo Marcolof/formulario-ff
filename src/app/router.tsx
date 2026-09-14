@@ -8,6 +8,7 @@ import { PrototypeHome } from '@/modules/prototype/PrototypeHome'
 import { FulfillmentPage } from '@/modules/prototype/v1/fulfillment/FulfillmentPage'
 import { LandingPage } from '@/modules/prototype/v1/LandingPage'
 import { LandingPage as LandingPageV2 } from '@/modules/prototype/v2/LandingPage'
+import { FulfillmentPage as FulfillmentPageV3 } from '@/modules/prototype/v3/fulfillment/FulfillmentPage'
 import { LandingPage as LandingPageV3 } from '@/modules/prototype/v3/LandingPage'
 
 import { RootLayout } from './RootLayout'
@@ -52,13 +53,21 @@ export const router = createBrowserRouter([
           </PrototypeChrome>
         ),
       },
-      // La v3 no tiene ruta de Fulfillment: su acceso abre el flyer en un visor
-      // sobre la propia landing (`#fulfillment`).
       {
         path: '/prototipo/v3',
         element: (
           <PrototypeChrome>
             <LandingPageV3 />
+          </PrototypeChrome>
+        ),
+      },
+      // La v3 tiene pantalla propia de Fulfillment: un front distinto del de la
+      // landing, no la página compartida por la v1 y la v2.
+      {
+        path: '/prototipo/v3/fulfillment',
+        element: (
+          <PrototypeChrome>
+            <FulfillmentPageV3 />
           </PrototypeChrome>
         ),
       },

@@ -20,17 +20,19 @@ origin:
     import_map: null
 
 strategy:
-  current_focus: "Tres propuestas de acceso a Fulfillment listas para comparar: v1 (tarjeta en la grilla de servicios + página con formulario), v2 (carrusel en panel navy) y v3 (landing igual a la v1 y flyer del cliente en un visor, sin formulario)"
+  current_focus: "Tres propuestas de acceso a Fulfillment listas para comparar: v1 (tarjeta en la grilla de servicios), v2 (carrusel en panel navy) y v3 (pantalla de Fulfillment con front propio, según Figma 13284:7345). Las tres terminan en el mismo formulario"
   intervention: "greenfield-local"
   recommended_next:
-    - "Elegir con el área cuál de las tres versiones se adopta; la v3 no capta contactos, así que no cumple sola el objetivo del requerimiento formal"
+    - "Elegir con el área cuál de las tres versiones se adopta"
+    - "Confirmar si la tipografía Poppins de la v3 es definitiva o un borrador del diseño: es la única fuente fuera del sistema actual"
     - "Validar con el área solicitante los textos breves, el orden y el destacado de las tarjetas del carrusel de la v2"
     - "Validar el texto del mensaje de confirmación del formulario"
-    - "Llevar v2 o v3 a Figma si se quiere documentar el diseño; el conector de Figma requiere volver a autenticarse"
+    - "Optimizar 'banner ff formulario.png' (4,7 MB) antes de cualquier publicación real"
   deferred:
     - "Menú de usuario logueado de la landing (oculto en el DOM sin sesión)"
     - "Scripts de terceros: GTM, Meta Pixel, chat de Wcentrix"
     - "Qué muestra '¿Dónde encuentro mi código de seguimiento?' (en la landing original tampoco abre nada)"
+    - "Qué hacer con la imagen del hero de la v3 en mobile: por ahora se oculta"
 
 knowledge:
   confirmed:
@@ -41,26 +43,30 @@ knowledge:
     - "El bundle original de MiCorreo sólo renderiza si se lo sirve en la ruta /landing"
     - "Campos, obligatoriedad y validaciones del formulario salen del documento formal 'Solicitud Inicial_Formulario FF' v1.0. 'Número de cliente' aparece sólo si responde 'Sí' y no es obligatorio"
     - "El listado de rubros es el desplegable real de MiCorreo, provisto por Correo Argentino: no se puede inventar ni editar por cuenta propia (2026-09-11)"
-    - "La v2 sólo cambia la landing. El hero se mantiene; 'Gestionar Devolución' y 'Conocé nuestros servicios' pasan a un carrusel de accesos con tarjetas de título, descripción breve, CTA e ícono; la devolución abre un modal con todo su contenido; 'Seguimiento de envíos' y 'Sucursales' quedan en su lugar (pedido del usuario, 2026-09-11)"
-    - "Hay una sola página de Fulfillment para las dos versiones que la usan (v1 y v2)"
+    - "La v2 sólo cambia la landing. El hero se mantiene; 'Gestionar Devolución' y 'Conocé nuestros servicios' pasan a un carrusel de accesos; la devolución abre un modal con todo su contenido; 'Seguimiento de envíos' y 'Sucursales' quedan en su lugar (pedido del usuario, 2026-09-11)"
     - "Rediseño del bloque central de la v2 según imagen de referencia del usuario (2026-09-11): el carrusel conserva el título 'Conocé nuestros servicios' dentro de un panel navy redondeado; la tarjeta lleva el ícono en columna propia a la izquierda y la etiqueta en flujo; 'Accesos directos' pasa a llamarse 'Accesos rápidos' con Sucursales primero, tarjeta blanca y CTA subrayado; los títulos de sección de la v2 van sin reglas laterales"
     - "En la v2 sólo Fulfillment va destacado. La imagen de referencia muestra también 'Mis Comunicaciones Digitales' con '¡Nuevo!' y 'Solicitar'; se decidió no replicarlo porque el requerimiento formal sólo presenta Fulfillment como novedad (2026-09-11)"
     - "El carrusel mantiene las 7 tarjetas: 'limpiar los accesos' se resolvió como rediseño visual, no como recorte (2026-09-11)"
-    - "La v1 no se duplica para las propuestas: los componentes compartidos reciben props opcionales con el valor de la landing original por defecto, y la piel propia de cada versión se aísla con un data-variant"
-    - "La v3 tiene la landing idéntica a la v1 y el CTA de Fulfillment abre una imagen estática en un visor a alto de pantalla, con cerrar flotante arriba a la derecha, zoom con rueda, pinch de trackpad y gestos típicos también en responsive (pedido del usuario, 2026-09-14)"
-    - "La v3 no tiene pantalla propia de Fulfillment ni formulario: el acceso muestra sólo el flyer"
+    - "La v1 no se duplica para las propuestas: los componentes compartidos reciben props opcionales con el valor de la landing original por defecto, y la piel propia de cada versión se aísla con un atributo"
+    - "La v3 se reformuló por completo el 14/09/2026: se descartó el visor con el flyer estático y pasó a ser un front integrado con pantalla propia de Fulfillment, según el diseño de Figma 13284:7345"
+    - "La pantalla de la v3 mantiene la barra de navegación superior y el footer de la landing; todo lo demás es un front propio (navy #14245d y #192b69, Poppins, íconos en círculo)"
+    - "En la v3 el formulario va a dos columnas en escritorio y a una sola en responsive, con la misma funcionalidad de las otras versiones, y al enviarse muestra un mensaje de éxito con ícono que conserva la altura de la tarjeta (pedido del usuario, 2026-09-14)"
+    - "En la v3 la imagen del hero no se muestra en pantallas de hasta 900px: queda sólo el mensaje"
+    - "Hay dos pantallas de Fulfillment: la compartida por la v1 y la v2, y la propia de la v3"
+    - "v3: el ancho máximo del contenido se amplió de 1010px (el del diseño) a 1320px (el de la landing), porque a 1010px se veía angosto en pantallas grandes (feedback del usuario, 2026-09-14). Las columnas de servicios e inputs son grillas fijas a 2, así que el cambio sólo las ensancha"
+    - "v3: 'Número de cliente' se corrigió para aparecer justo debajo de '¿Ya sos cliente de MiCorreo?' al responder 'Sí', en vez de sumarse arriba al grid de inputs (feedback del usuario, 2026-09-14)"
+    - "v3: los encabezados de columna ('¿Qué incluye...' / 'Distribución rápida...') pasaron de 16px a 20px, que es lo que pedía el diseño (feedback del usuario, 2026-09-14)"
   assumptions:
-    - "Los assets de marca de Fulfillment (logo e ilustración) son provisorios: se dibujaron con la paleta de MiCorreo hasta que el cliente entregue los oficiales"
+    - "Los assets de marca de Fulfillment (logo e ilustración) de la v1 son provisorios: se dibujaron con la paleta de MiCorreo hasta que el cliente entregue los oficiales"
     - "No se crea una landing institucional paralela; sí una página de Fulfillment dentro de MiCorreo"
     - "v2: los textos breves de las tarjetas se derivaron del copy existente de la landing; no son textos aprobados"
-    - "v2: las medidas del rediseño (padding del panel, tamaño de ícono y de etiqueta) se derivaron de la imagen de referencia y de los tokens existentes, no del archivo de Figma, porque la cuenta actual no tiene acceso a él. Conviene contrastarlas al recuperar el acceso"
-    - "v2: Fulfillment va tercero en el carrusel, destacado con '¡Nuevo!' y CTA 'Solicitar', como en el wireframe"
-    - "v3: los valores del visor (250% en el doble toque, 600% de máximo, paso de los botones, oscurecido del fondo con el token del login) son criterio de diseño, no una definición del área"
-    - "v3: el flyer se toma como definitivo para prototipar, pero dice 'Próximamente' y tiene un error de tipeo ('Gestión depedidos'), así que probablemente sea una versión de trabajo"
-    - "La cifra 'Más de 3.000 negocios ya confían' del hero de Fulfillment está sin validar"
+    - "v2: las medidas del rediseño se derivaron de una imagen de referencia y de los tokens existentes, no del archivo de Figma. Conviene contrastarlas al recuperar el acceso"
+    - "v2: Fulfillment va tercero en el carrusel, destacado con '¡Nuevo!' y CTA 'Solicitar'"
+    - "v3: Poppins puede ser una tipografía de borrador del diseño; es la única fuera del sistema actual y se carga desde Google Fonts"
+    - "v3: los seis servicios se modelan agrupados por columna, y no como una lista que se acomoda sola, para que en mobile cada encabezado quede con sus propios servicios"
+    - "La cifra 'Más de 3.000 negocios ya confían' del hero de Fulfillment de la v1 está sin validar"
   open_questions:
-    - "Cuál de las tres propuestas de acceso a Fulfillment se adopta: v1 (tarjeta en la grilla de servicios), v2 (carrusel en panel navy) o v3 (flyer en visor)"
-    - "Si Fulfillment se comunica sólo como pieza informativa o si tiene que captar contactos: la v3 no tiene formulario"
+    - "Cuál de las tres propuestas de acceso a Fulfillment se adopta: v1 (tarjeta en la grilla de servicios), v2 (carrusel en panel navy) o v3 (pantalla con front propio)"
     - "Texto definitivo del mensaje de confirmación del formulario"
     - "Comportamiento ante error de envío, cuando exista backend"
 
@@ -91,9 +97,11 @@ sources:
   - id: figma-mi-correo
     kind: figma
     file_key: "wN6vAlF1TgGc2AJdJJvsAU"
-    node: "13217:34295"
+    nodes:
+      - "13217:34295 — página de Fulfillment de la v1 y la v2"
+      - "13284:7345 — pantalla de Fulfillment de la v3, dibujada a 1010px"
     access: read-write
-    used_for: "diseño de la página Fulfillment (fuente de verdad visual). Página 'GDD-2735 - Formulario FF (Fulfillment)'"
+    used_for: "fuente de verdad visual de las dos pantallas de Fulfillment. Página 'GDD-2735 - Formulario FF (Fulfillment)'. Los íconos son Lucide y el diseño nombra cada capa con el nombre del ícono"
   - id: pedido-v2
     kind: user-brief
     captured_at: "2026-09-11"
@@ -102,19 +110,26 @@ sources:
     kind: image
     access: read-only
     captured_at: "2026-09-11"
-    origin: "captura del Figma del usuario; la cuenta con la que se trabaja hoy no tiene acceso a ese archivo"
-    used_for: "rediseño del bloque central de la v2: panel navy, tarjeta con ícono a la izquierda, etiqueta en flujo, títulos sin reglas, renombre y orden de los accesos rápidos"
+    origin: "captura del Figma del usuario; la cuenta con la que se trabajaba ese día no tenía acceso al archivo"
+    used_for: "rediseño del bloque central de la v2"
   - id: pedido-v3
     kind: user-brief
     captured_at: "2026-09-14"
-    used_for: "alcance de la versión 3: landing igual a la v1 y flyer en visor con zoom y gestos"
+    used_for: "reformulación de la versión 3: front integrado con pantalla propia, hero con imagen oculta en responsive, íconos Lucide, formulario a dos columnas y mensaje de éxito que mantiene la altura"
+  - id: banner-fulfillment
+    kind: image
+    path: "src/assets/img/banner ff formulario.png"
+    access: read-only
+    captured_at: "2026-09-14"
+    origin: "provisto por el usuario del proyecto"
+    used_for: "imagen del hero de la pantalla de la v3. 2765x2248, 4,7 MB: conviene optimizarla"
   - id: flyer-fulfillment
     kind: image
     path: "src/assets/img/Fulfillment.jpeg"
     access: read-only
     captured_at: "2026-09-14"
     origin: "provisto por el usuario del proyecto"
-    used_for: "contenido completo de la v3: es lo único que se muestra al tocar Fulfillment. 1010x1600, 285 KB"
+    used_for: "era todo el contenido de la primera propuesta de la v3, hoy descartada. Ningún front lo referencia; se conserva por si se necesita"
 
 architecture:
   mode: monorepo-single-build
@@ -122,7 +137,7 @@ architecture:
   hub_route: "/"
   deep_linking: required
   module_style_isolation: required
-  notes: "Build único en la raíz, puerto 4320. El Hub es la home y cada módulo cuelga de una ruta interna. Tres ámbitos de estilo aislados: tokens.css (:root), shell.tokens.css ([data-shell]) y prototype.tokens.css ([data-module='prototype'])."
+  notes: "Build único en la raíz, puerto 4320. El Hub es la home y cada módulo cuelga de una ruta interna. Ámbitos de estilo aislados: tokens.css (:root), shell.tokens.css ([data-shell]), prototype.tokens.css ([data-module='prototype']) y fulfillment.tokens.css ([data-page='fulfillment-v3'])."
   routes:
     - path: "/"
       module: hub
@@ -140,7 +155,10 @@ architecture:
       note: "Mismo componente que /prototipo/v1/fulfillment"
     - path: "/prototipo/v3"
       module: prototype
-      note: "El hash #fulfillment abre el visor con el flyer. No hay /prototipo/v3/fulfillment: en esta propuesta Fulfillment no tiene pantalla propia"
+      note: "La landing de la v1 con el acceso a Fulfillment redirigido"
+    - path: "/prototipo/v3/fulfillment"
+      module: prototype
+      note: "Pantalla con front propio, distinta de la de la v1 y la v2"
     - path: "/documentacion"
       module: documentation
     - path: "/documentacion/:docId"
@@ -157,22 +175,23 @@ documentation:
 
 frontend:
   source_mode: from-scratch
-  scratch_input: "html reference + estilos computados de la landing en producción"
+  scratch_input: "html reference + estilos computados de la landing en producción; Figma para las pantallas de Fulfillment"
   module_path: "src/modules/prototype"
   canonical_source: "src/modules/prototype"
   external_sources:
     - "Envio internacional CLAUDE (tokens y fuentes)"
+    - "Google Fonts (Poppins, sólo para la pantalla de la v3)"
   change_log: "documentation/05-REGISTRO-DE-CAMBIOS.md"
   responsive:
     status: replicated
-    breakpoint: "900px (md de MUI); el original tiene además un escalón en 600px que la v1 no replica. El carrusel de la v2 suma un escalón en 1200px (4 → 3 tarjetas)"
+    breakpoint: "900px (md de MUI); el original tiene además un escalón en 600px que la v1 no replica. El carrusel de la v2 suma un escalón en 1200px y la pantalla de la v3 uno en 560px"
     navigation_strategy: "Hamburguesa con panel desplegable bajo el header, como el original"
     wide_table_strategy: not-applicable
 
 capabilities:
   prototype: "implementación directa con Vite + React + TypeScript + CSS Modules"
   documentation: "Markdown en documentation/"
-  figma-sync: "plugin de Figma (use_figma / get_design_context); hoy requiere volver a autenticar el conector"
+  figma-sync: "plugin de Figma (get_design_context / use_figma)"
 
 modules:
   hub:
@@ -219,7 +238,7 @@ modules:
         route: "/documentacion/propuesta-v2"
         path: "documentation/08-PROPUESTA-V2.md"
         status: draft
-      - name: "Versión 3 — Flyer en visor"
+      - name: "Versión 3 — Pantalla propia de Fulfillment"
         route: "/documentacion/propuesta-v3"
         path: "documentation/09-PROPUESTA-V3.md"
         status: draft
@@ -233,21 +252,26 @@ modules:
         route: "/prototipo/v1"
         path: "src/modules/prototype/v1"
         status: review
-      - name: "Página Fulfillment con formulario de contacto"
+      - name: "Página Fulfillment con formulario (v1 y v2)"
         route: "/prototipo/v1/fulfillment"
         path: "src/modules/prototype/v1/fulfillment"
         status: review
-        note: "Página de Fulfillment de las versiones 1 y 2: también se monta en /prototipo/v2/fulfillment. La v3 no la usa. Assets de marca provisorios; mensaje de confirmación pendiente de validación."
+        note: "También se monta en /prototipo/v2/fulfillment. Assets de marca provisorios; mensaje de confirmación pendiente de validación."
       - name: "Versión 2 — carrusel de servicios"
         route: "/prototipo/v2"
         path: "src/modules/prototype/v2"
         status: draft
-        note: "Compone la landing con componentes de la v1 (que reciben props opcionales, sin duplicarlos); agrega el carrusel en panel navy y el modal de devolución. Textos breves y orden pendientes de validación; medidas pendientes de contrastar contra Figma."
-      - name: "Versión 3 — flyer en visor"
+        note: "Compone la landing con componentes de la v1 (props opcionales, sin duplicarlos); agrega el carrusel en panel navy y el modal de devolución."
+      - name: "Versión 3 — landing con acceso redirigido"
         route: "/prototipo/v3"
         path: "src/modules/prototype/v3"
         status: draft
-        note: "La landing de la v1 sin cambios visuales; el CTA de Fulfillment abre el flyer del cliente en un visor con zoom y gestos, sin dependencias nuevas. No incluye formulario, así que sola no cumple el objetivo del requerimiento."
+        note: "La landing de la v1 sin cambios visuales; sólo cambia el destino del acceso a Fulfillment."
+      - name: "Pantalla Fulfillment de la v3"
+        route: "/prototipo/v3/fulfillment"
+        path: "src/modules/prototype/v3/fulfillment"
+        status: draft
+        note: "Front propio según Figma 13284:7345, con su capa de tokens. Reutiliza navbar, footer, inputs, botón y las reglas del formulario. Poppins y el ancho de 1010px pendientes de confirmar."
     extraction:
       required: true
       status: partial
@@ -256,14 +280,16 @@ modules:
         - "src/modules/prototype/v2/LandingPage.tsx"
         - "src/modules/prototype/v3/LandingPage.tsx"
         - "src/modules/prototype/v1/fulfillment/FulfillmentPage.tsx"
+        - "src/modules/prototype/v3/fulfillment/FulfillmentPage.tsx"
       standalone_command: "npm run dev"
       shared_dependencies:
         - "src/styles/tokens.css"
         - "src/styles/globals.css"
         - "src/modules/prototype/prototype.tokens.css"
+        - "Poppins desde Google Fonts, declarada en index.html (sólo la pantalla de la v3)"
       internal_dependencies:
         - "La v2 importa componentes y datos de la v1: extraer la v2 implica llevar también v1/components, v1/data y v1/fulfillment"
-        - "La v3 importa todos los componentes de la landing de la v1: extraerla implica llevar v1/components y v1/data"
+        - "La v3 importa los componentes de la landing de la v1 y, en su pantalla propia, el navbar, el footer, los controles de formulario y useContactForm"
       adapters: []
       pending:
         - "Sin index.ts público ni MODULE.md: el router importa las páginas directamente"
@@ -278,11 +304,11 @@ modules:
 figma:
   status: partial
   source: "Figma 'Mi Correo 2.0' (fileKey wN6vAlF1TgGc2AJdJJvsAU), página 'GDD-2735 - Formulario FF (Fulfillment)'"
-  sync: "La página Fulfillment está diseñada en Figma (13217:34295) y el prototipo la sigue. Ni la v2 ni la v3 tienen diseño en Figma."
+  sync: "Las dos pantallas de Fulfillment están diseñadas en Figma (13217:34295 y 13284:7345) y el prototipo las sigue. La landing de la v2 no tiene diseño en Figma."
 
 design_system:
   status: partial
-  source: "tokens.css heredado de Envio internacional CLAUDE + prototype.tokens.css propio del módulo; íconos Lucide del Design System"
+  source: "tokens.css heredado de Envio internacional CLAUDE + prototype.tokens.css propio del módulo; íconos Lucide del Design System. La pantalla de la v3 tiene su propia capa de tokens, fuera del sistema de la landing"
 
 delivery:
   local_first: true
@@ -300,4 +326,4 @@ delivery:
   last_verified: "2026-09-14"
   pending_push: none
   create_vercel_project: false
-  notes: "El repositorio ya tenía la integración de Vercel conectada (deploy automático en cada push a main). Se agregó vercel.json con rewrite a index.html porque, sin él, recargar una ruta interna de la SPA daba 404."
+  notes: "El repositorio ya tenía la integración de Vercel conectada (deploy automático en cada push a main). vercel.json hace rewrite a index.html porque, sin él, recargar una ruta interna de la SPA daba 404."

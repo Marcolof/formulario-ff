@@ -82,34 +82,35 @@ export function PrototypeHome() {
 
         <li className={styles.item}>
           <div className={styles.head}>
-            <h2 className={styles.title}>Versión 3 — flyer en visor</h2>
+            <h2 className={styles.title}>Versión 3 — pantalla propia de Fulfillment</h2>
             <span className={styles.draft}>Propuesta · borrador</span>
           </div>
           <p className={styles.summary}>
-            La opción de mínimo cambio: la landing es exactamente la de la versión 1 y el
-            acceso a Fulfillment abre el flyer del cliente en un visor a pantalla completa,
-            con zoom y arrastre. No hay pantalla propia ni formulario.
+            La landing es la de la versión 1, pero el acceso a Fulfillment lleva a una
+            pantalla con front propio, distinto del sistema visual de la landing: hero navy
+            con el banner, servicios en dos columnas, formulario a dos columnas y beneficios.
+            Conserva la barra superior y el footer.
           </p>
           <dl className={styles.facts}>
             <div>
               <dt>Cambia</dt>
-              <dd>Sólo el destino del CTA de Fulfillment</dd>
+              <dd>Sólo el destino del acceso a Fulfillment</dd>
             </div>
             <div>
-              <dt>Gestos</dt>
-              <dd>Rueda, pinch, arrastre, doble toque y teclado</dd>
+              <dt>Diseño</dt>
+              <dd>Figma "Mi Correo 2.0", nodo 13284:7345</dd>
             </div>
             <div>
-              <dt>Contenido</dt>
-              <dd>Imagen estática provista por el cliente</dd>
+              <dt>Formulario</dt>
+              <dd>Las mismas validaciones, en dos columnas</dd>
             </div>
           </dl>
           <div className={styles.actions}>
             <Link className={styles.primary} to="/prototipo/v3">
               Abrir versión 3
             </Link>
-            <Link className={styles.secondary} to="/prototipo/v3#fulfillment">
-              Abrir con el flyer
+            <Link className={styles.secondary} to="/prototipo/v3/fulfillment">
+              Ir directo a Fulfillment
             </Link>
           </div>
         </li>

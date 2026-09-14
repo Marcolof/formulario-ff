@@ -3,9 +3,9 @@
 Proyecto: **Formulario de contacto Fulfillment (Formulario FF)**
 Producto: **MiCorreo — Correo Argentino**
 Estado: tres versiones navegables de la landing — la v1 replica el layout original con el
-acceso a Fulfillment incorporado; la v2 propone un carrusel de servicios; la v3 abre el flyer
-del cliente en un visor. Las v1 y v2 llevan a la misma página con el formulario; la v3 no
-tiene formulario.
+acceso a Fulfillment incorporado; la v2 propone un carrusel de servicios; la v3 lleva a una
+pantalla de Fulfillment con front propio. Las tres terminan en un formulario con los mismos
+campos y las mismas validaciones.
 
 ## Documentos
 
@@ -19,7 +19,7 @@ tiene formulario.
 | [06-ARQUITECTURA-Y-RUTAS.md](06-ARQUITECTURA-Y-RUTAS.md) | Cómo está armado el monorepo, el Hub y el mapa de rutas. |
 | [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md) | Campos, validaciones, estados y textos del formulario de contacto. |
 | [08-PROPUESTA-V2.md](08-PROPUESTA-V2.md) | Versión 2: carrusel de servicios, modal de devolución y qué queda por validar. |
-| [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md) | Versión 3: el flyer del cliente en un visor a pantalla completa, con zoom y gestos. |
+| [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md) | Versión 3: la pantalla de Fulfillment con front propio, su hero, el formulario a dos columnas y los beneficios. |
 
 ## Módulos del proyecto
 

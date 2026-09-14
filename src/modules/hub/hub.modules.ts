@@ -17,7 +17,7 @@ export const modules: ModuleCard[] = [
     index: '01',
     title: 'Prototipo navegable',
     summary:
-      'Las versiones navegables de la landing. La versión 1 replica el layout original; la versión 2 propone un carrusel de servicios con Fulfillment destacado; la versión 3 abre el flyer del cliente en un visor.',
+      'Las versiones navegables de la landing. La versión 1 replica el layout original; la versión 2 propone un carrusel de servicios con Fulfillment destacado; la versión 3 lleva a una pantalla de Fulfillment con front propio.',
     meta: 'Versión 1 en revisión · versiones 2 y 3 en borrador',
     route: '/prototipo',
     state: 'review',

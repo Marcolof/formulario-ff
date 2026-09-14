@@ -1,0 +1,196 @@
+/* Formulario de la v3. La tarjeta y los controles son los del diseño de Figma
+ * (nodo 13284:7400), que usa los mismos inputs y el mismo botón que el resto del
+ * producto; lo propio de esta versión es el layout a dos columnas. */
+
+.card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+  padding: 28px;
+  border: var(--border-width-thin) solid var(--ff-field-border);
+  border-radius: var(--ffv3-radius-form);
+  background-color: var(--ffv3-surface);
+  box-shadow: var(--ff-card-shadow);
+}
+
+.title {
+  color: var(--ffv3-text);
+  font-size: var(--landing-font-size-title);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+}
+
+.subtitle {
+  color: var(--ffv3-hint);
+  font-size: var(--landing-font-size-meta);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+/* Dos columnas en escritorio; en mobile se apila todo. */
+.fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+/* Celular se pide como dos campos: código de área + número. */
+.phone {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.phoneArea {
+  flex: 0 0 108px;
+}
+
+.phoneNumber {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Aparece debajo de "¿Ya sos cliente?" cuando responde "Sí". Se acota al ancho
+ * de una columna del grid de arriba, en vez de ocupar todo el ancho de la
+ * tarjeta, para que se lea como parte de esa pregunta y no como un campo más
+ * de la lista. */
+.numeroCliente {
+  max-width: calc((100% - var(--space-4)) / 2);
+}
+
+/* La pregunta y sus opciones van en una línea, como en el diseño. */
+.clientRow {
+  padding: 0;
+  border: none;
+  margin: 0;
+}
+
+.clientInner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+
+.legend {
+  color: var(--ffv3-text);
+  font-size: var(--landing-font-size-body);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+}
+
+.options {
+  display: flex;
+  gap: var(--space-8);
+}
+
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--ffv3-text);
+  font-size: var(--landing-font-size-body);
+  line-height: normal;
+  cursor: pointer;
+}
+
+.radio input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--ffv3-navy);
+}
+
+.error {
+  margin-top: var(--space-1);
+  color: var(--feedback-danger-text);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-snug);
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+}
+
+.submit {
+  width: 100%;
+  max-width: 400px;
+}
+
+.disclaimer {
+  color: var(--ffv3-hint);
+  font-size: 11px;
+  line-height: normal;
+  text-align: center;
+}
+
+/* --- Estado de éxito -------------------------------------------------------
+ * Conserva la altura que tenía el formulario para que la página no salte al
+ * enviar: la altura se mide antes de reemplazar el contenido. */
+
+.success {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.successIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-full);
+  background-color: var(--ffv3-yellow);
+  color: var(--ffv3-navy);
+}
+
+.successTitle {
+  color: var(--ffv3-text);
+  font-size: var(--landing-font-size-title);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+}
+
+.successBody {
+  max-width: 460px;
+  color: var(--ffv3-hint);
+  font-size: var(--landing-font-size-body);
+  line-height: var(--line-height-normal);
+}
+
+@media (max-width: 900px) {
+  .card {
+    padding: var(--space-6);
+  }
+
+  .fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .clientInner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .numeroCliente {
+    max-width: none;
+  }
+
+  .submit {
+    max-width: none;
+  }
+}

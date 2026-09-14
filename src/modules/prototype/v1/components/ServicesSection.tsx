@@ -6,17 +6,14 @@ import styles from './ServicesSection.module.css'
 
 type Props = {
   /**
-   * CTAs que no navegan. El servicio indicado pasa a ser un botón que ejecuta
-   * esta acción en vez de un enlace; se anuncia como que abre un diálogo, que
-   * es para lo único que se usa hoy.
-   *
-   * Sin la prop —como en la v1— todos los CTA navegan igual que en la landing
-   * original. La v3 la usa para abrir el flyer de Fulfillment en un modal.
+   * Destinos que reemplazan al del dato. Sin la prop —como en la v1— cada CTA
+   * navega adonde dice `landing.content.ts`. La v3 la usa para llevar
+   * Fulfillment a su propia pantalla sin duplicar los datos de la landing.
    */
-  actions?: Partial<Record<ServiceId, () => void>>
+  hrefs?: Partial<Record<ServiceId, string>>
 }
 
-export function ServicesSection({ actions }: Props) {
+export function ServicesSection({ hrefs }: Props) {
   return (
     <section className={styles.section}>
       <SectionHeading>Conocé nuestros servicios</SectionHeading>
@@ -24,7 +21,8 @@ export function ServicesSection({ actions }: Props) {
       <div className={styles.container}>
         <div className={styles.list}>
           {services.map((service, index) => {
-            const action = actions?.[service.id]
+            const href = hrefs?.[service.id] ?? service.href
+            const internal = service.internal || href.startsWith('/')
 
             return (
             <article
@@ -45,16 +43,12 @@ export function ServicesSection({ actions }: Props) {
                   <div className={styles.logoLockup}>{service.logoText}</div>
                 )}
                 <p className={styles.body}>{service.body}</p>
-                {action ? (
-                  <button type="button" className={styles.cta} onClick={action} aria-haspopup="dialog">
-                    <p>{service.cta}</p>
-                  </button>
-                ) : service.internal ? (
-                  <Link className={styles.cta} to={service.href}>
+                {internal ? (
+                  <Link className={styles.cta} to={href}>
                     <p>{service.cta}</p>
                   </Link>
                 ) : (
-                  <a className={styles.cta} href={service.href}>
+                  <a className={styles.cta} href={href}>
                     <p>{service.cta}</p>
                   </a>
                 )}

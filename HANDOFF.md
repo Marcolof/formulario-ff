@@ -28,38 +28,38 @@ con acceso a Fulfillment y una página con formulario de contacto. Cliente: Corr
 
 ## Estado actual (2026-09-14)
 
-- **Local:** verificado, todo funciona (`npm run typecheck` limpio, navegación y gestos
-  probados en el navegador en escritorio y mobile).
-- **Git:** al día. El 14/09/2026 se subió todo lo pendiente (rubros reales, versión 2 con su
-  rediseño y versión 3 completa) en un solo commit. **No hacer commit ni push sin que el
-  usuario lo pida explícitamente** ("subir a github" es la frase que usa).
+- **Local:** verificado (`npm run typecheck` y `npm run build` limpios; navegación, formulario
+  y responsive probados en el navegador).
+- **Git:** al día con `main`. Se subió la reformulación completa de la v3 (pantalla propia de
+  Fulfillment) más tres ajustes de esa misma sesión: el ancho del contenido, la posición del
+  campo "Número de cliente" y el tamaño de los encabezados de columna. No hacer commit ni push
+  sin que el usuario lo pida explícitamente ("subir a github" es la frase que usa).
 - **Remoto:** `https://github.com/Marcolof/formulario-ff`, rama `main`. Deploy automático
   en Vercel (`formulario-ff.vercel.app`, proyecto `marcos-projects-c934fa75/formulario-ff`)
-  en cada push a `main`, así que la URL pública refleja lo que hay en `main`.
-- **Figma:** el conector MCP de Figma requiere reautenticación (no se puede usar hasta que
-  el usuario lo autorice desde la config de conectores de claude.ai o `/mcp`). El diseño
-  visual de referencia de la página Fulfillment vive en "Mi Correo 2.0"
-  (fileKey `wN6vAlF1TgGc2AJdJJvsAU`), página "GDD-2735 - Formulario FF (Fulfillment)",
-  nodo `13217:34295` — hecho por el propio usuario, es fuente de verdad visual.
-  **Ojo:** el rediseño de la v2 salió de una **imagen** que el usuario pasó por chat
-  (captura de su Figma); la cuenta con la que se trabaja hoy **no tiene acceso a ese
-  archivo**, así que las medidas se derivaron de la imagen y de los tokens existentes.
-  Al recuperar el acceso, contrastar espaciados y tamaños.
+  en cada push a `main`.
+- **Figma:** el conector funciona. El archivo es "Mi Correo 2.0"
+  (fileKey `wN6vAlF1TgGc2AJdJJvsAU`), página "GDD-2735 - Formulario FF (Fulfillment)". Dos
+  nodos importan: **`13217:34295`** (pantalla de Fulfillment de la v1 y la v2) y
+  **`13284:7345`** (pantalla de la v3, dibujada a 1010px de ancho).
+  **Ojo:** el rediseño del bloque central de la v2 no salió de Figma sino de una **imagen** que
+  el usuario pasó por chat, porque en ese momento la cuenta no tenía acceso al archivo. Esas
+  medidas conviene contrastarlas contra Figma.
 
 ## Arquitectura (resumen — el detalle vivo está en el código y en la documentación)
 
 Monorepo, un solo build, una sola URL, puerto local **4320**.
 
 ```
-/                        → Hub (portada)
-/prototipo               → landing del módulo prototipo (lista de versiones)
-/prototipo/v1             → versión 1: réplica fiel de la landing original + Fulfillment
-/prototipo/v1/fulfillment → página de Fulfillment con el formulario (ÚNICA — ver nota abajo)
-/prototipo/v2             → versión 2: carrusel de servicios en panel navy + accesos rápidos
-/prototipo/v2/fulfillment → la MISMA página de Fulfillment, montada bajo la v2
-/prototipo/v3             → versión 3: la landing de la v1; #fulfillment abre el flyer en un visor
-/documentacion            → índice de documentos .md
-/documentacion/:docId     → un documento
+/                          → Hub (portada)
+/prototipo                 → landing del módulo prototipo (lista de versiones)
+/prototipo/v1              → versión 1: réplica fiel de la landing original
+/prototipo/v1/fulfillment  → pantalla de Fulfillment con formulario (la usan v1 y v2)
+/prototipo/v2              → versión 2: carrusel de servicios en panel navy
+/prototipo/v2/fulfillment  → la MISMA pantalla de Fulfillment, montada bajo la v2
+/prototipo/v3              → versión 3: la landing de la v1 con el acceso redirigido
+/prototipo/v3/fulfillment  → pantalla de Fulfillment con front propio (OTRA pantalla)
+/documentacion             → índice de documentos .md
+/documentacion/:docId      → un documento
 ```
 
 Documento canónico de arquitectura: [documentation/06-ARQUITECTURA-Y-RUTAS.md](documentation/06-ARQUITECTURA-Y-RUTAS.md).
@@ -75,56 +75,55 @@ que consume el front viven en `src/modules/prototype/**/data/*.content.ts`.
 - **v1** (`src/modules/prototype/v1/`): réplica fiel de la landing de producción de MiCorreo,
   con la tarjeta de Fulfillment agregada en "Conocé nuestros servicios". Es la referencia
   contra la que se comparan las propuestas nuevas. **No se modifica para probar cosas.**
-- **v2** (`src/modules/prototype/v2/`): propuesta de alto impacto, pedida el 11/09/2026 y
-  **rediseñada el mismo día** a partir de una imagen de referencia del usuario. Sólo cambia el
-  bloque central de la landing:
+- **v2** (`src/modules/prototype/v2/`): propuesta de alto impacto sobre la landing, pedida el
+  11/09/2026 y rediseñada el mismo día. Sólo cambia el bloque central:
   - El hero se mantiene igual.
-  - "Gestionar Devolución" y "Conocé nuestros servicios" (6 tarjetas) se reemplazan por un
-    **carrusel que conserva el título "Conocé nuestros servicios"**, dentro de un **panel
-    navy redondeado**, con 7 tarjetas (ícono a la izquierda + título + descripción + CTA):
-    devolución, Paq.ar, **Fulfillment** (destacado con "¡Nuevo!" y botón "Solicitar"), Mis
-    Comunicaciones Digitales, Punto Correo, Rotulador, Oficios Judiciales. **Sólo
-    Fulfillment va destacado** — la imagen de referencia también marcaba "Mis Comunicaciones
-    Digitales", pero se decidió no replicarlo porque el requerimiento formal presenta sólo a
-    Fulfillment como novedad.
-  - "Gestionar Devolución" pasa a abrirse en un **modal** (`<dialog>` nativo) con
-    exactamente el mismo contenido que tenía la sección de la v1. Deep-linkeable con
+  - "Gestionar Devolución" y "Conocé nuestros servicios" se reemplazan por un **carrusel** que
+    conserva el título "Conocé nuestros servicios", dentro de un **panel navy redondeado**, con
+    7 tarjetas. **Sólo Fulfillment va destacado** ("¡Nuevo!" + "Solicitar"): la imagen de
+    referencia marcaba también "Mis Comunicaciones Digitales", pero el requerimiento formal
+    sólo presenta Fulfillment como novedad.
+  - "Gestionar Devolución" pasa a un **modal**, deep-linkeable con
     `/prototipo/v2#gestion-devolucion`.
-  - La sección "Accesos directos" (Seguimiento y Sucursales) se renombra **"Accesos
-    rápidos"**, con **Sucursales primero**, tarjeta blanca con sombra y CTA con subrayado
-    amarillo. Los títulos de sección de la v2 van **sin las reglas laterales** de la v1.
-  - Documentación funcional: [documentation/08-PROPUESTA-V2.md](documentation/08-PROPUESTA-V2.md).
-- **v3** (`src/modules/prototype/v3/`): propuesta de **mínimo cambio**, pedida el 14/09/2026.
-  - La landing es **exactamente la de la v1**: los mismos componentes, mismo orden, sin
-    variantes de estilo.
-  - Lo único que cambia es el destino del CTA de Fulfillment: abre el flyer del cliente
-    (`src/assets/img/Fulfillment.jpeg`) en un **visor a pantalla completa** — cerrar flotante
-    arriba a la derecha, zoom con rueda, pinch de trackpad, pinch y doble toque en táctil,
-    arrastre para desplazar, botones de zoom y atajos de teclado. Deep link:
-    `/prototipo/v3#fulfillment`.
-  - **No tiene pantalla propia de Fulfillment ni formulario**, así que por sí sola no cumple
-    el objetivo del requerimiento formal (captar contactos). Está anotado como pregunta
-    abierta.
-  - El visor **no usa ninguna librería**: todo con eventos de puntero. Si vas a tocarlo, leé
-    los comentarios de `v3/components/ImageDialog.tsx` antes (la rueda se escucha a mano por
-    el listener pasivo de React; la superficie declara `touch-action: none`).
-  - Documentación funcional: [documentation/09-PROPUESTA-V3.md](documentation/09-PROPUESTA-V3.md).
+  - "Accesos directos" se renombra **"Accesos rápidos"**, con Sucursales primero.
+  - Documentación: [documentation/08-PROPUESTA-V2.md](documentation/08-PROPUESTA-V2.md).
+- **v3** (`src/modules/prototype/v3/`): **pantalla propia de Fulfillment**, reformulada el
+  14/09/2026 (antes era un visor con un flyer estático; ese enfoque quedó descartado).
+  - La landing es **exactamente la de la v1**; lo único que cambia es el destino del acceso a
+    Fulfillment.
+  - Esa pantalla es **un front distinto del sistema visual de la landing**: navy `#14245d` y
+    `#192b69`, tipografía **Poppins**, íconos de Lucide en círculos, hero con imagen propia,
+    servicios en dos columnas, formulario a dos columnas, caja de beneficios y cierre.
+    Conserva la barra superior y el footer de la landing.
+  - Está calcada del diseño de Figma `13284:7345`, dibujado a 1010px, pero el **ancho máximo
+    del contenido es 1320px** (el mismo que la landing): a 1010px se veía angosto en pantallas
+    grandes (feedback del usuario). Las columnas de servicios e inputs son grillas fijas a 2,
+    así que ensanchar el máximo sólo ensancha las columnas, no las multiplica.
+  - La imagen del hero **se oculta en pantallas de hasta 900px** (queda sólo el texto), y en
+    escritorio va al 146% de su caja, anclada a la izquierda, como en el diseño.
+  - "Número de cliente" aparece **justo debajo** de "¿Ya sos cliente de MiCorreo?" cuando se
+    responde "Sí" (no arriba, mezclado con el resto de los inputs — corregido por feedback del
+    usuario). Va acotado a media columna en escritorio.
+  - Al enviar el formulario, la tarjeta **conserva su altura** y muestra un mensaje de éxito con
+    ícono.
+  - Documentación: [documentation/09-PROPUESTA-V3.md](documentation/09-PROPUESTA-V3.md).
 
 **Lo que comparten y no hay que romper:**
 
-- **La página de Fulfillment es una sola** — no hay una copia por versión. El mismo
-  componente (`v1/fulfillment/FulfillmentPage.tsx`) se monta en `/prototipo/v1/fulfillment` y
-  `/prototipo/v2/fulfillment` sólo para que una demo no salte de versión en la URL. La v3 no
-  la usa.
-- El texto/campo/botón de "Gestionar Devolución" vive una sola vez en
-  `v1/components/ReturnsForm.tsx` y lo usan la sección de la v1 y el modal de la v2. Los
-  enlaces de los servicios de la v2 se toman de `v1/data/landing.content.ts` por `id`.
+- **Hay dos pantallas de Fulfillment, no tres.** La de la v1 y la v2 es el mismo componente
+  montado en dos rutas; la de la v3 es otra.
+- **Las reglas del formulario existen una sola vez**, en
+  `v1/fulfillment/useContactForm.ts`: campos, validaciones y momento de validación. Las usan la
+  pantalla de la v1/v2 y la de la v3, que tienen el mismo formulario con distinto layout. Si
+  cambia una regla, cambia para todas.
+- El contenido de "Gestionar Devolución" vive una vez en `v1/components/ReturnsForm.tsx`.
 - **Cómo las propuestas reusan la v1 sin romperla** (importante): `SectionHeading`,
-  `ShortcutsSection`, `WhyUsSection` y `ServicesSection` ganaron props **opcionales**
-  (`rules`, `title`, `items`, `variant`, `headingRules`, `actions`) cuyo valor por defecto es
+  `ShortcutsSection`, `WhyUsSection` y `ServicesSection` tienen props **opcionales**
+  (`rules`, `title`, `items`, `variant`, `headingRules`, `hrefs`) cuyo valor por defecto es
   exactamente el comportamiento de la landing original. La v1 no pasa nada y queda igual. La
-  piel de la v2 se aísla con `[data-variant='v2']`. **No dupliques estos componentes** para
-  hacer otra variante: sumá una prop con default.
+  piel de la v2 se aísla con `[data-variant='v2']` y la pantalla de la v3 con
+  `[data-page='fulfillment-v3']`. **No dupliques estos componentes** para hacer otra variante:
+  sumá una prop con default.
 - **Todavía no se decidió cuál de las tres se presenta/adopta.** Es una pregunta abierta en
   `project.yaml`.
 
@@ -148,32 +147,33 @@ que consume el front viven en `src/modules/prototype/**/data/*.content.ts`.
 - **Push y commit sólo si el usuario lo pide explícitamente** ("subir a github" / "subir a
   git hub"). Nunca crear un repo remoto ni un proyecto de Vercel nuevo — el usuario ya tiene
   ambos conectados; sólo se hace push al existente cuando lo autoriza.
-- Tokens en tres capas, no mezclar: `src/styles/tokens.css` (`:root`, primitivas de marca de
-  MiCorreo), `src/app/shell.tokens.css` (`[data-shell]`, chrome del Hub), y
-  `src/modules/prototype/prototype.tokens.css` (`[data-module='prototype']`, lenguaje visual
-  de la landing/Fulfillment — usado por todas las versiones por igual).
+- Tokens por capas, no mezclar: `src/styles/tokens.css` (`:root`, primitivas de marca),
+  `src/app/shell.tokens.css` (`[data-shell]`, chrome del Hub),
+  `src/modules/prototype/prototype.tokens.css` (`[data-module='prototype']`, lenguaje visual de
+  la landing) y `v3/fulfillment/fulfillment.tokens.css` (`[data-page='fulfillment-v3']`, el
+  front propio de esa pantalla).
 - Componentes compartidos de la v1 (`OutlinedField`/`OutlinedSelect` con
   `variant="landing"|"form"`, `Button` con `size="md"|"lg"|"pill"`) — reusarlos, no crear
-  variantes nuevas de inputs o botones.
-- Íconos: **Lucide** (`lucide-react`), nunca dibujar SVGs propios ni "regenerar" íconos.
-- Fuente: **Gilroy** en todo el módulo prototype (landing/Fulfillment). Ubuntu es de otro
-  proyecto (MLOF Color) — no confundir.
-- No sumar dependencias para resolver algo que el navegador ya hace (el visor de la v3 y los
-  modales son ejemplos: `<dialog>` nativo y eventos de puntero).
+  variantes nuevas de inputs o botones. La pantalla de la v3 los reutiliza aunque su diseño
+  sea distinto, porque el diseño usa esos mismos controles.
+- Íconos: **Lucide** (`lucide-react`), nunca dibujar SVGs propios ni "regenerar" íconos. El
+  Figma nombra cada capa con el nombre del ícono de Lucide, así que la correspondencia sale de
+  ahí.
+- Fuente: **Gilroy** en todo el proyecto. La excepción es la pantalla de Fulfillment de la v3,
+  que usa **Poppins** por diseño (se carga desde Google Fonts en `index.html`). Ubuntu es de
+  otro proyecto (MLOF Color) — no confundir.
+- No sumar dependencias para resolver algo que el navegador ya hace (`<dialog>` nativo,
+  eventos de puntero, CSS Grid).
 - Antes de cambiar código existente, correr `npm run typecheck` y, si el cambio es visible,
   verificarlo en el navegador (Browser pane / `preview_start` con la config `formulario-ff`,
   puerto 4320) — no asumir que compila.
 
 ## Dónde seguir (recomendado, no obligatorio)
 
-1. Decidir con el usuario si se hace commit de lo pendiente (rubros + v2 + v3) antes de seguir
-   agregando cambios, para no acumular un diff gigante.
-2. Elegir con el área cuál de las tres versiones se adopta. Ojo con la v3: no capta contactos.
-3. Validar con el área solicitante los textos breves, el orden y el destacado de las
-   tarjetas del carrusel de la v2 (están marcados como hipótesis en el doc 08).
-4. Si se quiere llevar la v2 o la v3 a Figma, primero hay que resolver la reautenticación del
-   conector.
-5. Releer `.project/project.yaml` → `knowledge.open_questions` antes de tomar decisiones de
+1. Elegir con el área cuál de las tres versiones se adopta.
+2. Confirmar si Poppins es definitiva o un borrador del diseño de la v3.
+3. Optimizar `banner ff formulario.png`: pesa 4,7 MB.
+4. Releer `.project/project.yaml` → `knowledge.open_questions` antes de tomar decisiones de
    producto nuevas: ahí está la lista viva de lo que falta definir.
 
 ## Índice rápido de documentación
@@ -189,5 +189,5 @@ que consume el front viven en `src/modules/prototype/**/data/*.content.ts`.
 | `documentation/06-ARQUITECTURA-Y-RUTAS.md` | Monorepo, rutas, aislamiento de estilos |
 | `documentation/07-FORMULARIO-FULFILLMENT.md` | Spec funcional del formulario (campos, rubros, validaciones) |
 | `documentation/08-PROPUESTA-V2.md` | Spec funcional de la versión 2 (carrusel + modal) |
-| `documentation/09-PROPUESTA-V3.md` | Spec funcional de la versión 3 (flyer en visor) |
+| `documentation/09-PROPUESTA-V3.md` | Spec funcional de la versión 3 (pantalla propia de Fulfillment) |
 | `.project/project.yaml` | Estado estructurado: fuentes, decisiones, módulos, pendientes |

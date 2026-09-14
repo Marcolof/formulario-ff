@@ -1,0 +1,345 @@
+/* Pantalla de Fulfillment de la v3. Diseño de referencia: Figma "Mi Correo 2.0",
+ * nodo 13284:7345, dibujado a 1010px de ancho. */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  /* El hero sangra hasta el borde derecho y la imagen desborda su caja. */
+  overflow-x: hidden;
+  background-color: var(--ffv3-surface);
+  color: var(--ffv3-navy);
+}
+
+/* --- Hero ----------------------------------------------------------------- */
+
+.hero {
+  background-color: var(--ffv3-navy-deep);
+  overflow: hidden;
+}
+
+.heroInner {
+  display: flex;
+  align-items: center;
+}
+
+/* El texto se alinea con el contenedor centrado de las secciones de abajo, pero
+ * la imagen sigue llegando al borde derecho, como en el diseño. */
+/* El margen se calcula sobre el ancho del hero (100%) y no sobre 100vw, que
+ * incluye la barra de scroll y corría el texto unos píxeles. */
+.heroCopy {
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+  padding-right: 60px;
+  padding-left: calc(max(0px, (100% - var(--ffv3-content-max)) / 2) + 60px);
+}
+
+.heroTitle {
+  color: var(--ffv3-yellow);
+  font-family: var(--ffv3-font-display);
+  font-size: var(--ffv3-hero-title);
+  font-weight: var(--font-weight-bold);
+  line-height: 0.95;
+}
+
+.heroSubtitle {
+  color: var(--white);
+  font-family: var(--ffv3-font-display);
+  font-size: var(--ffv3-hero-subtitle);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.1;
+}
+
+/* La imagen es bastante más grande que su caja y se recorta: en el diseño mide
+ * 736px dentro de una caja de 505 (146%), pegada a la izquierda y centrada en
+ * vertical. Así la caja y la cinta quedan del tamaño de la referencia. */
+.heroMedia {
+  position: relative;
+  flex: 1 1 0;
+  height: var(--ffv3-hero-height);
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* `max-width: none` porque globals.css limita las imágenes al 100% de su caja,
+ * y acá tiene que desbordarla. */
+.heroMedia img {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 146%;
+  max-width: none;
+  height: auto;
+  transform: translateY(-50%);
+}
+
+/* --- Detalle del servicio -------------------------------------------------- */
+
+.detail {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px;
+  max-width: var(--ffv3-content-max);
+  padding: 48px 64px 48px 74px;
+  margin-inline: auto;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  min-width: 0;
+}
+
+.groupHeading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  border-radius: var(--ffv3-radius-card);
+  font-family: var(--ffv3-font-display);
+  font-size: var(--ffv3-group-heading-size);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.08;
+  text-align: center;
+}
+
+.groupHeadingNavy {
+  background-color: var(--ffv3-navy);
+  color: var(--white);
+}
+
+.groupHeadingYellow {
+  background-color: var(--ffv3-yellow);
+  color: var(--ffv3-navy);
+}
+
+.services {
+  display: flex;
+  flex-direction: column;
+  gap: 38px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.service {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.serviceIcon {
+  display: flex;
+  flex: 0 0 var(--ffv3-icon-size);
+  align-items: center;
+  justify-content: center;
+  width: var(--ffv3-icon-size);
+  height: var(--ffv3-icon-size);
+  border-radius: var(--radius-full);
+  background-color: var(--ffv3-navy);
+  color: var(--white);
+}
+
+.serviceText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.serviceTitle {
+  font-size: var(--landing-font-size-cta);
+  font-weight: var(--font-weight-bold);
+  line-height: normal;
+}
+
+.serviceBody {
+  font-size: var(--landing-font-size-body);
+  font-weight: var(--font-weight-medium);
+  line-height: normal;
+}
+
+/* --- Formulario ------------------------------------------------------------ */
+
+.formSection {
+  display: flex;
+  justify-content: center;
+  max-width: var(--ffv3-content-max);
+  padding: 0 48px 48px;
+  margin-inline: auto;
+}
+
+/* --- Beneficios ------------------------------------------------------------ */
+
+.benefits {
+  max-width: var(--ffv3-content-max);
+  padding: 24px 48px 48px;
+  margin-inline: auto;
+}
+
+/* La etiqueta se monta sobre el borde superior de la caja, así que el padding
+ * de arriba le deja lugar. */
+.benefitsBox {
+  position: relative;
+  padding: 60px 36px 22px;
+  border: var(--border-width-base) solid var(--ffv3-yellow);
+  border-radius: var(--ffv3-radius-card);
+}
+
+.benefitsLabel {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(425px, calc(100% - 32px));
+  height: 56px;
+  border-radius: var(--radius-sm);
+  background-color: var(--ffv3-navy);
+  color: var(--white);
+  font-family: var(--ffv3-font-display);
+  font-size: 17px;
+  font-weight: var(--font-weight-bold);
+  text-align: center;
+  transform: translateX(-50%);
+}
+
+.benefitList {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 26px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.benefit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: center;
+}
+
+.benefitIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--ffv3-benefit-icon-size);
+  height: var(--ffv3-benefit-icon-size);
+  border-radius: var(--radius-full);
+  background-color: var(--ffv3-yellow);
+  color: var(--ffv3-navy);
+}
+
+.benefitTitle {
+  color: var(--ffv3-navy);
+  font-family: var(--ffv3-font-display);
+  font-size: var(--landing-font-size-body);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.05;
+}
+
+.benefitBody {
+  color: var(--ffv3-navy);
+  font-family: var(--ffv3-font-display);
+  font-size: 13px;
+  font-weight: var(--font-weight-regular);
+  line-height: 1.15;
+}
+
+/* --- Cierre ---------------------------------------------------------------- */
+
+.closing {
+  padding: 48px;
+  background-color: var(--ffv3-navy-deep);
+  color: var(--white);
+  text-align: center;
+}
+
+.closingText {
+  max-width: var(--ffv3-content-max);
+  margin-inline: auto;
+  font-size: 28px;
+  font-weight: var(--font-weight-bold);
+  line-height: normal;
+}
+
+.closingHighlight {
+  color: var(--ffv3-yellow);
+}
+
+/* --- Responsive ------------------------------------------------------------
+ * Por ahora la imagen del hero no se muestra en pantallas angostas: queda sólo
+ * el mensaje, que es lo que pidió el requerimiento. */
+
+@media (max-width: 900px) {
+  .heroInner {
+    padding-block: var(--space-10);
+  }
+
+  .heroCopy {
+    padding-inline: var(--ffv3-gutter-mobile);
+  }
+
+  .heroTitle {
+    font-size: var(--ffv3-hero-title-mobile);
+  }
+
+  .heroSubtitle {
+    font-size: var(--ffv3-hero-subtitle-mobile);
+  }
+
+  .heroMedia {
+    display: none;
+  }
+
+  .detail {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 38px;
+    padding: var(--space-10) var(--ffv3-gutter-mobile);
+  }
+
+  .formSection {
+    padding: 0 var(--ffv3-gutter-mobile) var(--space-10);
+  }
+
+  .benefits {
+    padding: 24px var(--ffv3-gutter-mobile) var(--space-10);
+  }
+
+  .benefitsBox {
+    padding: 52px var(--space-6) var(--space-6);
+  }
+
+  .benefitList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+
+  .benefitsLabel {
+    height: 48px;
+    top: -24px;
+    font-size: var(--landing-font-size-body);
+  }
+
+  .closing {
+    padding: var(--space-10) var(--ffv3-gutter-mobile);
+  }
+
+  .closingText {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 560px) {
+  .benefitList {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

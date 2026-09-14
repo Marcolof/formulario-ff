@@ -97,9 +97,9 @@ export const documents: Doc[] = [
   {
     id: 'propuesta-v3',
     index: '09',
-    title: 'Versión 3 — Flyer en visor',
+    title: 'Versión 3 — Pantalla propia de Fulfillment',
     summary:
-      'La propuesta de mínimo cambio: la landing de la v1 y el flyer del cliente en un visor a pantalla completa con zoom y gestos. Qué cubre y qué deja afuera.',
+      'La landing de la v1 con el acceso llevando a una pantalla de front propio: hero con banner, servicios en dos columnas, formulario a dos columnas y beneficios.',
     fileName: '09-PROPUESTA-V3.md',
     content: propuestaV3,
   },

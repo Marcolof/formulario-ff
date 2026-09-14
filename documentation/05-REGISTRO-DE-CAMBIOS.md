@@ -97,5 +97,50 @@ otra vez con una prop opcional que por defecto no altera la v1.
 | Asset | `src/assets/img/Fulfillment.jpeg` | Flyer provisto por el cliente (1010 × 1600, 285 KB). Se usa tal cual, sin retocar. |
 
 Lo nuevo de la v3 vive en `src/modules/prototype/v3/`. El visor no suma ninguna dependencia:
-el zoom, el arrastre y el pinch se resuelven con eventos de puntero. El detalle funcional está
-en [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md).
+el zoom, el arrastre y el pinch se resuelven con eventos de puntero.
+
+## Reformulación de la v3 (14/09/2026)
+
+La propuesta del visor con el flyer quedó descartada el mismo día. La v3 pasa a tener una
+**pantalla propia de Fulfillment** con un front distinto del de la landing, según el diseño de
+Figma `13284:7345`. El detalle funcional está en [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md).
+
+| Qué | Dónde | Cambio |
+|---|---|---|
+| Visor de imagen | `v3/components/ImageDialog.*` | **Eliminado**, junto con el deep link `#fulfillment`. |
+| Lógica del formulario | `v1/fulfillment/useContactForm.ts` (nuevo) | Los campos, las validaciones y el momento de validación salen de `ContactForm` a un hook propio. Lo usan la pantalla de la v1/v2 y la de la v3, que tienen el mismo formulario con distinto layout. `ContactForm` queda sólo con su marcado. |
+| CTA de servicios | `v1/components/ServicesSection.tsx` | La prop `actions` (que convertía el CTA en botón para abrir el visor) se reemplaza por `hrefs`, que sólo cambia el destino. El CTA vuelve a ser siempre un enlace, que es lo que corresponde ahora que navega a una pantalla. |
+| Rutas | `app/router.tsx` | Se suma `/prototipo/v3/fulfillment`. |
+| Tipografía | `index.html` | Se carga **Poppins** desde Google Fonts: la pide el diseño de la v3. El resto del proyecto sigue usando sólo Gilroy, embebida desde `src/assets/fonts`. |
+| Asset | `src/assets/img/banner ff formulario.png` | Imagen del hero, provista por el cliente. Se usa tal cual. |
+
+Lo nuevo de la v3 vive en `src/modules/prototype/v3/fulfillment/`, con su propia capa de
+tokens: esa pantalla no usa el lenguaje visual de la landing.
+
+## Ajuste de ancho de la v3 (14/09/2026)
+
+El contenido de la pantalla de Fulfillment de la v3 estaba limitado a 1010px —el ancho del
+diseño de Figma— y en pantallas grandes se veía angosto, con mucho aire a los costados
+(feedback del usuario). Se amplió a 1320px, el mismo ancho máximo que usa la landing
+(`--landing-container-max`), en `v3/fulfillment/fulfillment.tokens.css`. Las columnas de
+servicios y de inputs son grillas fijas a 2, así que el cambio sólo ensancha las columnas: no
+altera el layout.
+
+## Corrección de "Número de cliente" en la v3 (14/09/2026)
+
+El campo se agregaba al grid de dos columnas de inputs, arriba de la pregunta "¿Ya sos
+cliente de MiCorreo?" que lo habilita — quedaba desalineado del control que lo muestra
+(feedback del usuario, con captura). En
+[`v3/fulfillment/FulfillmentForm.tsx`](../src/modules/prototype/v3/fulfillment/FulfillmentForm.tsx)
+el campo se movió fuera de `.fields`, a después del `<fieldset>` de la pregunta: ahora aparece
+justo debajo de "Sí" / "No", acotado al ancho de una columna (`.numeroCliente`, media
+columna en escritorio; ancho completo en mobile, como el resto de los campos).
+
+## Tamaño de los encabezados de columna en la v3 (14/09/2026)
+
+"¿Qué incluye nuestro fulfillment?" y "Distribución rápida y confiable" usaban
+`--landing-font-size-body` (16px) por error de copiado: no hay un paso de 20 en la escala de
+la landing, que es lo que pedía el diseño (feedback del usuario). Se agregó el token propio
+`--ffv3-group-heading-size: 20px` en
+[`fulfillment.tokens.css`](../src/modules/prototype/v3/fulfillment/fulfillment.tokens.css) y
+`.groupHeading` en `FulfillmentPage.module.css` pasó a usarlo.

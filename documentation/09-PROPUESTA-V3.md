@@ -1,134 +1,148 @@
-# Versión 3 — Flyer en visor
+# Versión 3 — Pantalla propia de Fulfillment
 
-La propuesta de **mínimo cambio**: la landing es exactamente la de la versión 1 y el acceso a
-Fulfillment abre el flyer del cliente en un visor a pantalla completa. No hay pantalla propia
-de Fulfillment ni formulario de contacto en esta versión.
+La landing es la de la versión 1, sin ningún cambio visual, pero el acceso a Fulfillment lleva
+a una **pantalla con front propio**, distinto del sistema visual de la landing. Conserva la
+barra de navegación superior y el footer.
 
-**Ruta:** `/prototipo/v3` · **Implementación:**
-[`v3/LandingPage.tsx`](../src/modules/prototype/v3/LandingPage.tsx) · **Contenido:** flyer
-`Fulfillment.jpeg` provisto por el cliente (14/09/2026).
+**Rutas:** `/prototipo/v3` (landing) y `/prototipo/v3/fulfillment` (la pantalla) ·
+**Implementación:** [`v3/fulfillment/`](../src/modules/prototype/v3/fulfillment/) ·
+**Diseño:** Figma "Mi Correo 2.0", nodo `13284:7345`, dibujado a 1010px de ancho.
 
-Cada definición está marcada como **confirmada** (la pidió el usuario del proyecto),
-**hipótesis** (decisión de diseño a validar) o **pendiente**.
+Cada definición está marcada como **confirmada** (la pide el diseño o el usuario del
+proyecto), **hipótesis** (decisión de implementación a validar) o **pendiente**.
+
+> Esta versión reemplaza por completo a la propuesta anterior de la v3, que mostraba un flyer
+> estático en un visor con zoom. Ese enfoque quedó descartado el 14/09/2026.
 
 ## Qué cambia respecto de la versión 1
 
 | Bloque | Versión 1 | Versión 3 | Estado |
 |---|---|---|---|
-| Hero, Gestionar Devolución, Conocé nuestros servicios, Accesos directos, ¿Por qué elegirnos?, footer | — | **Idénticos**, los mismos componentes sin variantes | Confirmado |
-| CTA "Conocer más" de Fulfillment | Navega a `/prototipo/v1/fulfillment` | Abre el flyer en un visor a pantalla completa | Confirmado |
-| Página de Fulfillment con formulario | Existe | **No se usa** en esta versión | Confirmado |
+| Toda la landing | — | **Idéntica**, los mismos componentes sin variantes | Confirmado |
+| Destino del acceso a Fulfillment | `/prototipo/v1/fulfillment` | `/prototipo/v3/fulfillment`, una pantalla propia | Confirmado |
+| Pantalla de Fulfillment | Sobre el sistema visual de la landing | Front propio: navy, Poppins, íconos en círculo | Confirmado |
+| Barra superior y footer | — | **Se mantienen** los de la landing | Confirmado |
 
-No cambia ni un estilo de la landing: la v3 monta los mismos componentes de la v1, en el
-mismo orden, y sólo reemplaza el destino de un CTA.
+## La pantalla
 
-## El visor
+De arriba hacia abajo, como en el diseño:
 
-**Confirmado por el pedido:** imagen estática, a alto de pantalla, con botón de cerrar
-flotante arriba a la derecha, zoom con la rueda, pinch en trackpad y gestos típicos de
-imagen también en responsive.
+1. **Hero** — franja navy (`#14245d`) partida en dos: a la izquierda "Fulfillment" en amarillo
+   sobre "Solución integral de almacenamiento y distribución para tu eCommerce"; a la derecha
+   la imagen del banner, que llega hasta el borde de la pantalla.
+2. **Detalle del servicio** — dos columnas, cada una con su encabezado: "¿Qué incluye nuestro
+   fulfillment?" (navy) y "Distribución rápida y confiable" (amarillo), con tres servicios
+   cada una. Cada servicio lleva su ícono en un círculo navy de 78px.
+3. **Formulario** — tarjeta blanca con los campos en dos columnas.
+4. **Beneficios** — caja con borde amarillo y la etiqueta "Beneficios para tu negocio" montada
+   sobre el borde superior; adentro, cuatro beneficios con ícono en círculo amarillo.
+5. **Cierre** — franja navy con "Nos ocupamos de todo, vos enfocate en hacer crecer tu
+   negocio."
 
-### Gestos y controles
+### El hero y su imagen
 
-| Acción | Cómo |
+La imagen es `src/assets/img/banner ff formulario.png`, provista por el usuario.
+
+En el diseño no entra completa: mide 736px dentro de una caja de 505 —el **146%**— pegada a
+la izquierda y centrada en vertical, de modo que se recorta arriba, abajo y a la derecha. Se
+reprodujo esa misma proporción, que es lo que hace que la caja y la cinta "Próximamente" se
+vean del tamaño de la referencia en vez de quedar chicas.
+
+**En pantallas de hasta 900px la imagen no se muestra**: queda sólo el mensaje. Es lo que pidió
+el requerimiento, y está planteado como algo provisorio ("por ahora").
+
+### Iconografía
+
+Todos los íconos son de **Lucide**. El diseño ya nombra sus capas con los nombres de Lucide,
+así que la correspondencia es directa:
+
+| Bloque | Íconos |
 |---|---|
-| Acercar / alejar | Rueda del mouse, pinch del trackpad, pinch de dos dedos en pantalla táctil, botones + y −, teclas `+` y `−` |
-| Alternar acercamiento | Doble clic o doble toque (alterna entre imagen completa y 250%) |
-| Desplazar | Arrastrar con el mouse o con el dedo |
-| Ver la imagen completa | Botón de reinicio, o tecla `0` |
-| Cerrar | Botón flotante arriba a la derecha, `Esc`, o clic en el fondo |
+| Servicios | `Boxes`, `Package`, `Map` (columna izquierda) · `Warehouse`, `MapPin`, `Truck` (derecha) |
+| Beneficios | `ChartColumnDecreasing`, `Clock`, `ThumbsUp`, `ChartLine` |
+| Formulario | `CircleCheckBig` en el mensaje de éxito |
 
-El acercamiento sigue al cursor o al punto medio de los dedos: lo que se está mirando queda
-en su lugar en vez de saltar al centro. El desplazamiento está acotado para que la imagen no
-se pueda arrastrar fuera de la vista, y el mínimo es la imagen completa (100%), así que nunca
-queda más chica que la pantalla. El máximo es 600%.
+## El formulario
 
-### Dónde van los controles
+**Los campos, las reglas de validación y el momento en que se muestran los errores son los
+mismos de las otras versiones.** No están duplicados: viven en
+[`useContactForm`](../src/modules/prototype/v1/fulfillment/useContactForm.ts), que comparten
+la pantalla de la v1/v2 y esta. Si una regla cambia, cambia para todas. El detalle está en
+[07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md).
 
-El botón de cerrar va flotando arriba a la derecha, separado del borde. El control de zoom
-cambia de lugar según el espacio libre, para no taparle nada a la imagen:
+Lo propio de esta versión es la disposición:
 
-| | Control de zoom | Por qué |
+- **Dos columnas** en escritorio: empresa y nombre, mail y rubro, celular y —cuando
+  corresponde— los campos condicionales. En pantallas de hasta 900px **se apila todo en una
+  sola columna**.
+- La pregunta "¿Ya sos cliente de MiCorreo?" va en una línea con sus dos opciones al lado; en
+  mobile se apila.
+- El botón "Enviar" va centrado, con un ancho máximo de 400px.
+
+Los controles no son nuevos: el diseño usa los mismos campos y el mismo botón que el resto del
+producto, así que se reutilizan `OutlinedField`, `OutlinedSelect` y `Button`.
+
+"Número de cliente" no forma parte del grid de dos columnas: aparece **justo debajo** de la
+pregunta "¿Ya sos cliente de MiCorreo?" cuando se responde "Sí", acotado a media columna en
+escritorio (ancho completo en mobile). Así queda claro que ese campo depende de esa respuesta
+y no es uno más de la lista de arriba (corrección por feedback del usuario, 2026-09-14).
+
+### Mensaje de éxito
+
+Al enviar, la tarjeta se reemplaza por un ícono de confirmación, el título y el mensaje, más un
+botón para cargar otra consulta.
+
+**La tarjeta conserva la altura que tenía el formulario**, que es lo que se pidió: la altura se
+mide justo antes de reemplazar el contenido y se aplica como mínimo, así la página no pega un
+salto al enviar ni se reacomoda lo que está alrededor. Verificado: 413px antes y después.
+
+**Pendiente:** el texto del mensaje sigue siendo el mismo de las otras versiones y sigue sin
+estar aprobado por el área solicitante.
+
+## Decisiones de implementación
+
+| Decisión | Por qué | Estado |
 |---|---|---|
-| Escritorio | Flotando abajo a la derecha, al mismo margen que el cerrar | El flyer es vertical y deja libres los costados. Va por encima del botón de chat de la landing, que ocupa esa esquina |
-| Hasta 900px | Centrado, **debajo** de la imagen | La imagen entra por ancho y sobra alto. El control es parte del layout, no flota: la imagen dispone sólo del alto restante, así que no se pisan ni con la imagen ampliada |
-
-**Hipótesis a validar:** los valores concretos — 250% para el doble toque, 600% de máximo, el
-paso de los botones — salen de lo que se siente natural en un visor, no de una definición del
-área.
-
-### Decisiones de implementación
-
-- **Sin librerías nuevas.** Todo se resuelve con eventos de puntero, así que el mismo código
-  atiende mouse, trackpad y touch sin ramas por dispositivo, y el proyecto no suma una
-  dependencia para una propuesta que todavía se está evaluando.
-- **`<dialog>` nativo**, como el modal de devolución de la v2: el navegador ya resuelve foco
-  atrapado, cierre con `Esc`, fondo inerte y devolución del foco al CTA que lo abrió.
-- **La rueda se escucha a mano** (`passive: false`) porque React registra `onWheel` como
-  pasivo y ahí no se puede impedir que el navegador haga su propio scroll o zoom.
-- **La superficie declara `touch-action: none`** para que los gestos los maneje el visor y no
-  el navegador.
-
-### Deep link
-
-`/prototipo/v3#fulfillment` abre la landing con el flyer ya abierto; se puede enlazar y
-recargar. Es el mismo patrón que usa el modal de devolución de la v2.
-
-### Accesibilidad
-
-- El diálogo tiene nombre accesible ("Fulfillment de Correo Argentino") y el CTA declara
-  `aria-haspopup="dialog"`.
-- **El `alt` de la imagen transcribe el contenido del flyer.** Es texto dentro de una imagen:
-  sin esa descripción, para un lector de pantalla la propuesta directamente no existe. Vive
-  en [`v3/data/v3.content.ts`](../src/modules/prototype/v3/data/v3.content.ts) y hay que
-  actualizarlo si cambia el flyer.
-- Los botones de zoom cubren a quien no tenga rueda ni trackpad, y hay atajos de teclado.
-
-**Pendiente:** una imagen no es contenido accesible ni indexable por más que tenga `alt`. Si
-esta versión avanza, conviene decidir si el texto del flyer se publica también como HTML.
-
-## El asset
-
-`src/assets/img/Fulfillment.jpeg` — 1010 × 1600 px, 285 KB. Es una pieza vertical con el
-título "Fulfillment", la marca "Próximamente", qué incluye el servicio, la distribución por
-zona, los beneficios y un cierre.
-
-Observaciones sobre el archivo, para el área que lo produjo:
-
-- Dice **"Gestión depedidos"** donde debería decir "Gestión de pedidos".
-- Al ser una imagen, su texto no se puede copiar, traducir, buscar ni ajustar de tamaño.
-
-## Qué queda por validar
-
-- Si Fulfillment se presenta sólo como pieza informativa ("Próximamente") o si en algún
-  momento tiene que captar contactos. **Esta versión no tiene formulario**, así que no cumple
-  el objetivo del requerimiento formal, que es juntar potenciales clientes.
-- Si el flyer es definitivo o provisorio.
-- Cuál de las tres versiones se adopta.
-
-## Implementación
-
-```txt
-src/modules/prototype/v3/
-├── LandingPage.tsx                 # la landing de la v1 + el visor
-├── data/v3.content.ts              # el flyer, su descripción y el hash del deep link
-└── components/
-    ├── ImageDialog.tsx             # visor: gestos, zoom, controles
-    └── ImageDialog.module.css
-```
+| **Ancho máximo de 1320px** para el contenido | El diseño está dibujado a 1010px, pero a ese ancho en pantallas grandes el contenido quedaba angosto con mucho aire a los costados (feedback del usuario, 2026-09-14). Las columnas de servicios e inputs son grillas fijas a 2 —no se reacomodan solas—, así que ensanchar el máximo sólo ensancha las columnas, no rompe el layout. Se igualó al ancho de la landing (`--landing-container-max`) para que las pantallas del producto se sientan consistentes | Confirmado (ajustado por feedback) |
+| **Poppins** en hero, encabezados de columna y beneficios | Es lo que pide el diseño. Se carga desde Google Fonts y cae en Gilroy si no está disponible. El resto del producto usa sólo Gilroy | Hipótesis: conviene confirmar que no sea una tipografía de borrador |
+| **Servicios agrupados** por columna en los datos | En el diseño son seis elementos que se acomodan en dos columnas. Modelados así, en mobile cada encabezado queda con sus tres servicios en vez de mezclarse | Hipótesis |
+| Navy `#14245d` y `#192b69` literales | Son los del diseño y no coinciden con los de la marca en `tokens.css`. Se dejan explícitos en la capa de tokens de la pantalla en vez de forzarlos contra tokens que no les corresponden | Hipótesis |
+| El CTA de la landing es un enlace, no un botón | Ahora navega a una pantalla: tiene que poder abrirse en otra pestaña y copiarse | Confirmado |
 
 ### Cómo la v3 reusa la v1 sin romperla
 
-`ServicesSection` ganó una prop **opcional** `actions`: un mapa de servicio → función. El
-servicio que aparece ahí muestra su CTA como botón y ejecuta esa acción; el resto navega como
-siempre. La v1 no pasa la prop y queda exactamente igual, verificado en el navegador.
+`ServicesSection` recibe una prop **opcional** `hrefs`, que reemplaza el destino de un servicio.
+La v3 la usa para mandar Fulfillment a su propia pantalla; la v1 no pasa nada y navega como
+siempre. Es el mismo criterio del resto del proyecto: **no se duplican componentes de la v1
+para hacer una variante**, se les suma una prop cuyo valor por defecto es el comportamiento
+original.
 
-Es el mismo criterio que se usó para la v2: **no se duplican componentes de la v1 para hacer
-una variante**, se les suma una prop cuyo valor por defecto es el comportamiento original.
+La pantalla nueva sí tiene su propia capa de estilos
+([`fulfillment.tokens.css`](../src/modules/prototype/v3/fulfillment/fulfillment.tokens.css)),
+enganchada a un atributo que sólo lleva ella. Como la barra superior y el footer sí son los de
+la landing, la página declara los dos ámbitos: `data-module="prototype"` y
+`data-page="fulfillment-v3"`.
+
+## Qué queda por validar
+
+- La tipografía Poppins, que no forma parte del sistema actual.
+- Qué hacer con la imagen del hero en mobile: hoy simplemente no se muestra.
+- El texto del mensaje de confirmación.
+- Cuál de las tres versiones se adopta.
+
+## Observaciones sobre los insumos
+
+- La imagen del banner pesa **4,7 MB** (2765 × 2248 px). Funciona, pero conviene una versión
+  optimizada antes de cualquier publicación real.
+- En el diseño, el beneficio dice "Ganà tiempo", con acento grave. En el prototipo se escribió
+  **"Ganá tiempo"**.
+- El flyer `Fulfillment.jpeg`, que usaba la propuesta anterior de la v3, quedó sin uso. Se
+  conserva en `src/assets/img/` por si se necesita más adelante.
 
 ## Fuentes
 
-- **Pedido del usuario del proyecto (14/09/2026):** alcance de la v3 — landing igual a la v1,
-  flyer en modal a alto de pantalla, botón de cerrar flotante, zoom con rueda, pinch en
-  trackpad y gestos típicos también en responsive.
-- **`Fulfillment.jpeg`**, provisto por el usuario y ubicado en `src/assets/img/`.
+- **Pedido del usuario del proyecto (14/09/2026):** reformular la v3 como un front integrado,
+  con barra superior y footer, hero con imagen propia oculta en responsive, íconos de Lucide,
+  formulario a dos columnas y mensaje de éxito que mantenga la altura.
+- **Figma "Mi Correo 2.0", nodo `13284:7345`:** el diseño completo de la pantalla.
+- **`banner ff formulario.png`**, provisto por el usuario en `src/assets/img/`.

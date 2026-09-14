@@ -1,0 +1,53 @@
+/* ============================================================================
+ * fulfillment.tokens.css — tokens de la pantalla de Fulfillment de la v3
+ * ----------------------------------------------------------------------------
+ * Esta pantalla NO usa el lenguaje visual de la landing: es un front propio,
+ * tomado del diseño de Figma "Mi Correo 2.0", nodo 13284:7345. Por eso tiene su
+ * propia capa de tokens, enganchada a un atributo que sólo lleva esta página.
+ *
+ * Los navy de acá (#14245d y #192b69) no son los de la marca en `tokens.css`:
+ * son los del diseño. Se dejan literales a propósito, con este comentario, en
+ * vez de forzarlos contra tokens que no les corresponden.
+ *
+ * La barra superior y el footer sí son los de la landing, así que la página
+ * declara además `data-module="prototype"` y consume `prototype.tokens.css`.
+ * ========================================================================= */
+
+[data-page='fulfillment-v3'] {
+  /* --- Color --------------------------------------------------------------- */
+  --ffv3-navy-deep: #14245d; /* hero y cierre */
+  --ffv3-navy: #192b69; /* encabezado de columna, íconos de servicio, texto */
+  --ffv3-yellow: #ffd000; /* encabezado de columna, íconos de beneficio, borde */
+  --ffv3-surface: var(--white);
+  --ffv3-text: #191919;
+  --ffv3-hint: #667085;
+
+  /* --- Tipografía ----------------------------------------------------------
+   * El diseño usa Poppins en el hero, los encabezados de columna y los
+   * beneficios; Gilroy en los servicios, el formulario y el cierre. Poppins se
+   * carga desde Google Fonts en index.html y cae en Gilroy si no está. */
+  --ffv3-font-display: 'Poppins', 'Gilroy', system-ui, sans-serif;
+  --ffv3-hero-title: 61px;
+  --ffv3-hero-subtitle: 23px;
+  --ffv3-hero-title-mobile: 40px;
+  --ffv3-hero-subtitle-mobile: 18px;
+  /* Encabezados de columna ("¿Qué incluye nuestro fulfillment?" / "Distribución
+   * rápida y confiable"): no hay un paso de 20 en la escala de la landing
+   * (--landing-font-size-body es 16), así que se declara acá. */
+  --ffv3-group-heading-size: 20px;
+
+  /* --- Layout --------------------------------------------------------------
+   * El diseño está dibujado a 1010px, pero a ese ancho en pantallas grandes el
+   * contenido queda angosto con mucho aire a los costados (feedback del
+   * usuario, 2026-09-14). Las columnas de servicios y de inputs son grillas
+   * fijas a 2 (no se reacomodan solas), así que ensanchar este máximo sólo
+   * ensancha las columnas: no rompe el layout de a dos. Se iguala al ancho de
+   * la landing para que las pantallas del producto se sientan consistentes. */
+  --ffv3-content-max: var(--landing-container-max, 1320px);
+  --ffv3-hero-height: 410px;
+  --ffv3-icon-size: 78px;
+  --ffv3-benefit-icon-size: 72px;
+  --ffv3-radius-card: 14px;
+  --ffv3-radius-form: 24px;
+  --ffv3-gutter-mobile: 20px;
+}
