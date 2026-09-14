@@ -63,34 +63,32 @@ por confirmar.
 ## Estado actual
 
 El punto de partida —la réplica de la landing, ver
-[04-REPLICA-LANDING.md](04-REPLICA-LANDING.md)— ya está terminado, y sobre él hay **tres
-propuestas de acceso a Fulfillment**, navegables y comparables entre sí:
+[04-REPLICA-LANDING.md](04-REPLICA-LANDING.md)— ya está terminado, y sobre él queda **una
+sola propuesta de acceso a Fulfillment**:
 
 | Versión | Qué propone | Documento |
 |---|---|---|
-| v1 | Layout original + tarjeta de Fulfillment en "Conocé nuestros servicios" y la página con el formulario | [04-REPLICA-LANDING.md](04-REPLICA-LANDING.md) · [07](07-FORMULARIO-FULFILLMENT.md) |
-| v2 | El bloque central pasa a un carrusel de servicios en panel navy, con Fulfillment destacado; la devolución va a un modal | [08-PROPUESTA-V2.md](08-PROPUESTA-V2.md) |
-| v3 | Landing igual a la v1; el acceso abre el flyer del cliente en un visor. **No tiene formulario** | [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md) |
+| v3 | La landing replicada; el acceso lleva a una pantalla de Fulfillment con front propio, que termina en el formulario de contacto | [08-PROPUESTA-V3.md](08-PROPUESTA-V3.md) · [07](07-FORMULARIO-FULFILLMENT.md) |
 
-La página de Fulfillment con el formulario es una sola y la comparten la v1 y la v2.
+El 14-09-2026 se retiraron las otras dos propuestas, por decisión del usuario y con copia de
+seguridad previa: la **v1** (layout original con el formulario en una columna) y la **v2**
+(carrusel de servicios en panel navy con la devolución en un modal). Lo que aportaron y por
+qué se fueron está en [05-REGISTRO-DE-CAMBIOS.md](05-REGISTRO-DE-CAMBIOS.md).
 
 ## Próximos pasos sugeridos
 
-1. **Elegir cuál de las tres versiones se adopta.** Ojo con la v3: al no tener formulario, por
-   sí sola no cumple el objetivo principal de captar contactos.
-2. Validar con el área los textos breves, el orden y el destacado de las tarjetas del carrusel
-   de la v2, marcados como hipótesis en el documento 08.
-3. Validar el texto del mensaje de confirmación del formulario, que hoy es una propuesta de
+1. Validar el texto del mensaje de confirmación del formulario, que hoy es una propuesta de
    trabajo.
-4. Definir qué pasa después del envío del lado del negocio: base de datos, reporte semanal y
+2. Definir qué pasa después del envío del lado del negocio: base de datos, reporte semanal y
    eventos de Analytics.
+3. Resolver los límites de longitud que hoy contradicen al documento formal — ver
+   [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md).
 
 ## Pendientes de definición
 
-Cuál de las tres propuestas se adopta; si Fulfillment se comunica sólo como pieza informativa
-o tiene que captar contactos; CTA principal; copy final; mensaje de confirmación;
-comportamiento ante errores de servidor; eventos de Analytics; alcance exacto de las mejoras
-de la landing.
+Si Fulfillment se comunica sólo como pieza informativa o tiene que captar contactos; CTA
+principal; copy final; mensaje de confirmación; comportamiento ante errores de servidor;
+eventos de Analytics; alcance exacto de las mejoras de la landing.
 
 Ya están definidos: el listado de rubros —ver
 [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md#rubros)—, los campos y sus

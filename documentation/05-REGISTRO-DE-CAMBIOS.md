@@ -3,6 +3,12 @@
 Qué se trajo de cada fuente y qué se modificó al portarlo. Sirve para armar la PR de
 desarrollo sin tener que reconstruir el razonamiento.
 
+> **Nota de lectura (14-09-2026).** Las entradas anteriores a la limpieza de ese día nombran
+> rutas `v1/...` y `v2/...`. Al retirarse esas versiones, lo que la v3 seguía usando se movió
+> a `v3/` conservando el historial de Git (`components/`, `data/`, `useContactForm.ts`). Para
+> leer una entrada vieja: donde dice `v1/components/` o `v1/data/`, hoy es `v3/`. La última
+> entrada de este documento detalla el movimiento.
+
 ## Desde `Envio internacional CLAUDE` (sólo lectura)
 
 | Origen | Destino | Cambio |
@@ -103,7 +109,7 @@ el zoom, el arrastre y el pinch se resuelven con eventos de puntero.
 
 La propuesta del visor con el flyer quedó descartada el mismo día. La v3 pasa a tener una
 **pantalla propia de Fulfillment** con un front distinto del de la landing, según el diseño de
-Figma `13284:7345`. El detalle funcional está en [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md).
+Figma `13284:7345`. El detalle funcional está en [08-PROPUESTA-V3.md](08-PROPUESTA-V3.md).
 
 | Qué | Dónde | Cambio |
 |---|---|---|
@@ -167,6 +173,42 @@ tiene este subrayado. El cambio es una decisión de diseño explícita del usuar
 el sistema hacia adelante, no una corrección de fidelidad: **la v1 deja de coincidir con la
 producción real en este detalle.**
 
+## Aclaración de protección de datos, en las tres versiones (14/09/2026)
+
+`form.disclaimer` (el texto chico debajo del botón "Enviar") pasa de "Tus datos están
+protegidos." —el texto genérico del diseño de Figma— a "La información ingresada será
+almacenada únicamente para gestionar tu solicitud y poder contactarte.", a pedido del
+usuario. Es un dato compartido en
+[`fulfillment.content.ts`](../src/modules/prototype/v1/data/fulfillment.content.ts), así que
+cambió solo en las tres versiones. De paso, se corrigió una mención vieja a "de Correo
+Argentino" que había quedado en el texto de confirmación de
+[07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md) (el código ya estaba
+actualizado; sólo la documentación había quedado atrás). Verificado en v1 y v3, en una línea,
+sin desbordar la tarjeta.
+
+## Color de foco de inputs y selects, en todo el sistema (14/09/2026)
+
+El foco de `OutlinedField`/`OutlinedSelect` —el componente de Input/Select real del proyecto,
+usado por las dos variantes (`landing` y `form`) en las tres versiones— estaba puesto a mano
+con `--color-accent` (el azul de marca), en vez del token del sistema para foco de inputs:
+`--border-focus` (`--blue-focus: #2196f3`), ya definido en `tokens.css` pero sin usar en
+ningún lado. Corregido en las dos reglas de foco de
+[`OutlinedField.module.css`](../src/modules/prototype/v1/components/OutlinedField.module.css)
+(feedback del usuario, con referencia del token del Design System: "Inputs/Stroke/input-
+stroke-focus"). Alcanza a todos los inputs y selects del formulario de Fulfillment (v1, v2 y
+v3) y al campo de "Gestionar Devolución" de la landing. Verificado con clic real en el
+navegador — `element.focus()` por script no dispara el `:focus` visual en este entorno de
+pruebas, así que la verificación fue por captura, no por `getComputedStyle`.
+
+## Orden de los campos del formulario, en las tres versiones (14/09/2026)
+
+"Rubro de la empresa" pasa a ir donde estaba "Cod. área + Celular", y el teléfono baja a
+donde estaba el rubro — pedido del usuario, "eso cambia para todas las alternativas". Cambio
+de orden en el JSX únicamente (`ContactForm.tsx` para v1/v2, `FulfillmentForm.tsx` para v3);
+las reglas y validaciones no cambiaron, viven igual en `useContactForm`. Verificado en
+escritorio (una y dos columnas) y mobile. Ver
+[07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md).
+
 ## Micro interacciones de la pantalla de Fulfillment de la v3 (14/09/2026)
 
 Tres pedidos del usuario sobre la misma pantalla:
@@ -182,7 +224,7 @@ Tres pedidos del usuario sobre la misma pantalla:
    consulta" llegando de abajo hacia arriba. Al tocar ese botón: la misma transición al revés
    —el bloque de éxito se desvanece y, recién entonces, vuelven a aparecer los campos vacíos
    (pedido de seguimiento del usuario, mismo día). Detalle completo en
-   [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md#transición-y-micro-interacciones-14-09-2026).
+   [08-PROPUESTA-V3.md](08-PROPUESTA-V3.md#transición-y-micro-interacciones-14-09-2026).
    - **Bug encontrado y corregido en el camino:** el primer intento tenía un `useEffect` con
      `[sent, phase]` como dependencias. Al cambiar `phase` a `'leaving'`, React volvía a
      ejecutar el efecto y limpiaba (`clearTimeout`) el timer que acababa de programar, antes
@@ -193,14 +235,24 @@ Tres pedidos del usuario sobre la misma pantalla:
    arriba la primera vez que entra en pantalla, con
    [`useReveal.ts`](../src/modules/prototype/v3/fulfillment/useReveal.ts) (nuevo,
    `IntersectionObserver`, sin librerías). Detalle en
-   [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md#micro-interacciones-de-scroll-14-09-2026).
+   [08-PROPUESTA-V3.md](08-PROPUESTA-V3.md#micro-interacciones-de-scroll-14-09-2026).
 
-## Escala de la imagen del hero de la v3 (14/09/2026)
+## Escala de la imagen del hero de la v3 (14/09/2026, dos rondas)
 
 La imagen del hero estaba al 146% de su caja, la proporción exacta del diseño de Figma, pero
-recortaba bastante arriba y abajo. Se bajó un 15% —al **124%**— a pedido del usuario, para que
-se vea más alto del banner en la versión de escritorio a ancho completo. Ajuste en
-`.heroMedia img` de
+recortaba bastante arriba y abajo. Primera ronda: se bajó un 15% —a **124%**— a pedido del
+usuario. Segunda ronda: se pidió otro 15% —a 105%—, pero ese valor **deja huecos**: por la
+proporción real de la imagen contra esta caja, por debajo de ~114% de ancho la imagen ya no
+cubre el alto completo y aparecen franjas del fondo navy arriba y abajo. Además, un porcentaje
+fijo de ancho sólo es seguro para el ancho de viewport contra el que se probó — la caja tiene
+`flex: 1 1 0`, así que su proporción cambia con la pantalla.
+
+Se resolvió cambiando de técnica: `.heroMedia img` pasa de un `width` en porcentaje fijo +
+`height: auto` a **`width: 100%; height: 100%; object-fit: cover; object-position: left
+center`**. El navegador calcula el recorte mínimo que cubre la caja para cualquier ancho de
+viewport — sin huecos nunca, y es a la vez el recorte más chico posible, más cerca del pedido
+del usuario que cualquier porcentaje fijo. Verificado sin huecos en 1440px y 1024px de ancho.
+Ajuste en
 [`FulfillmentPage.module.css`](../src/modules/prototype/v3/fulfillment/FulfillmentPage.module.css).
 
 ## Tamaño de los encabezados de columna en la v3 (14/09/2026)
@@ -211,3 +263,64 @@ la landing, que es lo que pedía el diseño (feedback del usuario). Se agregó e
 `--ffv3-group-heading-size: 20px` en
 [`fulfillment.tokens.css`](../src/modules/prototype/v3/fulfillment/fulfillment.tokens.css) y
 `.groupHeading` en `FulfillmentPage.module.css` pasó a usarlo.
+
+## Limpieza: se retiran las versiones 1 y 2 (14/09/2026)
+
+Pedido del usuario, con copia de seguridad hecha por él de antemano: **queda sólo la v3**.
+
+**Qué se movió** (con `git mv`, para no perder el historial de cada archivo):
+
+| De | A | Por qué |
+|---|---|---|
+| `v1/components/` | `v3/components/` | La landing de la v3 es la réplica: usa estos componentes. |
+| `v1/data/landing.content.ts` · `v1/data/fulfillment.content.ts` | `v3/data/` | Textos, enlaces y la lista de rubros. |
+| `v1/fulfillment/useContactForm.ts` | `v3/fulfillment/` | Las reglas del formulario; ya no hay dos pantallas que las compartan. |
+| `v1/LandingPage.module.css` | `v3/` | Acompaña a `v3/LandingPage.tsx`. |
+
+**Qué se borró:** `src/modules/prototype/v1/` y `/v2/` completos —incluidos `ContactForm.tsx`
+(el formulario en una columna), la página de Fulfillment de la v1, el carrusel
+`QuickAccessCarousel`, el modal de devolución y `v2/data/`—, el documento `08-PROPUESTA-V2.md`
+y las rutas `/prototipo/v1`, `/prototipo/v1/fulfillment`, `/prototipo/v2`,
+`/prototipo/v2/fulfillment`. Las URLs viejas no dan error: el catch-all del router las manda
+al Hub. También se borraron los tokens `--ff-` que quedaron sin consumidor
+(`--ff-content-max`, `--ff-hero-surface`, `--ff-icon-surface`, `--ff-benefit-surface`,
+`--ff-text-hint`, `--ff-radius-card`, `--ff-radius-icon`).
+
+**Qué se conservó a propósito:** las props opcionales `rules`, `headingRules`, `title`,
+`items` y `variant` de los componentes compartidos, que hoy no tienen quién las cambie. Son el
+punto de extensión de la regla "no se duplican componentes para hacer una variante", no código
+muerto a limpiar sin decidirlo. Lo mismo con los assets `centro-logistico.png`, `map.png` y
+`clients.svg`, que quedaron sin referencia.
+
+**Renumeración de documentos:** `09-PROPUESTA-V3.md` pasa a `08-PROPUESTA-V3.md` para no dejar
+un hueco en la serie. El `id` de la ruta del lector sigue siendo `propuesta-v3`.
+
+## Menú del prototipo y panel de casos de uso (14/09/2026)
+
+El botón "Volver al Hub" pasa a ser un **menú** con dos caminos: "Volver al hub" y "Simular
+casos de uso", que abre un panel de tweaks con un chip por caso.
+
+| Qué | Dónde | Detalle |
+|---|---|---|
+| Menú, panel y chips | `components/PrototypeChrome.tsx` + `.module.css` | Una sola columna fija abajo a la izquierda (la derecha la ocupa el chatbot de la landing). El menú se cierra al tocar fuera o con Escape; el panel, sólo con su botón, para poder comparar casos mientras se usa la pantalla. |
+| Caso activo | `components/simulation.ts` (nuevo) | Contexto de React: el formulario está varios niveles abajo dentro de `children`. Por defecto `happy`, así que una pantalla montada fuera del chrome se comporta como en producción. |
+| Caso "error de formulario" | `v3/fulfillment/useContactForm.ts` | Opción `forceError`: el envío nunca prospera y se agrega el mensaje general `SIMULATED_ERROR`. **No cambia ninguna regla de validación**, y el error aparece recién después de pulsar "Enviar". |
+
+## Límites de longitud del formulario (14/09/2026)
+
+Pedido del usuario. Tres de los cuatro **contradicen al documento formal de requerimiento**, y
+quedan registrados como divergencia deliberada en
+[07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md): hay que confirmarlos con el área
+solicitante antes de desarrollo.
+
+| Campo | Antes | Ahora |
+|---|---|---|
+| Razón social | 40 | **64** |
+| Nombre y apellido | 60 | **64** |
+| Correo electrónico | sin tope | **64** |
+| Número de cliente | hasta 10 dígitos | **exactamente 10**, sólo números |
+| Rubro "Otros" | 30 | 30 (sin cambio, verificado) |
+
+Los valores dejan de estar escritos a mano en el JSX: `useContactForm` exporta `TEXTO_MAX`,
+`RUBRO_OTRO_MAX` y `NUMERO_CLIENTE_LARGO`, y `FulfillmentForm` los usa como `maxLength`. Así
+el patrón de validación y el tope del campo no pueden quedar desalineados.

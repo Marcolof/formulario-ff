@@ -143,7 +143,7 @@ export const services: Service[] = [
     image: serviceImageFulfillment,
     body: 'Solución integral de almacenamiento y distribución para tu eCommerce. Nos ocupamos de todo: vos enfocate en hacer crecer tu negocio.',
     cta: 'Conocer más',
-    href: '/prototipo/v1/fulfillment',
+    href: '/prototipo/v3/fulfillment',
     internal: true,
   },
 ]

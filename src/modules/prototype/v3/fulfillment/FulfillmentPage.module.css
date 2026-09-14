@@ -53,11 +53,24 @@
   line-height: 1.1;
 }
 
-/* La imagen es más grande que su caja y se recorta: en el diseño mide 736px
- * dentro de una caja de 505 (146%), pegada a la izquierda y centrada en
- * vertical. Se bajó un 15% de esa escala (146% → 124%, feedback del usuario,
- * 2026-09-14) para que se recorte menos arriba y abajo y se vea más alto del
- * banner, a costa de alejarse un poco de la proporción exacta del diseño. */
+/* La imagen se recorta para llenar la caja (feedback del usuario, 2026-09-14:
+ * "que se vea más alto el banner" y no quede recortada de más arriba/abajo).
+ *
+ * Antes esto se resolvía con un `width` en porcentaje fijo (146%, después
+ * 124%) calculado a mano contra un ancho de caja puntual. Eso tiene un techo
+ * matemático: por la proporción real de la imagen (2765×2248) contra esta
+ * caja, por debajo de ~114% la imagen deja de cubrir el alto y aparecen
+ * franjas del fondo navy arriba y abajo — no hay forma de bajarlo al 105%
+ * pedido sin ese hueco. Además, `flex: 1 1 0` hace que el ancho de la caja
+ * cambie con el viewport, así que un porcentaje fijo sólo estaba probado para
+ * un ancho de pantalla; a otro ancho, la proporción de la caja cambia y ese
+ * mismo número podría dejar huecos igual.
+ *
+ * `object-fit: cover` resuelve las dos cosas: el navegador calcula el recorte
+ * mínimo que sigue cubriendo la caja completa, para cualquier ancho de
+ * viewport, sin que haya que recalcular nada a mano. Es, a la vez, el recorte
+ * más chico posible sin dejar huecos — más cerca de "más chico" de lo que
+ * puede llegar cualquier porcentaje fijo. */
 .heroMedia {
   position: relative;
   flex: 1 1 0;
@@ -66,16 +79,13 @@
   overflow: hidden;
 }
 
-/* `max-width: none` porque globals.css limita las imágenes al 100% de su caja,
- * y acá tiene que desbordarla. */
 .heroMedia img {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 124%;
-  max-width: none;
-  height: auto;
-  transform: translateY(-50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Pegada a la izquierda, centrada en vertical: mismo anclaje del recorte
+   * que tenía la versión anterior. */
+  object-position: left center;
 }
 
 /* --- Detalle del servicio -------------------------------------------------- */

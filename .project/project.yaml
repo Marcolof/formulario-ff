@@ -20,14 +20,13 @@ origin:
     import_map: null
 
 strategy:
-  current_focus: "Tres propuestas de acceso a Fulfillment listas para comparar: v1 (tarjeta en la grilla de servicios), v2 (carrusel en panel navy) y v3 (pantalla de Fulfillment con front propio, según Figma 13284:7345). Las tres terminan en el mismo formulario"
+  current_focus: "Una sola propuesta vigente, la v3: la landing replicada con el acceso a una pantalla de Fulfillment de front propio (Figma 13284:7345) que termina en el formulario. Las versiones v1 y v2 se retiraron el 2026-09-14 a pedido del usuario, con copia de seguridad previa"
   intervention: "greenfield-local"
   recommended_next:
-    - "Elegir con el área cuál de las tres versiones se adopta"
+    - "Confirmar con el área solicitante los tres límites de longitud que contradicen al documento formal: razón social y nombre a 64 (documento: 40 y 60), mail a 64 y número de cliente de 10 dígitos exactos (documento: 'hasta' 10)"
     - "Confirmar si la tipografía Poppins de la v3 es definitiva o un borrador del diseño: es la única fuente fuera del sistema actual"
-    - "Validar con el área solicitante los textos breves, el orden y el destacado de las tarjetas del carrusel de la v2"
     - "Validar el texto del mensaje de confirmación del formulario"
-    - "Optimizar 'banner ff formulario.png' (4,7 MB) antes de cualquier publicación real"
+    - "Optimizar 'banner ff formulario.png' (4,7 MB) antes de cualquier publicación real, y resolver si la versión de 5,4 MB que apareció en disco reemplaza a la anterior"
   deferred:
     - "Menú de usuario logueado de la landing (oculto en el DOM sin sesión)"
     - "Scripts de terceros: GTM, Meta Pixel, chat de Wcentrix"
@@ -43,38 +42,37 @@ knowledge:
     - "El bundle original de MiCorreo sólo renderiza si se lo sirve en la ruta /landing"
     - "Campos, obligatoriedad y validaciones del formulario salen del documento formal 'Solicitud Inicial_Formulario FF' v1.0. 'Número de cliente' aparece sólo si responde 'Sí' y no es obligatorio"
     - "El listado de rubros es el desplegable real de MiCorreo, provisto por Correo Argentino: no se puede inventar ni editar por cuenta propia (2026-09-11)"
-    - "La v2 sólo cambia la landing. El hero se mantiene; 'Gestionar Devolución' y 'Conocé nuestros servicios' pasan a un carrusel de accesos; la devolución abre un modal con todo su contenido; 'Seguimiento de envíos' y 'Sucursales' quedan en su lugar (pedido del usuario, 2026-09-11)"
-    - "Rediseño del bloque central de la v2 según imagen de referencia del usuario (2026-09-11): el carrusel conserva el título 'Conocé nuestros servicios' dentro de un panel navy redondeado; la tarjeta lleva el ícono en columna propia a la izquierda y la etiqueta en flujo; 'Accesos directos' pasa a llamarse 'Accesos rápidos' con Sucursales primero, tarjeta blanca y CTA subrayado; los títulos de sección de la v2 van sin reglas laterales"
-    - "En la v2 sólo Fulfillment va destacado. La imagen de referencia muestra también 'Mis Comunicaciones Digitales' con '¡Nuevo!' y 'Solicitar'; se decidió no replicarlo porque el requerimiento formal sólo presenta Fulfillment como novedad (2026-09-11)"
-    - "El carrusel mantiene las 7 tarjetas: 'limpiar los accesos' se resolvió como rediseño visual, no como recorte (2026-09-11)"
-    - "La v1 no se duplica para las propuestas: los componentes compartidos reciben props opcionales con el valor de la landing original por defecto, y la piel propia de cada versión se aísla con un atributo"
+    - "Las versiones v1 (layout original con el formulario en una columna) y v2 (carrusel de servicios en panel navy) se borraron el 2026-09-14 a pedido del usuario, que ya tenía copia de seguridad. Lo que la v3 usaba se movió con git mv a v3/ (components, data, useContactForm, LandingPage.module.css); el resto se eliminó junto con sus rutas y el documento 08-PROPUESTA-V2.md"
+    - "La réplica de la landing no se duplica para las propuestas: los componentes compartidos reciben props opcionales con el valor de la landing original por defecto, y la piel propia de cada variante se aísla con un atributo"
     - "La v3 se reformuló por completo el 14/09/2026: se descartó el visor con el flyer estático y pasó a ser un front integrado con pantalla propia de Fulfillment, según el diseño de Figma 13284:7345"
     - "La pantalla de la v3 mantiene la barra de navegación superior y el footer de la landing; todo lo demás es un front propio (navy #14245d y #192b69, Poppins, íconos en círculo)"
-    - "En la v3 el formulario va a dos columnas en escritorio y a una sola en responsive, con la misma funcionalidad de las otras versiones, y al enviarse muestra un mensaje de éxito con ícono que conserva la altura de la tarjeta (pedido del usuario, 2026-09-14)"
+    - "En la v3 el formulario va a dos columnas en escritorio y a una sola en responsive, y al enviarse muestra un mensaje de éxito con ícono que conserva la altura de la tarjeta (pedido del usuario, 2026-09-14)"
     - "En la v3 la imagen del hero no se muestra en pantallas de hasta 900px: queda sólo el mensaje"
-    - "Hay dos pantallas de Fulfillment: la compartida por la v1 y la v2, y la propia de la v3"
+    - "Hay una sola pantalla de Fulfillment: la de la v3, con front propio"
+    - "El botón flotante del prototipo es un menú con dos caminos: 'Volver al hub' y 'Simular casos de uso', que abre un panel de tweaks con chips. Casos: happy path (envío real) y error de formulario (el envío nunca prospera y el mensaje general aparece después de pulsar Enviar). El caso viaja por contexto (components/simulation.ts) y no cambia ninguna regla de validación (pedido del usuario, 2026-09-14)"
+    - "Límites de longitud pedidos por el usuario el 2026-09-14, que CONTRADICEN al documento formal y hay que confirmar: razón social 64 (documento: 40), nombre y apellido 64 (documento: 60), mail 64 (documento: sin tope) y número de cliente de 10 dígitos exactos, sólo números (documento: 'hasta' 10). El rubro 'Otros' sigue en 30. Los valores se exportan desde useContactForm y el JSX los usa como maxLength"
     - "v3: el ancho máximo del contenido se amplió de 1010px (el del diseño) a 1320px (el de la landing), porque a 1010px se veía angosto en pantallas grandes (feedback del usuario, 2026-09-14). Las columnas de servicios e inputs son grillas fijas a 2, así que el cambio sólo las ensancha"
     - "v3: 'Número de cliente' se corrigió para aparecer justo debajo de '¿Ya sos cliente de MiCorreo?' al responder 'Sí', en vez de sumarse arriba al grid de inputs (feedback del usuario, 2026-09-14)"
     - "v3: los encabezados de columna ('¿Qué incluye...' / 'Distribución rápida...') pasaron de 16px a 20px, que es lo que pedía el diseño (feedback del usuario, 2026-09-14)"
-    - "v3: la escala de la imagen del hero se bajó un 15% (146% → 124% de su caja) para que se vea más alto del banner en escritorio, a costa de alejarse de la proporción exacta de Figma (feedback del usuario, 2026-09-14)"
-    - "Se activó el botón terciario del sistema (--button-tertiary-* en tokens.css, ya definido pero sin uso) para los CTA de texto tipo 'Conocer más'/'Ingresá': subrayado inferior amarillo, agregado a Button.module.css como .tertiary y aplicado con composes desde ServicesSection, ShortcutsSection y QuickAccessCarousel (feedback del usuario, 2026-09-14)"
-    - "Ese cambio alcanza también a la v1: sus CTA de texto no tenían subrayado y coincidían así con la landing real. Es una decisión de diseño del usuario, no una corrección de fidelidad — la v1 deja de calcar ese detalle de producción. Ver documentation/04-REPLICA-LANDING.md#diferencias-conocidas"
-    - "El texto de confirmación del formulario ('...un asesor comercial se va a comunicar...') ya no menciona 'de Correo Argentino'. Es un dato compartido por las tres versiones (fulfillment.content.ts), así que cambió en todas a la vez (feedback del usuario, 2026-09-14)"
+    - "v3: la imagen del hero pasó de un width en porcentaje fijo (146% → 124%) a object-fit: cover (feedback del usuario, 2026-09-14, dos rondas). Un tercer pedido de bajar otro 15% (a 105%) reveló que por debajo de ~114% la imagen deja de cubrir el alto de la caja y aparecen huecos; además el porcentaje fijo sólo era seguro para el ancho de viewport probado. object-fit: cover resuelve las dos cosas sin porcentajes calculados a mano"
+    - "Se activó el botón terciario del sistema (--button-tertiary-* en tokens.css, ya definido pero sin uso) para los CTA de texto tipo 'Conocer más'/'Ingresá': subrayado inferior amarillo, agregado a Button.module.css como .tertiary y aplicado con composes desde ServicesSection y ShortcutsSection (feedback del usuario, 2026-09-14)"
+    - "Ese cambio alcanza también a la landing replicada: sus CTA de texto no tenían subrayado y coincidían así con la landing real. Es una decisión de diseño del usuario, no una corrección de fidelidad — la réplica deja de calcar ese detalle de producción. Ver documentation/04-REPLICA-LANDING.md#diferencias-conocidas"
+    - "El texto de confirmación del formulario ('...un asesor comercial se va a comunicar...') ya no menciona 'de Correo Argentino' (fulfillment.content.ts, feedback del usuario, 2026-09-14)"
     - "En la pantalla de Fulfillment de la v3, el cambio de los campos al estado de éxito —y la vuelta con 'Cargar otra consulta'— es una transición en dos pasos en cada sentido (salida animada, luego entrada animada), no un reemplazo directo (feedback del usuario, 2026-09-14, en dos pedidos seguidos). Bug encontrado y corregido en el camino: un useEffect con [sent, phase] como dependencias se autocancelaba el timer al cambiar de fase; se corrigió dejando sólo [sent] para la ida, y la vuelta usa su propio timer en el handler del botón"
+    - "El orden de los campos del formulario cambió: 'Rubro de la empresa' pasa a ir donde estaba el teléfono, y el teléfono baja a donde estaba el rubro (feedback del usuario, 2026-09-14). Sólo cambió el orden en el JSX; las reglas y validaciones siguen en useContactForm, sin tocar"
+    - "El color de foco de todos los inputs y selects (OutlinedField/OutlinedSelect, las dos variantes) pasó de --color-accent a --border-focus (#2196f3), el token de foco del sistema que ya existía en tokens.css sin usarse (feedback del usuario, con referencia del Design System, 2026-09-14). Alcanza a todo el sistema"
+    - "El texto debajo del botón 'Enviar' (form.disclaimer) cambió de 'Tus datos están protegidos.' a 'La información ingresada será almacenada únicamente para gestionar tu solicitud y poder contactarte.' (feedback del usuario, 2026-09-14). Dato compartido en fulfillment.content.ts"
     - "En la pantalla de Fulfillment de la v3, cada sección menos el hero aparece con un fundido hacia arriba la primera vez que entra en pantalla, con un hook propio (useReveal.ts, IntersectionObserver, sin librerías). El hero se ve completo desde el arranque (feedback del usuario, 2026-09-14)"
   assumptions:
-    - "Los assets de marca de Fulfillment (logo e ilustración) de la v1 son provisorios: se dibujaron con la paleta de MiCorreo hasta que el cliente entregue los oficiales"
+    - "El logo de Fulfillment de la tarjeta de servicios es provisorio: es un lockup tipográfico dibujado con la paleta de MiCorreo, hasta que el cliente entregue el asset oficial"
     - "No se crea una landing institucional paralela; sí una página de Fulfillment dentro de MiCorreo"
-    - "v2: los textos breves de las tarjetas se derivaron del copy existente de la landing; no son textos aprobados"
-    - "v2: las medidas del rediseño se derivaron de una imagen de referencia y de los tokens existentes, no del archivo de Figma. Conviene contrastarlas al recuperar el acceso"
-    - "v2: Fulfillment va tercero en el carrusel, destacado con '¡Nuevo!' y CTA 'Solicitar'"
     - "v3: Poppins puede ser una tipografía de borrador del diseño; es la única fuera del sistema actual y se carga desde Google Fonts"
     - "v3: los seis servicios se modelan agrupados por columna, y no como una lista que se acomoda sola, para que en mobile cada encabezado quede con sus propios servicios"
-    - "La cifra 'Más de 3.000 negocios ya confían' del hero de Fulfillment de la v1 está sin validar"
   open_questions:
-    - "Cuál de las tres propuestas de acceso a Fulfillment se adopta: v1 (tarjeta en la grilla de servicios), v2 (carrusel en panel navy) o v3 (pantalla con front propio)"
+    - "Si los límites de longitud de 64 caracteres y el número de cliente de 10 dígitos exactos reemplazan a lo que dice el documento formal"
     - "Texto definitivo del mensaje de confirmación del formulario"
-    - "Comportamiento ante error de envío, cuando exista backend"
+    - "Comportamiento ante error de envío real, cuando exista backend (el caso simulado sólo muestra la forma del error)"
+    - "Si la versión de 'banner ff formulario.png' que apareció en disco el 2026-09-14 (5,4 MB) reemplaza a la commiteada (4,7 MB)"
 
 sources:
   - id: envio-internacional
@@ -99,25 +97,15 @@ sources:
     path: "C:/MLOF 01/VORTEX/CORREO ARGENTINO/Formulario FF/Solicitud Inicial_Formulario FF_10092026.docx"
     url: "https://docs.google.com/document/d/1OXfjHoUCptr2RVdWdQEgJBFAMqr7vVx2"
     access: read-only
-    used_for: "requerimiento formal v1.0: campos, validaciones y obligatoriedad del formulario; wireframe 'Accesos rápidos' usado como referencia de la v2"
+    used_for: "requerimiento formal v1.0: campos, validaciones y obligatoriedad del formulario. Tres de sus límites de longitud fueron sobrescritos por pedido del usuario el 2026-09-14 y están pendientes de confirmar"
   - id: figma-mi-correo
     kind: figma
     file_key: "wN6vAlF1TgGc2AJdJJvsAU"
     nodes:
-      - "13217:34295 — página de Fulfillment de la v1 y la v2"
-      - "13284:7345 — pantalla de Fulfillment de la v3, dibujada a 1010px"
+      - "13284:7345 — pantalla de Fulfillment vigente, dibujada a 1010px"
+      - "13217:34295 — página de Fulfillment de la v1 y la v2 (retiradas el 2026-09-14); de ahí siguen los textos y el tratamiento de los controles del formulario"
     access: read-write
-    used_for: "fuente de verdad visual de las dos pantallas de Fulfillment. Página 'GDD-2735 - Formulario FF (Fulfillment)'. Los íconos son Lucide y el diseño nombra cada capa con el nombre del ícono"
-  - id: pedido-v2
-    kind: user-brief
-    captured_at: "2026-09-11"
-    used_for: "alcance de la versión 2 de la landing"
-  - id: referencia-visual-v2
-    kind: image
-    access: read-only
-    captured_at: "2026-09-11"
-    origin: "captura del Figma del usuario; la cuenta con la que se trabajaba ese día no tenía acceso al archivo"
-    used_for: "rediseño del bloque central de la v2"
+    used_for: "fuente de verdad visual de la pantalla de Fulfillment. Página 'GDD-2735 - Formulario FF (Fulfillment)'. Los íconos son Lucide y el diseño nombra cada capa con el nombre del ícono"
   - id: pedido-v3
     kind: user-brief
     captured_at: "2026-09-14"
@@ -149,26 +137,19 @@ architecture:
       module: hub
     - path: "/prototipo"
       module: prototype
-    - path: "/prototipo/v1"
-      module: prototype
-    - path: "/prototipo/v1/fulfillment"
-      module: prototype
-    - path: "/prototipo/v2"
-      module: prototype
-      note: "El hash #gestion-devolucion abre el modal de devolución"
-    - path: "/prototipo/v2/fulfillment"
-      module: prototype
-      note: "Mismo componente que /prototipo/v1/fulfillment"
     - path: "/prototipo/v3"
       module: prototype
-      note: "La landing de la v1 con el acceso a Fulfillment redirigido"
+      note: "La landing replicada, con el acceso a Fulfillment"
     - path: "/prototipo/v3/fulfillment"
       module: prototype
-      note: "Pantalla con front propio, distinta de la de la v1 y la v2"
+      note: "Pantalla con front propio. El hash #formulario baja al formulario"
     - path: "/documentacion"
       module: documentation
     - path: "/documentacion/:docId"
       module: documentation
+    - path: "*"
+      module: hub
+      note: "Catch-all: las rutas de la v1 y la v2, retiradas el 2026-09-14, vuelven al Hub en vez de dar error"
 
 documentation:
   source_mode: source-documents
@@ -190,7 +171,7 @@ frontend:
   change_log: "documentation/05-REGISTRO-DE-CAMBIOS.md"
   responsive:
     status: replicated
-    breakpoint: "900px (md de MUI); el original tiene además un escalón en 600px que la v1 no replica. El carrusel de la v2 suma un escalón en 1200px y la pantalla de la v3 uno en 560px"
+    breakpoint: "900px (md de MUI); el original tiene además un escalón en 600px que la réplica no hace. La pantalla de Fulfillment suma uno en 560px"
     navigation_strategy: "Hamburguesa con panel desplegable bajo el header, como el original"
     wide_table_strategy: not-applicable
 
@@ -240,13 +221,9 @@ modules:
         route: "/documentacion/formulario-fulfillment"
         path: "documentation/07-FORMULARIO-FULFILLMENT.md"
         status: review
-      - name: "Versión 2 — Carrusel de servicios"
-        route: "/documentacion/propuesta-v2"
-        path: "documentation/08-PROPUESTA-V2.md"
-        status: draft
       - name: "Versión 3 — Pantalla propia de Fulfillment"
         route: "/documentacion/propuesta-v3"
-        path: "documentation/09-PROPUESTA-V3.md"
+        path: "documentation/08-PROPUESTA-V3.md"
         status: draft
   prototype:
     status: review
@@ -254,38 +231,21 @@ modules:
     route: "/prototipo"
     path: "src/modules/prototype"
     children:
-      - name: "Versión 1 — layout original + Fulfillment"
-        route: "/prototipo/v1"
-        path: "src/modules/prototype/v1"
-        status: review
-      - name: "Página Fulfillment con formulario (v1 y v2)"
-        route: "/prototipo/v1/fulfillment"
-        path: "src/modules/prototype/v1/fulfillment"
-        status: review
-        note: "También se monta en /prototipo/v2/fulfillment. Assets de marca provisorios; mensaje de confirmación pendiente de validación."
-      - name: "Versión 2 — carrusel de servicios"
-        route: "/prototipo/v2"
-        path: "src/modules/prototype/v2"
-        status: draft
-        note: "Compone la landing con componentes de la v1 (props opcionales, sin duplicarlos); agrega el carrusel en panel navy y el modal de devolución."
-      - name: "Versión 3 — landing con acceso redirigido"
+      - name: "Versión 3 — landing replicada con el acceso a Fulfillment"
         route: "/prototipo/v3"
         path: "src/modules/prototype/v3"
-        status: draft
-        note: "La landing de la v1 sin cambios visuales; sólo cambia el destino del acceso a Fulfillment."
-      - name: "Pantalla Fulfillment de la v3"
+        status: review
+        note: "La réplica de la landing de producción; el acceso a Fulfillment lleva a la pantalla propia. Única propuesta vigente desde el 2026-09-14. El logo de Fulfillment es provisorio."
+      - name: "Pantalla Fulfillment"
         route: "/prototipo/v3/fulfillment"
         path: "src/modules/prototype/v3/fulfillment"
-        status: draft
-        note: "Front propio según Figma 13284:7345, con su capa de tokens. Reutiliza navbar, footer, inputs, botón y las reglas del formulario. Poppins y el ancho de 1010px pendientes de confirmar."
+        status: review
+        note: "Front propio según Figma 13284:7345, con su capa de tokens. Reutiliza navbar, footer, inputs y botón. Poppins pendiente de confirmar; mensaje de confirmación pendiente de validación."
     extraction:
       required: true
       status: partial
       entrypoints:
-        - "src/modules/prototype/v1/LandingPage.tsx"
-        - "src/modules/prototype/v2/LandingPage.tsx"
         - "src/modules/prototype/v3/LandingPage.tsx"
-        - "src/modules/prototype/v1/fulfillment/FulfillmentPage.tsx"
         - "src/modules/prototype/v3/fulfillment/FulfillmentPage.tsx"
       standalone_command: "npm run dev"
       shared_dependencies:
@@ -294,8 +254,8 @@ modules:
         - "src/modules/prototype/prototype.tokens.css"
         - "Poppins desde Google Fonts, declarada en index.html (sólo la pantalla de la v3)"
       internal_dependencies:
-        - "La v2 importa componentes y datos de la v1: extraer la v2 implica llevar también v1/components, v1/data y v1/fulfillment"
-        - "La v3 importa los componentes de la landing de la v1 y, en su pantalla propia, el navbar, el footer, los controles de formulario y useContactForm"
+        - "La pantalla de Fulfillment importa de v3/components el navbar, el footer, los controles de formulario y el botón; extraerla implica llevarlos"
+        - "El formulario lee el caso de uso simulado de prototype/components/simulation.ts; fuera de PrototypeChrome el contexto devuelve 'happy' y se comporta como en producción"
       adapters: []
       pending:
         - "Sin index.ts público ni MODULE.md: el router importa las páginas directamente"
@@ -310,7 +270,7 @@ modules:
 figma:
   status: partial
   source: "Figma 'Mi Correo 2.0' (fileKey wN6vAlF1TgGc2AJdJJvsAU), página 'GDD-2735 - Formulario FF (Fulfillment)'"
-  sync: "Las dos pantallas de Fulfillment están diseñadas en Figma (13217:34295 y 13284:7345) y el prototipo las sigue. La landing de la v2 no tiene diseño en Figma."
+  sync: "La pantalla de Fulfillment está diseñada en Figma (13284:7345) y el prototipo la sigue. El nodo 13217:34295 corresponde a la página en una columna, retirada el 2026-09-14."
 
 design_system:
   status: partial
@@ -330,6 +290,6 @@ delivery:
   public_url: "https://formulario-ff.vercel.app"
   status: deployed
   last_verified: "2026-09-14"
-  pending_push: "Ajustes posteriores a a6aeb30: escala de la imagen del hero de la v3, el botón terciario reutilizable para los CTA de texto (afecta v1, v2 y v3), texto de confirmación del formulario, y micro interacciones de la pantalla de Fulfillment de la v3 (transición de éxito, aparición con el scroll)."
+  pending_push: "Ajustes posteriores a 17ae77a: imagen del hero con object-fit: cover; nuevo orden de los campos (rubro donde estaba el teléfono); color de foco de inputs y selects con --border-focus; texto debajo de 'Enviar'; retiro de las versiones v1 y v2 con todo lo que arrastra (rutas, documento 08-PROPUESTA-V2.md, tokens --ff- sin uso, documentación reescrita); menú del prototipo con panel de casos de uso; nuevos límites de longitud del formulario. Pendiente de decidir: el asset 'banner ff formulario.png' cambió en disco (4,7 MB → 5,4 MB) fuera de esta sesión, sin confirmar si es intencional — no está incluido en el commit hasta que el usuario lo confirme."
   create_vercel_project: false
   notes: "El repositorio ya tenía la integración de Vercel conectada (deploy automático en cada push a main). vercel.json hace rewrite a index.html porque, sin él, recargar una ruta interna de la SPA daba 404."

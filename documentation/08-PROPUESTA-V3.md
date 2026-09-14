@@ -1,8 +1,9 @@
 # Versión 3 — Pantalla propia de Fulfillment
 
-La landing es la de la versión 1, sin ningún cambio visual, pero el acceso a Fulfillment lleva
-a una **pantalla con front propio**, distinto del sistema visual de la landing. Conserva la
-barra de navegación superior y el footer.
+La **única propuesta vigente** desde el 14-09-2026. La landing es la réplica de producción,
+sin ningún cambio visual, pero el acceso a Fulfillment lleva a una **pantalla con front
+propio**, distinto del sistema visual de la landing. Conserva la barra de navegación superior
+y el footer.
 
 **Rutas:** `/prototipo/v3` (landing) y `/prototipo/v3/fulfillment` (la pantalla) ·
 **Implementación:** [`v3/fulfillment/`](../src/modules/prototype/v3/fulfillment/) ·
@@ -14,12 +15,12 @@ proyecto), **hipótesis** (decisión de implementación a validar) o **pendiente
 > Esta versión reemplaza por completo a la propuesta anterior de la v3, que mostraba un flyer
 > estático en un visor con zoom. Ese enfoque quedó descartado el 14/09/2026.
 
-## Qué cambia respecto de la versión 1
+## Qué cambia respecto de la landing replicada
 
-| Bloque | Versión 1 | Versión 3 | Estado |
+| Bloque | Landing replicada | Versión 3 | Estado |
 |---|---|---|---|
 | Toda la landing | — | **Idéntica**, los mismos componentes sin variantes | Confirmado |
-| Destino del acceso a Fulfillment | `/prototipo/v1/fulfillment` | `/prototipo/v3/fulfillment`, una pantalla propia | Confirmado |
+| Destino del acceso a Fulfillment | La página en una columna, hoy retirada | `/prototipo/v3/fulfillment`, una pantalla propia | Confirmado |
 | Pantalla de Fulfillment | Sobre el sistema visual de la landing | Front propio: navy, Poppins, íconos en círculo | Confirmado |
 | Barra superior y footer | — | **Se mantienen** los de la landing | Confirmado |
 
@@ -43,11 +44,21 @@ De arriba hacia abajo, como en el diseño:
 
 La imagen es `src/assets/img/banner ff formulario.png`, provista por el usuario.
 
-En el diseño no entra completa: mide 736px dentro de una caja de 505 —el 146%— pegada a la
-izquierda y centrada en vertical, de modo que se recorta arriba, abajo y a la derecha. Esa
-escala se bajó un **15%, al 124%**, a pedido del usuario (2026-09-14): con menos escala se
-recorta menos verticalmente y se ve más alto del banner, a costa de alejarse un poco de la
-proporción exacta de Figma.
+En el diseño no entra completa: mide 736px dentro de una caja de 505, pegada a la izquierda y
+centrada en vertical, de modo que se recorta arriba, abajo y a la derecha.
+
+Al pedido del usuario de achicar el recorte (14/09/2026, en dos rondas), el primer intento
+fue bajar un `width` en porcentaje fijo (146% → 124%). La segunda ronda —otro 15% menos,
+a 105%— reveló el techo de esa técnica: por la proporción real de la imagen (2765×2248)
+contra esta caja, por debajo de ~114% la imagen deja de cubrir el alto y aparecen franjas del
+fondo navy arriba y abajo. Además, como la caja tiene `flex: 1 1 0`, su ancho cambia con el
+viewport — un porcentaje fijo sólo estaba probado para un ancho de pantalla puntual y podía
+fallar en otros.
+
+Se resolvió con **`object-fit: cover`**: el navegador calcula el recorte mínimo que sigue
+cubriendo la caja completa, para cualquier ancho de viewport, sin porcentajes calculados a
+mano. Es, a la vez, el recorte más chico posible sin dejar huecos — más cerca de lo que pedía
+el usuario que cualquier número fijo. Verificado sin huecos en varios anchos de escritorio.
 
 **En pantallas de hasta 900px la imagen no se muestra**: queda sólo el mensaje. Es lo que pidió
 el requerimiento, y está planteado como algo provisorio ("por ahora").
@@ -65,10 +76,10 @@ así que la correspondencia es directa:
 
 ## El formulario
 
-**Los campos, las reglas de validación y el momento en que se muestran los errores son los
-mismos de las otras versiones.** No están duplicados: viven en
-[`useContactForm`](../src/modules/prototype/v1/fulfillment/useContactForm.ts), que comparten
-la pantalla de la v1/v2 y esta. Si una regla cambia, cambia para todas. El detalle está en
+**Los campos, las reglas de validación y el momento en que se muestran los errores** viven en
+[`useContactForm`](../src/modules/prototype/v3/fulfillment/useContactForm.ts), separados del
+marcado: el componente sólo pone el layout y toma de ahí hasta los `maxLength`. El detalle
+—incluidos los tres límites que contradicen al documento formal a pedido del usuario— está en
 [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md).
 
 Lo propio de esta versión es la disposición:
@@ -147,13 +158,14 @@ cada elemento sólo anima una vez, la primera vez que aparece.
 | Navy `#14245d` y `#192b69` literales | Son los del diseño y no coinciden con los de la marca en `tokens.css`. Se dejan explícitos en la capa de tokens de la pantalla en vez de forzarlos contra tokens que no les corresponden | Hipótesis |
 | El CTA de la landing es un enlace, no un botón | Ahora navega a una pantalla: tiene que poder abrirse en otra pestaña y copiarse | Confirmado |
 
-### Cómo la v3 reusa la v1 sin romperla
+### Cómo se conecta con la landing sin tocarla
 
-`ServicesSection` recibe una prop **opcional** `hrefs`, que reemplaza el destino de un servicio.
-La v3 la usa para mandar Fulfillment a su propia pantalla; la v1 no pasa nada y navega como
-siempre. Es el mismo criterio del resto del proyecto: **no se duplican componentes de la v1
-para hacer una variante**, se les suma una prop cuyo valor por defecto es el comportamiento
-original.
+El destino del acceso a Fulfillment sale de los datos de la landing
+(`v3/data/landing.content.ts`), por el `id` del servicio: los componentes no llevan el enlace
+escrito a mano. `ServicesSection` sigue aceptando una prop **opcional** `hrefs` para
+reemplazar el destino de un servicio sin tocar los datos — el punto de extensión que dejó el
+criterio del proyecto: **no se duplican componentes para hacer una variante**, se les suma una
+prop cuyo valor por defecto es el comportamiento original.
 
 La pantalla nueva sí tiene su propia capa de estilos
 ([`fulfillment.tokens.css`](../src/modules/prototype/v3/fulfillment/fulfillment.tokens.css)),
@@ -161,12 +173,24 @@ enganchada a un atributo que sólo lleva ella. Como la barra superior y el foote
 la landing, la página declara los dos ámbitos: `data-module="prototype"` y
 `data-page="fulfillment-v3"`.
 
+### Casos de uso simulables (14-09-2026)
+
+El botón flotante del prototipo abre un panel de tweaks con un chip por caso: *Happy path*
+(comportamiento real) y *Error de formulario* (el envío nunca prospera y, **después** de
+pulsar "Enviar", aparece el mensaje general de error sobre el botón). Sirve para mostrar el
+estado de error en una demo sin tener que romper los datos a mano.
+
+El caso viaja por contexto desde `PrototypeChrome`; el formulario sólo recibe un `forceError`.
+No cambia ninguna regla de validación. Ver
+[06-ARQUITECTURA-Y-RUTAS.md](06-ARQUITECTURA-Y-RUTAS.md#chrome-del-prototipo).
+
 ## Qué queda por validar
 
 - La tipografía Poppins, que no forma parte del sistema actual.
 - Qué hacer con la imagen del hero en mobile: hoy simplemente no se muestra.
 - El texto del mensaje de confirmación.
-- Cuál de las tres versiones se adopta.
+- Los tres límites de longitud que contradicen al documento formal (64 caracteres y número de
+  cliente de 10 dígitos exactos).
 
 ## Observaciones sobre los insumos
 

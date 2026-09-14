@@ -3,13 +3,15 @@
 Especificación funcional del formulario de captación de potenciales clientes de Fulfillment.
 Es el núcleo del proyecto: todo lo demás de la página existe para llevar hasta acá.
 
-**Ruta:** `/prototipo/v1/fulfillment` · **Implementación:**
-[`ContactForm.tsx`](../src/modules/prototype/v1/fulfillment/ContactForm.tsx) · **Diseño:**
-Figma "Mi Correo 2.0", nodo `13217:34295`, frame "Formulario".
+**Ruta:** `/prototipo/v3/fulfillment` · **Marcado:**
+[`FulfillmentForm.tsx`](../src/modules/prototype/v3/fulfillment/FulfillmentForm.tsx) ·
+**Reglas:** [`useContactForm.ts`](../src/modules/prototype/v3/fulfillment/useContactForm.ts) ·
+**Diseño:** Figma "Mi Correo 2.0", nodo `13284:7345` (el formulario a dos columnas); el nodo
+`13217:34295` fue el diseño de la versión en una columna, retirada el 14-09-2026.
 
 Los controles no son propios de esta pantalla: el campo de texto y el desplegable son
-[`OutlinedField` / `OutlinedSelect`](../src/modules/prototype/v1/components/OutlinedField.tsx)
-y el botón es [`Button`](../src/modules/prototype/v1/components/Button.tsx), los mismos que
+[`OutlinedField` / `OutlinedSelect`](../src/modules/prototype/v3/components/OutlinedField.tsx)
+y el botón es [`Button`](../src/modules/prototype/v3/components/Button.tsx), los mismos que
 usa la landing. El formulario los usa en su variante del diseño de Figma:
 
 - campos con `variant="form"`: borde `#d9d9d9`, radio 4, label gris oscuro `#474747`, y el
@@ -28,21 +30,42 @@ requerimiento.
 
 | # | Campo (label en pantalla) | Obligatorio | Formato |
 |---|---|---|---|
-| 1 | Nombre de la empresa / Razón social | **No** | Máx. 40 caracteres, alfanumérico + `. - / & ´` |
-| 2 | Nombre y apellido | Sí | Máx. 60 caracteres, sólo letras |
-| 3 | Correo electrónico | Sí | Mismo formato que MiCorreo |
-| 4 | Cod. área + Celular | Sí | Dos campos: código de área (2 a 4 dígitos) + celular (6 a 8 dígitos); la suma debe dar 10 dígitos |
-| 5 | Rubro de la empresa | Sí | Desplegable (22 rubros + "Otros" con texto libre, máx. 30 caracteres) |
+| 1 | Nombre de la empresa / Razón social | **No** | Máx. 64 caracteres, alfanumérico + `. - / & ´` |
+| 2 | Nombre y apellido | Sí | Máx. 64 caracteres, sólo letras |
+| 3 | Correo electrónico | Sí | Máx. 64 caracteres, mismo formato que MiCorreo |
+| 4 | Rubro de la empresa | Sí | Desplegable (22 rubros + "Otros" con texto libre, máx. 30 caracteres) |
+| 5 | Cod. área + Celular | Sí | Dos campos: código de área (2 a 4 dígitos) + celular (6 a 8 dígitos); la suma debe dar 10 dígitos |
 | 6 | ¿Ya sos cliente de MiCorreo? | Sí | Sí / No |
-| 7 | Número de cliente | **No** | Hasta 10 dígitos numéricos. Aparece sólo si responde "Sí" a la pregunta 6 |
+| 7 | Número de cliente | **No** | Exactamente 10 dígitos numéricos. Aparece sólo si responde "Sí" a la pregunta 6 |
 
-Todos confirmados por el documento formal de requerimiento (`Solicitud Inicial_Formulario
-FF`, v1.0). Antes de esa lectura, el prototipo tenía tres datos distintos: pedía "Nombre de
-la empresa" como obligatorio, "Celular" como un solo campo libre, y "Número de cliente" como
-obligatorio al responder "Sí" — los tres corregidos para reflejar el documento.
+Los campos y su obligatoriedad están confirmados por el documento formal de requerimiento
+(`Solicitud Inicial_Formulario FF`, v1.0). Antes de esa lectura, el prototipo tenía tres datos
+distintos: pedía "Nombre de la empresa" como obligatorio, "Celular" como un solo campo libre,
+y "Número de cliente" como obligatorio al responder "Sí" — los tres corregidos para reflejar
+el documento.
+
+### Divergencias deliberadas con el documento formal (14-09-2026)
+
+Tres límites de longitud **no** son los del documento: el usuario pidió cambiarlos
+explícitamente. Quedan registrados acá porque contradicen la fuente formal y hay que
+confirmarlos con el área solicitante antes de desarrollo.
+
+| Campo | Documento formal | Implementado | Motivo |
+|---|---|---|---|
+| Razón social | 40 caracteres | **64** | Pedido del usuario |
+| Nombre y apellido | 60 caracteres | **64** | Pedido del usuario |
+| Correo electrónico | sin tope explícito | **64** | Pedido del usuario |
+| Número de cliente | "hasta" 10 dígitos | **exactamente 10** | Pedido del usuario: "ni más ni menos" |
+
+El tope de 30 caracteres del rubro "Otros" sí coincide con lo que ya estaba implementado.
 
 El label del código de área es "Cod. área" y no "Código de área": en un campo de 108px el
 texto completo se partía en dos renglones. La abreviatura viene del diseño de Figma.
+
+**Orden de los campos (14/09/2026):** el rubro pasó a ir donde estaba el teléfono. Es un
+cambio de orden en pantalla, no de reglas: la obligatoriedad y las validaciones de cada campo
+son las mismas de siempre. *Número de cliente* aparece debajo de la pregunta que lo habilita,
+no arriba entre el resto de los campos.
 
 ### Dependencia del campo 7
 
@@ -71,21 +94,26 @@ se incorporaron.
 
 | Campo | Regla | Mensaje |
 |---|---|---|
-| Nombre de la empresa | Si se completa: patrón válido | "Máximo 40 caracteres. Se admiten letras, números y . - / & ´" |
-| Nombre y apellido | No vacío, patrón válido | "Ingresá tu nombre y apellido." / "Máximo 60 caracteres, sólo letras." |
-| Correo electrónico | No vacío, formato `algo@dominio.ext` | "Ingresá tu mail." / "Revisá el formato del mail." |
+| Nombre de la empresa | Si se completa: patrón válido | "Máximo 64 caracteres. Se admiten letras, números y . - / & ´" |
+| Nombre y apellido | No vacío, patrón válido | "Ingresá tu nombre y apellido." / "Máximo 64 caracteres, sólo letras." |
+| Correo electrónico | No vacío, máx. 64, formato `algo@dominio.ext` | "Ingresá tu mail." / "Máximo 64 caracteres." / "Revisá el formato del mail." |
 | Cod. área | No vacío, 2 a 4 dígitos | "Ingresá el código de área." / "2 a 4 dígitos." |
 | Celular | No vacío, 6 a 8 dígitos, suma con el código de área = 10 | "Ingresá tu celular." / "6 a 8 dígitos." / "Código de área + celular deben sumar 10 dígitos." |
 | Rubro | Opción elegida | "Elegí el rubro de la empresa." |
 | Rubro "Otros" | No vacío, patrón válido, sólo si se eligió "Otros" | "Ingresá el rubro." / "Máximo 30 caracteres, sólo letras." |
 | ¿Ya sos cliente? | Opción elegida | "Indicá si ya sos cliente de MiCorreo." |
-| Número de cliente | Si se completa: hasta 10 dígitos numéricos | "Hasta 10 dígitos numéricos." |
+| Número de cliente | Si se completa: exactamente 10 dígitos numéricos | "Son 10 dígitos numéricos." |
 
 **Momento de validación.** No se valida mientras la persona completa por primera vez: recién
 al apretar *Enviar* se muestran todos los errores juntos. A partir de ahí, cada campo se
 revalida al editarlo, para que el error desaparezca apenas se corrige. Código de área,
 celular y número de cliente filtran cualquier caracter que no sea dígito a medida que se
 escribe.
+
+**Límite duro además del mensaje.** Los topes de longitud también van como `maxLength` en el
+campo, así que no se puede escribir de más: el mensaje de error queda como red de seguridad
+(pegar texto, autocompletado). Los valores salen de `useContactForm.ts` —`TEXTO_MAX`,
+`RUBRO_OTRO_MAX`, `NUMERO_CLIENTE_LARGO`—, no escritos a mano en el marcado.
 
 ## Estados
 
@@ -94,10 +122,18 @@ escribe.
 | Inicial | Campos vacíos, sin errores. *Número de cliente* y *rubro "Otros"* ocultos. |
 | Error de campo | Borde rojo, `aria-invalid`, mensaje debajo asociado por `aria-describedby`. |
 | Enviado con éxito | La tarjeta se reemplaza por el mensaje de agradecimiento y un botón para cargar otra consulta. |
+| Error de formulario (simulado) | Además de los errores de campo, un mensaje general sobre el botón: "No pudimos procesar tu solicitud. Revisá los datos e intentá nuevamente." |
+
+**Casos de uso simulables.** El botón flotante del prototipo abre un panel de tweaks con un
+chip por caso: *Happy path* (comportamiento real) y *Error de formulario* (el envío nunca
+prospera, y el error aparece **después** de pulsar *Enviar*, no antes). Sirve para mostrar el
+estado de error sin tener que romper los datos a mano. El caso no cambia ninguna regla de
+validación: sólo bloquea el envío y agrega el mensaje general. Ver
+[06-ARQUITECTURA-Y-RUTAS.md](06-ARQUITECTURA-Y-RUTAS.md#chrome-del-prototipo).
 
 **Pendientes:** estado de *envío en progreso* (botón deshabilitado y feedback de carga) y
-*error de servidor o conectividad*. No se implementaron porque el prototipo no tiene backend
-y el comportamiento ante fallo todavía no está definido.
+*error de servidor o conectividad* real. No se implementaron porque el prototipo no tiene
+backend; el caso simulado de arriba muestra la forma del error, no su causa.
 
 ## Textos
 
@@ -108,11 +144,13 @@ En el orden en que aparecen en la tarjeta:
 | Título | Quiero empezar |
 | Bajada | Completá tus datos y te ayudamos a encontrar la mejor opción. |
 | Botón | Enviar |
-| Aclaración (debajo del botón) | Tus datos están protegidos. |
+| Aclaración (debajo del botón) | La información ingresada será almacenada únicamente para gestionar tu solicitud y poder contactarte. |
 | Confirmación (título) | ¡Gracias por contactarnos! |
-| Confirmación (cuerpo) | Recibimos tus datos. Un asesor comercial de Correo Argentino se va a comunicar con vos a la brevedad. |
+| Confirmación (cuerpo) | Recibimos tus datos. Un asesor comercial se va a comunicar con vos a la brevedad. |
 
-Título, bajada, botón y aclaración vienen del diseño de Figma.
+Título, bajada y botón vienen del diseño de Figma. La aclaración se reemplazó el 14/09/2026
+(pedido del usuario): el texto de Figma ("Tus datos están protegidos.") era genérico y pasó a
+uno que explica para qué se usan los datos.
 
 **Pendiente confirmado por el documento formal:** "El texto definitivo deberá ser
 definido/validado por el área solicitante" — el mensaje de confirmación sigue siendo una
@@ -127,7 +165,7 @@ Industrias y Oficinas · Juguetería y Librería · Limpieza · Mascotas · Salu
 Tabaquería · Tecnología e Informática · Textil · Vehículos y Accesorios · Otros
 (espacio a completar por el usuario)
 
-Vive en [`fulfillment.content.ts`](../src/modules/prototype/v1/data/fulfillment.content.ts).
+Vive en [`fulfillment.content.ts`](../src/modules/prototype/v3/data/fulfillment.content.ts).
 
 **Importante — origen del listado.** Éste es el desplegable real que usa MiCorreo al crear
 una nueva cuenta, provisto por Correo Argentino. **No es un listado que este proyecto pueda

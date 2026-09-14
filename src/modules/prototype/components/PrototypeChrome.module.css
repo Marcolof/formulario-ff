@@ -1,23 +1,131 @@
-/* Abajo a la izquierda: el botón del chatbot de la landing ocupa la derecha. */
-.back {
+/* Abajo a la izquierda: el botón del chatbot de la landing ocupa la derecha.
+   Todo el chrome es una sola columna anclada ahí, para que el menú y el panel
+   crezcan hacia arriba sin taparse entre sí. */
+.chrome {
   position: fixed;
   bottom: 24px;
   left: 24px;
   z-index: 5000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  max-width: min(320px, calc(100vw - 48px));
+}
+
+.trigger {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
   height: 40px;
   padding-inline: var(--space-5);
+  border: 0;
   border-radius: 999px;
   background-color: rgba(21, 38, 99, 0.92);
   color: var(--white);
+  font-family: inherit;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+
+.trigger:hover {
+  background-color: var(--correo-blue);
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 220px;
+  padding: var(--space-2);
+  border-radius: 12px;
+  background-color: var(--white);
+  box-shadow: 0 12px 32px rgba(11, 22, 60, 0.24);
+}
+
+.menuItem {
+  padding: var(--space-3) var(--space-4);
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  color: var(--correo-blue);
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  background-color: rgba(21, 38, 99, 0.08);
   text-decoration: none;
 }
 
-.back:hover {
-  background-color: var(--correo-blue);
-  text-decoration: none;
+.panel {
+  width: 100%;
+  padding: var(--space-4);
+  border-radius: 12px;
+  background-color: var(--white);
+  box-shadow: 0 12px 32px rgba(11, 22, 60, 0.24);
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.panelTitle {
+  margin: 0;
+  color: var(--correo-blue);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.panelClose {
+  border: 0;
+  background: none;
+  color: var(--correo-blue);
+  font-size: var(--font-size-sm);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.chip {
+  padding: 6px var(--space-4);
+  border: 1px solid rgba(21, 38, 99, 0.24);
+  border-radius: 999px;
+  background-color: var(--white);
+  color: var(--correo-blue);
+  font-family: inherit;
+  font-size: var(--font-size-xs, 12px);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: rgba(21, 38, 99, 0.48);
+}
+
+.chip[aria-checked='true'] {
+  border-color: transparent;
+  background-color: rgba(21, 38, 99, 0.92);
+  color: var(--white);
+}
+
+.panelHint {
+  margin: var(--space-3) 0 0;
+  color: rgba(21, 38, 99, 0.72);
+  font-size: var(--font-size-xs, 12px);
+  line-height: 1.4;
 }

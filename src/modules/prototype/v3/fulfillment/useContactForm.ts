@@ -4,10 +4,14 @@ import { RUBRO_OTROS } from '../data/fulfillment.content'
 
 /**
  * Estado y reglas del formulario de contacto de Fulfillment. Vive acá —y no
- * dentro de un componente— porque hay dos pantallas con el mismo formulario y
- * distinto layout: la de la v1/v2 (una columna) y la de la v3 (dos columnas).
- * Las validaciones salen del documento formal y tienen que ser una sola fuente:
- * si cambian, cambian para las dos.
+ * dentro del componente— para que las reglas y el momento en que se muestran
+ * los errores queden separados del layout: una sola fuente de verdad, revisable
+ * sin leer el JSX.
+ *
+ * Los límites de longitud salen del documento formal, salvo tres que el usuario
+ * pidió cambiar el 2026-09-14 y que lo contradicen a propósito: razón social,
+ * nombre y apellido y mail pasan a 64 caracteres (el documento dice 40 y 60), y
+ * el número de cliente pasa a ser exactamente 10 dígitos.
  */
 
 export type ContactValues = {
@@ -36,14 +40,19 @@ export const EMPTY_CONTACT: ContactValues = {
   numeroCliente: '',
 }
 
+/** El mismo tope para los tres campos de texto largo. */
+export const TEXTO_MAX = 64
+export const RUBRO_OTRO_MAX = 30
+export const NUMERO_CLIENTE_LARGO = 10
+
 const MAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 // Nombre de la empresa: alfanumérico + los símbolos que pide el documento.
-const EMPRESA_PATTERN = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.\-/&´]{1,40}$/
-const NOMBRE_PATTERN = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,60}$/
+const EMPRESA_PATTERN = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.\-/&´]{1,64}$/
+const NOMBRE_PATTERN = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,64}$/
 const CODIGO_AREA_PATTERN = /^\d{2,4}$/
 const CELULAR_PATTERN = /^\d{6,8}$/
 const RUBRO_OTRO_PATTERN = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,30}$/
-const NUMERO_CLIENTE_PATTERN = /^\d{1,10}$/
+const NUMERO_CLIENTE_PATTERN = /^\d{10}$/
 
 export function validateContact(values: ContactValues): ContactErrors {
   const errors: ContactErrors = {}
@@ -51,14 +60,15 @@ export function validateContact(values: ContactValues): ContactErrors {
   // Nombre de la empresa / Razón social: no es obligatorio, según excepción
   // explícita del documento formal.
   if (values.empresa.trim() && !EMPRESA_PATTERN.test(values.empresa.trim())) {
-    errors.empresa = 'Máximo 40 caracteres. Se admiten letras, números y . - / & ´'
+    errors.empresa = 'Máximo 64 caracteres. Se admiten letras, números y . - / & ´'
   }
 
   if (!values.nombre.trim()) errors.nombre = 'Ingresá tu nombre y apellido.'
   else if (!NOMBRE_PATTERN.test(values.nombre.trim()))
-    errors.nombre = 'Máximo 60 caracteres, sólo letras.'
+    errors.nombre = 'Máximo 64 caracteres, sólo letras.'
 
   if (!values.mail.trim()) errors.mail = 'Ingresá tu mail.'
+  else if (values.mail.trim().length > TEXTO_MAX) errors.mail = 'Máximo 64 caracteres.'
   else if (!MAIL_PATTERN.test(values.mail.trim())) errors.mail = 'Revisá el formato del mail.'
 
   if (!values.codigoArea.trim()) errors.codigoArea = 'Ingresá el código de área.'
@@ -80,24 +90,35 @@ export function validateContact(values: ContactValues): ContactErrors {
   if (!values.esCliente) errors.esCliente = 'Indicá si ya sos cliente de MiCorreo.'
 
   // Número de cliente: aparece si responde "Sí", pero el documento lo excluye
-  // explícitamente de los campos obligatorios. Sólo se valida el formato si
-  // se completa.
+  // explícitamente de los campos obligatorios. Sólo se valida el formato si se
+  // completa — y desde el 2026-09-14 son 10 dígitos exactos, ni más ni menos.
   if (
     values.esCliente === 'si' &&
     values.numeroCliente.trim() &&
     !NUMERO_CLIENTE_PATTERN.test(values.numeroCliente.trim())
   ) {
-    errors.numeroCliente = 'Hasta 10 dígitos numéricos.'
+    errors.numeroCliente = 'Son 10 dígitos numéricos.'
   }
 
   return errors
 }
 
-export function useContactForm() {
+/** Mensaje general del caso de uso "error de formulario" del panel de tweaks. */
+export const SIMULATED_ERROR =
+  'No pudimos procesar tu solicitud. Revisá los datos e intentá nuevamente.'
+
+/**
+ * `forceError` viene del panel de casos de uso del prototipo: con él activo el
+ * envío nunca prospera, así que el estado de error se puede revisar sin tener
+ * que romper los datos a mano. No cambia ninguna regla de validación: sólo
+ * bloquea el envío y agrega el mensaje general.
+ */
+export function useContactForm({ forceError = false }: { forceError?: boolean } = {}) {
   const [values, setValues] = useState<ContactValues>(EMPTY_CONTACT)
   const [errors, setErrors] = useState<ContactErrors>({})
   const [submitted, setSubmitted] = useState(false)
   const [sent, setSent] = useState(false)
+  const [formError, setFormError] = useState('')
 
   // Actualización funcional: evita que dos cambios de campo en el mismo evento
   // (ver "Otros" de rubro) se pisen por leer el mismo `values` ya obsoleto del
@@ -138,6 +159,11 @@ export function useContactForm() {
     setSubmitted(true)
     const found = validateContact(values)
     setErrors(found)
+    if (forceError) {
+      setFormError(SIMULATED_ERROR)
+      return
+    }
+    setFormError('')
     if (Object.keys(found).length === 0) setSent(true)
   }
 
@@ -146,7 +172,8 @@ export function useContactForm() {
     setErrors({})
     setSubmitted(false)
     setSent(false)
+    setFormError('')
   }
 
-  return { values, errors, sent, set, setDigits, setRubro, handleSubmit, reset }
+  return { values, errors, formError, sent, set, setDigits, setRubro, handleSubmit, reset }
 }

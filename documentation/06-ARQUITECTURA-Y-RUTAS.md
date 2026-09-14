@@ -26,15 +26,16 @@ Formulario FF claude/
     └── modules/
         ├── hub/                 # portada
         ├── prototype/
-        │   ├── prototype.tokens.css   # tokens compartidos por todas las versiones
-        │   ├── PrototypeHome.tsx      # listado de versiones
-        │   ├── components/PrototypeChrome.tsx
-        │   ├── v1/              # versión 1: réplica del layout original + Fulfillment
-        │   │   └── fulfillment/ # página de Fulfillment de la v1 y la v2, y la lógica
-        │   │                    # del formulario, compartida con la v3
-        │   ├── v2/              # versión 2: carrusel de servicios en panel navy
-        │   └── v3/              # versión 3: la landing de la v1 + pantalla propia
-        │       └── fulfillment/ # front propio, con su capa de tokens
+        │   ├── prototype.tokens.css   # lenguaje visual de MiCorreo, a nivel de módulo
+        │   ├── PrototypeHome.tsx      # landing del módulo
+        │   ├── components/            # chrome del prototipo: menú flotante, panel de
+        │   │                          # casos de uso y el contexto que los comunica
+        │   └── v3/              # la única propuesta vigente
+        │       ├── components/  # los componentes de la landing replicada
+        │       ├── data/        # textos y datos de la landing y del formulario
+        │       ├── LandingPage.tsx
+        │       └── fulfillment/ # front propio, con su capa de tokens y el hook del
+        │                        # formulario
         └── documentation/       # lector de los .md de documentation/
 ```
 
@@ -43,62 +44,70 @@ Formulario FF claude/
 | Ruta | Qué es | Módulo |
 |---|---|---|
 | `/` | Hub — portada con las tarjetas de módulo | hub |
-| `/prototipo` | Landing del módulo: las versiones y en qué estado está cada una | prototype |
-| `/prototipo/v1` | Versión 1 — réplica del layout original + tarjeta de Fulfillment | prototype |
-| `/prototipo/v1/fulfillment` | Página de Fulfillment con el formulario | prototype |
-| `/prototipo/v2` | Versión 2 — carrusel de servicios | prototype |
-| `/prototipo/v2#gestion-devolucion` | Versión 2 con el modal de devolución abierto | prototype |
-| `/prototipo/v2/fulfillment` | La **misma** página de Fulfillment, montada bajo la v2 | prototype |
-| `/prototipo/v3` | Versión 3 — la landing de la v1 con el acceso redirigido | prototype |
-| `/prototipo/v3/fulfillment` | Pantalla de Fulfillment con front propio, **distinta** de la anterior | prototype |
+| `/prototipo` | Landing del módulo: la propuesta y su estado | prototype |
+| `/prototipo/v3` | La landing replicada, con el acceso a Fulfillment | prototype |
+| `/prototipo/v3/fulfillment` | Pantalla de Fulfillment con front propio | prototype |
 | `/documentacion` | Índice de documentos | documentation |
 | `/documentacion/:docId` | Un documento, con opción de descargar el `.md` | documentation |
 
-Las versiones del prototipo se numeran y cada una tiene su propia ruta: la v1 no se modifica
-para probar propuestas. La v2 y la v3 componen su landing con componentes de la v1 y sólo
-agregan lo suyo — ver [08-PROPUESTA-V2.md](08-PROPUESTA-V2.md) y
-[09-PROPUESTA-V3.md](09-PROPUESTA-V3.md).
+Queda **una sola propuesta, la v3** — ver [08-PROPUESTA-V3.md](08-PROPUESTA-V3.md). La v1
+(layout original con el formulario en una columna) y la v2 (carrusel de servicios en panel
+navy) se retiraron el 14-09-2026; sus rutas ya no existen. La numeración se conserva: la ruta
+sigue siendo `/prototipo/v3` para no romper enlaces ya compartidos, y porque el equipo nombra
+así la propuesta.
 
-**Hay dos pantallas de Fulfillment, no tres.** La de la v1 y la v2 es la misma —el mismo
-componente montado en dos rutas, para que el recorrido de una demo no cambie de versión en la
-URL—. La de la v3 es otra cosa: un front propio, con su propio diseño.
+Las rutas viejas no dan error: el catch-all del router las manda al Hub.
 
 Todas las rutas son deep links: se pueden abrir directamente y recargar. Desde cualquier
-punto hay regreso al Hub — en las landings de módulo por el breadcrumb, y sobre las versiones
-del prototipo por un botón flotante que `PrototypeChrome` agrega **por fuera** del marcado de
-la página.
+punto hay regreso al Hub — en las landings de módulo por el breadcrumb, y sobre el prototipo
+por el menú flotante que `PrototypeChrome` agrega **por fuera** del marcado de la página.
 
 Al cambiar de ruta el scroll vuelve arriba (`ScrollToTop`). Los cambios de hash no lo mueven:
-en la v2 el hash abre y cierra el modal de devolución, y cerrarlo no tiene que mandar la
-página arriba.
+`/prototipo/v3/fulfillment#formulario` baja al formulario sin pelearse con ese reset.
+
+## Chrome del prototipo
+
+`PrototypeChrome` envuelve la página sin tocar su marcado —la landing replicada tiene que
+quedar idéntica al original— y aporta un botón flotante abajo a la izquierda (la derecha la
+ocupa el chatbot de la landing) con dos caminos:
+
+1. **Volver al hub.**
+2. **Simular casos de uso**, que abre un panel de tweaks con un chip por caso:
+   - *Happy path*: comportamiento real. Si los datos son válidos, el formulario se envía y
+     aparece el estado de éxito.
+   - *Error de formulario*: el envío nunca prospera; al pulsar "Enviar" aparece el mensaje de
+     error general del formulario, además de los errores reales de cada campo.
+
+El caso elegido viaja por contexto (`components/simulation.ts`), no por props: lo consume el
+formulario, que está varios niveles abajo. El valor por defecto del contexto es `happy`, así
+que la pantalla montada fuera del chrome se comporta como en producción.
 
 ## Una sola fuente editable por información
 
 - Los documentos para leer o descargar viven en `documentation/` como Markdown. El módulo
   de documentación los importa como texto crudo (`?raw`), así que no hay una segunda copia
   dentro de `src/`: editar el `.md` actualiza la app.
-- Los datos que consume el front viven dentro del módulo del prototipo: `v1/data/` (landing
-  y página de Fulfillment), `v2/data/` (carrusel y accesos) y `v3/data/` (la pantalla nueva).
-  La v2 y la v3 no copian enlaces: los toman de los servicios de la v1 por su identificador.
-- El contenido de "Gestionar Devolución" existe una vez, en `v1/components/ReturnsForm.tsx`;
-  lo usan la sección de la v1 y el modal de la v2.
-- **Las reglas del formulario existen una vez**, en `v1/fulfillment/useContactForm.ts`: campos,
-  validaciones y momento de validación. Las consumen la pantalla de la v1/v2 y la de la v3,
-  que tienen el mismo formulario con distinto layout.
+- Los datos que consume el front viven dentro del módulo del prototipo: `v3/data/
+  landing.content.ts` (landing) y `v3/data/fulfillment.content.ts` (textos y rubros del
+  formulario). El enlace a la pantalla de Fulfillment sale de ahí, no escrito a mano en cada
+  componente.
+- **Las reglas del formulario existen una vez**, en `v3/fulfillment/useContactForm.ts`:
+  campos, validaciones, límites de longitud y momento de validación. El componente sólo pone
+  el marcado y toma de ahí hasta los `maxLength`.
+- La lista de rubros sale del desplegable real de MiCorreo (`v3/data/fulfillment.content.ts`):
+  **no se inventa ni se edita** por nuestra cuenta.
 
-## Cómo las versiones nuevas reusan la v1
+## Cómo se agregan variantes
 
-Ninguna versión duplica componentes de la v1 para hacer una variante. Los componentes
-compartidos reciben **props opcionales cuyo valor por defecto es el comportamiento de la
-landing original**, y la piel propia de cada versión se aísla con un atributo. Así la v1 queda
-intacta y hay un solo lugar por componente.
+Regla vigente del proyecto: **ningún componente se duplica para hacer una variante**. Se le
+agrega una prop opcional cuyo valor por defecto es el comportamiento original, y la piel
+propia se aísla con un atributo (`data-variant`, `data-page`), nunca con una copia del
+archivo. Así hay un solo lugar por componente.
 
-| Componente de la v1 | Prop | La usa |
-|---|---|---|
-| `SectionHeading` | `rules` | v2 (títulos sin reglas laterales) |
-| `ShortcutsSection` | `title`, `items`, `variant`, `headingRules` | v2 |
-| `WhyUsSection` | `headingRules` | v2 |
-| `ServicesSection` | `hrefs` | v3 (Fulfillment va a su propia pantalla) |
+Quedan de esa regla las props opcionales que sobrevivieron al retiro de la v2 —`rules` en
+`SectionHeading`, `headingRules` en `WhyUsSection`, `title`/`items`/`variant` en
+`ShortcutsSection`— hoy sin consumidor que las cambie: son el punto de extensión, no código
+muerto a limpiar sin decidirlo.
 
 ## Aislamiento de estilos
 
@@ -114,8 +123,8 @@ Los ámbitos no se mezclan:
 Los tokens se enganchan a un atributo y no a una clase de CSS Module para que el selector no
 dependa del hash del build. Nada del chrome se filtra al prototipo ni al revés.
 
-`prototype.tokens.css` está al nivel del módulo y no dentro de `v1/` a propósito: es el
-lenguaje visual de MiCorreo, y la landing de toda versión lo consume igual. La pantalla de
+`prototype.tokens.css` está al nivel del módulo y no dentro de `v3/` a propósito: es el
+lenguaje visual de MiCorreo, y la landing de cualquier propuesta lo consume igual. La pantalla de
 Fulfillment de la v3 es la excepción: tiene su propio lenguaje visual y por eso su propia capa,
 que sólo alcanza a esa página. Como su barra superior y su footer sí son los de la landing, esa
 página declara los dos ámbitos a la vez.

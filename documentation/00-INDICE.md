@@ -2,10 +2,11 @@
 
 Proyecto: **Formulario de contacto Fulfillment (Formulario FF)**
 Producto: **MiCorreo — Correo Argentino**
-Estado: tres versiones navegables de la landing — la v1 replica el layout original con el
-acceso a Fulfillment incorporado; la v2 propone un carrusel de servicios; la v3 lleva a una
-pantalla de Fulfillment con front propio. Las tres terminan en un formulario con los mismos
-campos y las mismas validaciones.
+Estado: una sola propuesta navegable, la **v3** — la landing replicada del original, con el
+acceso a Fulfillment llevando a una pantalla de front propio que termina en el formulario de
+contacto. Las versiones v1 (layout original con el formulario en una columna) y v2 (carrusel
+de servicios) se retiraron del proyecto el 14-09-2026; su historia está en
+[05-REGISTRO-DE-CAMBIOS.md](05-REGISTRO-DE-CAMBIOS.md).
 
 ## Documentos
 
@@ -18,15 +19,14 @@ campos y las mismas validaciones.
 | [05-REGISTRO-DE-CAMBIOS.md](05-REGISTRO-DE-CAMBIOS.md) | Qué se tomó de cada fuente externa y qué se modificó al portarlo. |
 | [06-ARQUITECTURA-Y-RUTAS.md](06-ARQUITECTURA-Y-RUTAS.md) | Cómo está armado el monorepo, el Hub y el mapa de rutas. |
 | [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md) | Campos, validaciones, estados y textos del formulario de contacto. |
-| [08-PROPUESTA-V2.md](08-PROPUESTA-V2.md) | Versión 2: carrusel de servicios, modal de devolución y qué queda por validar. |
-| [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md) | Versión 3: la pantalla de Fulfillment con front propio, su hero, el formulario a dos columnas y los beneficios. |
+| [08-PROPUESTA-V3.md](08-PROPUESTA-V3.md) | Versión 3, la propuesta vigente: la pantalla de Fulfillment con front propio, su hero, el formulario a dos columnas y los beneficios. |
 
 ## Módulos del proyecto
 
 | Módulo | Ruta en la app | Código | Estado |
 |---|---|---|---|
 | Hub | `/` | `src/modules/hub/` | Vigente |
-| Prototipo navegable | `/prototipo` | `src/modules/prototype/` | v1 en revisión · v2 y v3 en borrador |
+| Prototipo navegable | `/prototipo` | `src/modules/prototype/` | v3, única vigente · en revisión |
 | Documentación | `/documentacion` | `src/modules/documentation/` + `documentation/` | Vigente |
 | Presentación | — | `presentation/` | Vacío, sin tarjeta en el Hub |
 

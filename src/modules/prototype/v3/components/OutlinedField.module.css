@@ -23,11 +23,16 @@
   line-height: 23px;
 }
 
+/* El foco usa el token del sistema para inputs (Inputs/Stroke/input-stroke-focus
+ * en el Design System, #2196f3 = --blue-focus). El componente lo tenía puesto
+ * a mano con --color-accent (el azul de marca), que es otro color — quedó así
+ * corregido para las dos variantes y para inputs, selects y sus estados de
+ * error por igual. */
 .control:focus,
 .controlError:focus,
 .select:focus,
 .selectError:focus {
-  border-color: var(--color-accent);
+  border-color: var(--border-focus);
   outline: none;
 }
 
@@ -107,7 +112,7 @@
 
 .formVariant .control:focus,
 .formVariant .select:focus {
-  border-color: var(--color-accent);
+  border-color: var(--border-focus);
 }
 
 .formVariant .field label {

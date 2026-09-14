@@ -75,7 +75,8 @@ export const benefits = {
 export const form = {
   title: 'Quiero empezar',
   subtitle: 'Completá tus datos y te ayudamos a encontrar la mejor opción.',
-  disclaimer: 'Tus datos están protegidos.',
+  disclaimer:
+    'La información ingresada será almacenada únicamente para gestionar tu solicitud y poder contactarte.',
   submit: 'Enviar',
   success: {
     title: '¡Gracias por contactarnos!',

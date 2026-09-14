@@ -1,5 +1,5 @@
-import { Navbar } from '../../v1/components/Navbar'
-import { SiteFooter } from '../../v1/components/SiteFooter'
+import { Navbar } from '../components/Navbar'
+import { SiteFooter } from '../components/SiteFooter'
 import '../../prototype.tokens.css'
 import { benefits, closing, hero, serviceGroups } from '../data/v3.content'
 import './fulfillment.tokens.css'

@@ -149,6 +149,52 @@
   line-height: var(--line-height-snug);
 }
 
+/* Mensaje general del caso de uso "error de formulario" (panel de tweaks del
+ * prototipo). Va antes del botón, para que se lea al pulsar Enviar.
+ *
+ * Tres capas para animar altura + opacidad a la vez sin medir nada a mano:
+ * - `.formErrorWrap` es una grilla de una sola fila que pasa de `0fr` a `1fr`.
+ *   Animar `grid-template-rows` es lo que da la altura real del contenido,
+ *   sea cual sea, sin JS ni un alto fijo.
+ * - `.formErrorInner` recorta ese contenido mientras la fila mide menos que
+ *   su alto natural (si no tuviera `overflow: hidden`, el padding y el texto
+ *   se verían aunque la fila esté en `0fr`).
+ * - `.formError` es la que se desvanece y baja/sube, con un pequeño retraso
+ *   para que la opacidad no arranque antes de que haya alto donde mostrarse. */
+.formErrorWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.formErrorWrap[data-visible='true'] {
+  grid-template-rows: 1fr;
+}
+
+.formErrorInner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.formError {
+  padding: var(--space-3) var(--space-4);
+  border-radius: 8px;
+  background-color: var(--feedback-danger-bg, rgba(211, 47, 47, 0.08));
+  color: var(--feedback-danger-text);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-snug);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 220ms ease-out, transform 220ms ease-out;
+}
+
+.formErrorWrap[data-visible='true'] .formError {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 80ms;
+}
+
 .action {
   display: flex;
   justify-content: center;

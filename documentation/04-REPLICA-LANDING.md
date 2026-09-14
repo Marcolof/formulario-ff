@@ -1,28 +1,27 @@
-# Versión 1 — la landing de MiCorreo con Fulfillment
+# La réplica de la landing de MiCorreo
 
-La v1 tiene dos capas, y conviene no confundirlas:
+La landing del prototipo (`/prototipo/v3`) tiene dos capas, y conviene no confundirlas:
 
 1. **La réplica**, medida contra la landing en producción y verificada sección por sección.
    Es la referencia contra la que se compara cualquier propuesta posterior.
 2. **Lo que agrega el requerimiento**, resuelto con el lenguaje visual existente y sin tocar
    el layout de lo replicado:
    - una sexta tarjeta de producto, **Fulfillment**, en "Conocé nuestros servicios";
-   - la **página de Fulfillment** con el formulario de contacto, en `/prototipo/v1/fulfillment`.
+   - el acceso desde esa tarjeta a la **pantalla de Fulfillment**, en
+     `/prototipo/v3/fulfillment`, que sí tiene front propio — ver
+     [08-PROPUESTA-V3.md](08-PROPUESTA-V3.md).
 
-Todo lo que se agrega usa el diseño actual de MiCorreo. La propuesta de un front distinto es
-la v2 y todavía no existe.
+> **Nota de historia (14-09-2026).** Este documento describía la "versión 1". Las versiones 1
+> y 2 se retiraron del proyecto y quedó una sola propuesta, la v3, que usa esta misma landing
+> replicada. El contenido de acá sigue vigente salvo por las rutas y las rutas de archivo, que
+> se actualizaron; lo que era exclusivo de la v1 —su página de Fulfillment en una columna— ya
+> no existe.
 
-## Por qué hay versiones
+## Por qué la réplica no se toca
 
-El módulo Prototipo navegable guarda más de una versión de la misma página:
-
-| Versión | Qué es | Estado |
-|---|---|---|
-| **v1 — layout original** | La landing de producción replicada, más el acceso y la página de Fulfillment resueltos con el diseño actual. | Vigente |
-| **v2 — propuesta** | Otro front sobre el mismo lenguaje visual: consume los tokens, globales y componentes del módulo, con la jerarquía que se defina para el Formulario FF. | Todavía no existe |
-
-La v1 no se modifica para probar ideas. Toda propuesta va a una versión nueva, así que
-siempre queda un original contra el que medir el cambio.
+La landing replicada no se modifica para probar ideas: es el original contra el que se mide
+cualquier cambio. Toda propuesta se resuelve sumando pantallas o props opcionales, nunca
+editando la réplica ni duplicando sus componentes.
 
 ## Cómo se obtuvieron los estilos
 
@@ -40,19 +39,22 @@ Capturas: 2026-09-10, sesión sin loguear, en dos viewports — 1440×900 y 375�
 
 ```txt
 src/modules/prototype/
-├── prototype.tokens.css         # tokens de MiCorreo, compartidos por todas las versiones
-├── PrototypeHome.tsx            # landing del módulo: lista de versiones
+├── prototype.tokens.css         # tokens de MiCorreo, a nivel de módulo
+├── PrototypeHome.tsx            # landing del módulo
 ├── components/
-│   └── PrototypeChrome.tsx      # el "Volver al Hub", por fuera de la página replicada
-└── v1/
+│   ├── PrototypeChrome.tsx      # menú flotante y panel de casos de uso, por fuera
+│   │                            # de la página replicada
+│   └── simulation.ts            # el caso de uso activo, por contexto
+└── v3/
     ├── LandingPage.tsx          # arma la página
     ├── LandingPage.module.css
     ├── data/
     │   ├── landing.content.ts   # textos, enlaces y assets de la landing
     │   └── fulfillment.content.ts
-    ├── fulfillment/             # la página de Fulfillment y su formulario
+    ├── fulfillment/             # la pantalla de Fulfillment, con front propio
     │   ├── FulfillmentPage.tsx
-    │   └── ContactForm.tsx
+    │   ├── FulfillmentForm.tsx
+    │   └── useContactForm.ts    # campos, validaciones y momento de validación
     └── components/
         ├── Navbar.tsx           # header sticky amarillo
         ├── HeroSection.tsx      # carrusel + slot de la tarjeta de login
@@ -66,9 +68,9 @@ src/modules/prototype/
         └── SectionHeading.tsx   # título con reglas laterales
 ```
 
-`prototype.tokens.css` vive al nivel del módulo, no dentro de `v1/`: es el lenguaje visual
-de MiCorreo y la v2 lo va a consumir igual. Los componentes, en cambio, son del layout de la
-v1 y la v2 va a proponer los suyos.
+`prototype.tokens.css` vive al nivel del módulo, no dentro de `v3/`: es el lenguaje visual de
+MiCorreo, y cualquier propuesta futura lo consume igual. Los componentes, en cambio, son del
+layout de esta landing, y una propuesta nueva podría traer los suyos.
 
 Todo el contenido editable de la landing vive en `data/landing.content.ts`. Los componentes
 no tienen textos embebidos.
@@ -80,55 +82,40 @@ no tienen textos embebidos.
 Sexta tarjeta, con el mismo componente y la misma alternancia izquierda/derecha que las otras
 cinco. Es la única que enlaza dentro del prototipo en vez de salir a un sitio externo.
 
-### Página de Fulfillment
+### Página de Fulfillment en una columna — retirada (14-09-2026)
 
-Sigue el diseño de Figma "Mi Correo 2.0", nodo `13217:34295` ("Fulfillment/Formulario
-default"). El contenido de las listas sigue siendo el del flyer del cliente; la estructura,
-los textos de la portada y del formulario y el tratamiento visual salen del diseño.
+Existió una página de Fulfillment con el lenguaje visual de la landing, siguiendo el nodo de
+Figma `13217:34295` ("Fulfillment/Formulario default"): portada gris, "¿Qué incluye nuestro
+fulfillment?", el formulario en la columna derecha, beneficios y mapa de cobertura. Estaba
+verificada contra Figma al pixel en viewport 1366.
 
-| Bloque | Contenido |
-|---|---|
-| Portada | Fondo gris `#f2f2f2` con las esquinas inferiores redondeadas: chip "FULFILLMENT", título "Vos vendés. Nosotros hacemos que llegue.", bajada, prueba social y foto del centro logístico |
-| ¿Qué incluye nuestro fulfillment? | Almacenamiento, pedidos y distribución, con íconos en caja celeste |
-| Formulario | Columna derecha, tarjeta blanca con sombra — ver [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md) |
-| Beneficios para tu negocio | Cuatro tarjetas crema `#fbf4d3` |
-| Distribución rápida y confiable | Sección azul con íconos en caja de borde blanco y el mapa de cobertura |
+Se retiró junto con las versiones 1 y 2. La pantalla vigente es la de la v3, con front propio
+—ver [08-PROPUESTA-V3.md](08-PROPUESTA-V3.md)—, y el formulario que vive en ella está
+documentado en [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md).
 
-En mobile las columnas se apilan: la foto debajo del texto de la portada, el contenido antes
-que el formulario, los beneficios en dos columnas (una sola por debajo de 560px) y el mapa
-centrado debajo de la lista.
+Lo que sobrevive de aquella pantalla:
 
-**Verificación contra Figma** (viewport 1366):
-
-| Elemento | Figma | Prototipo |
-|---|---|---|
-| Portada | 546 | 541 |
-| Cuerpo | 649 | 651 |
-| Beneficios | 278 | 278 |
-| Distribución | 457 | 457 |
-| Tarjeta del formulario | 500×553 | 500×555 |
-| Mapa | 277×337 | 277×337 |
-
-El footer no se compara: es el de la landing replicada (281px, medido contra producción), no
-el componente de Figma (307px).
-
-**Pendiente:** la cifra "Más de 3.000 negocios ya confían" viene del diseño. Hay que
-confirmarla con el área solicitante antes de publicar.
+- los **textos** de la tarjeta del formulario y el tratamiento visual de los controles, que la
+  v3 conserva;
+- tres assets que **ya no referencia ningún componente** y quedan en `src/assets/img/` por si
+  se retoma: `centro-logistico.png`, `map.png` y `clients.svg`;
+- la cifra "Más de 3.000 negocios ya confían", que era del diseño y quedó sin usar. Si vuelve
+  a aparecer, hay que confirmarla con el área solicitante antes de publicar.
 
 ### Tokens y componentes
 
-Los valores del diseño sin equivalente en el sistema se agregaron a `prototype.tokens.css`
-con prefijo `--ff-`: superficies, textos secundarios, radios y la sombra de la tarjeta.
-Donde había primitiva de marca se reutilizó: el gris de la portada es `--grey-100` y el
-borde de los campos, `--grey-300`.
+De los valores que se habían agregado a `prototype.tokens.css` con prefijo `--ff-` quedan
+sólo los que siguen teniendo consumidor: `--ff-field-border`, `--ff-field-radius`,
+`--ff-text-secondary` y `--ff-card-shadow`. Los de la página retirada (superficies de portada,
+íconos, beneficios y sus radios) se borraron el 14-09-2026.
 
 El formulario no inventa controles: usa los mismos que la landing, en una variante propia
 del diseño.
 
 | Componente | Dónde vive | Quién lo usa |
 |---|---|---|
-| `OutlinedField` / `OutlinedSelect` | `v1/components/` | "Gestionar Devolución" (variante por defecto) y el formulario de Fulfillment (`variant="form"`) |
-| `Button` | `v1/components/` | "Continuar" y "Ingresar" (`md`, `lg`) y "Enviar" (`pill`) |
+| `OutlinedField` / `OutlinedSelect` | `v3/components/` | "Gestionar Devolución" (variante por defecto) y el formulario de Fulfillment (`variant="form"`) |
+| `Button` | `v3/components/` | "Continuar" y "Ingresar" (`md`, `lg`), "Enviar" (`pill`) y los CTA de texto (`tertiary`) |
 
 Ambos se extrajeron de la landing replicada, midiendo su render. Las variantes del formulario
 se agregaron sin tocar la variante por defecto, así que la réplica conserva sus medidas.
@@ -169,7 +156,7 @@ Se corrigió además un error de tipeo del flyer: "Gestión depedidos" → "Gest
 
 ## Comportamiento en mobile
 
-Debajo de 900px la landing original no se limita a apilar: cambia de layout. La v1 replica
+Debajo de 900px la landing original no se limita a apilar: cambia de layout. La réplica sigue
 esos cambios.
 
 | Qué | Escritorio | Mobile |
@@ -184,14 +171,14 @@ esos cambios.
 | Footer | 3 columnas en fila | 1 columna centrada, con separadores azules de 56px entre bloques |
 
 El alto de la tarjeta de "¿Por qué elegirnos?" es fijo en el original (212.365px, idéntico en
-ambos viewports pese a tener contenidos de distinta altura); la v1 lo reproduce con un
+ambos viewports pese a tener contenidos de distinta altura); la réplica lo reproduce con un
 `min-height`, porque sin él la sección queda 30px corta en escritorio y 287px en mobile.
 
 ## Verificación
 
-Altura de cada sección, v1 contra producción:
+Altura de cada sección, la réplica contra producción:
 
-| Sección | Producción 1440 | v1 1440 | Producción 375 | v1 375 |
+| Sección | Producción 1440 | Réplica 1440 | Producción 375 | Réplica 375 |
 |---|---|---|---|---|
 | Banner | 600 | 600 | 800 | 800 |
 | Gestionar Devolución | 417 | 417 | 470 | 461 |
@@ -205,23 +192,23 @@ Sin scroll horizontal en ninguno de los dos viewports.
 ## Diferencias conocidas
 
 1. **Tipografía.** La landing en producción declara Gilroy sin `@font-face`: si la fuente no
-   está instalada, cae a Roboto/Helvetica. La v1 embebe Gilroy, así que siempre renderiza la
+   está instalada, cae a Roboto/Helvetica. La réplica embebe Gilroy, así que siempre renderiza la
    familia correcta. Las diferencias de decenas de píxeles en algunas secciones vienen de esa
    diferencia de métricas, más el redondeo de sub-píxel de un `devicePixelRatio` de 1.5. Por
    debajo del 2% no son diferencias significativas.
-2. **Un solo punto de corte.** La v1 cambia de layout en 900px, el `md` de MUI. El original
-   tiene además un escalón intermedio en 600px que la v1 no replica: entre 600 y 900 usa el
+2. **Un solo punto de corte.** La réplica cambia de layout en 900px, el `md` de MUI. El original
+   tiene además un escalón intermedio en 600px que la réplica no hace: entre 600 y 900 usa el
    layout mobile.
 3. **Carrusel.** Rota cada 5 segundos y los puntos son clicleables, como en el original. La
    landing real incluye una cuarta diapositiva que es un clon de la primera para el efecto
-   de bucle; la v1 usa tres y vuelve al inicio.
+   de bucle; la réplica usa tres y vuelve al inicio.
 4. **Sin backend.** Los formularios de login y de devolución no envían nada. El ojo de la
    contraseña sí alterna la visibilidad.
 5. **Estado sin loguear.** Se replicó la landing tal como se ve sin sesión iniciada. El menú
    de usuario logueado ("Nuevo envío", avatar, "Hola, Usuario") existe en el DOM original
    pero está oculto; no se portó.
 6. **Títulos de sección.** El original cambia la etiqueta del título de `h2` en escritorio a
-   `h5` en mobile. La v1 mantiene `h2` en ambos y sólo cambia el estilo: el nivel de
+   `h5` en mobile. La réplica mantiene `h2` en ambos y sólo cambia el estilo: el nivel de
    encabezado no debería depender del ancho de pantalla.
 7. **CTA con subrayado (14/09/2026).** Los enlaces "Conocer más" / "Ingresá" de "Conocé
    nuestros servicios" y "Accesos directos" pasaron a llevar el subrayado amarillo del botón
@@ -238,8 +225,9 @@ npm run dev
 
 - `http://localhost:4320/` — el Hub.
 - `http://localhost:4320/prototipo` — las versiones del prototipo.
-- `http://localhost:4320/prototipo/v1` — la landing.
-- `http://localhost:4320/prototipo/v1/fulfillment` — la página de Fulfillment.
+- `http://localhost:4320/prototipo/v3` — la landing.
+- `http://localhost:4320/prototipo/v3/fulfillment` — la pantalla de Fulfillment.
 
-El botón "Volver al Hub" que aparece sobre la v1 no es parte de la landing replicada: lo
-agrega `PrototypeChrome`, que envuelve la página sin tocar su marcado.
+El botón flotante que aparece sobre la landing —con "Volver al hub" y el panel de casos de
+uso— no es parte de la réplica: lo agrega `PrototypeChrome`, que envuelve la página sin tocar
+su marcado.

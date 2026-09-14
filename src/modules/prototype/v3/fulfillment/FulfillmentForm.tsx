@@ -1,10 +1,11 @@
 import { CircleCheckBig } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 
-import { Button } from '../../v1/components/Button'
-import { OutlinedField, OutlinedSelect } from '../../v1/components/OutlinedField'
-import { form, RUBRO_OTROS, rubros } from '../../v1/data/fulfillment.content'
-import { useContactForm } from '../../v1/fulfillment/useContactForm'
+import { Button } from '../components/Button'
+import { OutlinedField, OutlinedSelect } from '../components/OutlinedField'
+import { useSimulation } from '../../components/simulation'
+import { form, RUBRO_OTROS, rubros } from '../data/fulfillment.content'
+import { NUMERO_CLIENTE_LARGO, RUBRO_OTRO_MAX, TEXTO_MAX, useContactForm } from './useContactForm'
 import styles from './FulfillmentForm.module.css'
 
 /** Tiene que coincidir con la duración de salida de `.formLeaving` y
@@ -13,10 +14,9 @@ import styles from './FulfillmentForm.module.css'
 const LEAVE_MS = 220
 
 /**
- * El formulario de contacto con el layout de la v3: dos columnas en escritorio,
- * una sola en mobile. Los campos, las validaciones y el momento en que se
- * muestran los errores son los mismos de las otras versiones —viven en
- * `useContactForm`—; acá cambia sólo la disposición.
+ * El formulario de contacto: dos columnas en escritorio, una sola en mobile.
+ * Los campos, las validaciones, los límites de longitud y el momento en que se
+ * muestran los errores viven en `useContactForm`; acá va sólo la disposición.
  *
  * El cambio entre los campos y el estado de éxito —y la vuelta— es una
  * transición en dos pasos en cada sentido, no un swap directo:
@@ -36,7 +36,11 @@ const LEAVE_MS = 220
  * desvanecerse.
  */
 export function FulfillmentForm() {
-  const { values, errors, sent, set, setDigits, setRubro, handleSubmit, reset } = useContactForm()
+  // Caso de uso elegido en el panel de tweaks del prototipo. Fuera de él, el
+  // contexto devuelve 'happy': el comportamiento real.
+  const { useCase } = useSimulation()
+  const { values, errors, formError, sent, set, setDigits, setRubro, handleSubmit, reset } =
+    useContactForm({ forceError: useCase === 'error' })
 
   const [phase, setPhase] = useState<'form' | 'leaving' | 'success' | 'returning'>('form')
   // En true recién después de la primera vuelta a 'form' vía "Cargar otra
@@ -142,7 +146,7 @@ export function FulfillmentForm() {
             label="Nombre de la empresa / Razón social"
             value={values.empresa}
             error={errors.empresa}
-            maxLength={40}
+            maxLength={TEXTO_MAX}
             onChange={set('empresa')}
           />
           <OutlinedField
@@ -151,7 +155,7 @@ export function FulfillmentForm() {
             label="Nombre y apellido"
             value={values.nombre}
             error={errors.nombre}
-            maxLength={60}
+            maxLength={TEXTO_MAX}
             onChange={set('nombre')}
           />
           <OutlinedField
@@ -161,18 +165,9 @@ export function FulfillmentForm() {
             type="email"
             value={values.mail}
             error={errors.mail}
+            maxLength={TEXTO_MAX}
             onChange={set('mail')}
           />
-          <OutlinedSelect
-            id="ffv3-rubro"
-            variant="form"
-            label="Rubro de la empresa"
-            value={values.rubro}
-            error={errors.rubro}
-            options={rubros}
-            onChange={setRubro}
-          />
-
           <div className={styles.phone}>
             <div className={styles.phoneArea}>
               <OutlinedField
@@ -202,6 +197,16 @@ export function FulfillmentForm() {
             </div>
           </div>
 
+          <OutlinedSelect
+            id="ffv3-rubro"
+            variant="form"
+            label="Rubro de la empresa"
+            value={values.rubro}
+            error={errors.rubro}
+            options={rubros}
+            onChange={setRubro}
+          />
+
           {values.rubro === RUBRO_OTROS ? (
             <OutlinedField
               id="ffv3-rubro-otro"
@@ -209,7 +214,7 @@ export function FulfillmentForm() {
               label="Contanos el rubro"
               value={values.rubroOtro}
               error={errors.rubroOtro}
-              maxLength={30}
+              maxLength={RUBRO_OTRO_MAX}
               onChange={set('rubroOtro')}
             />
           ) : null}
@@ -253,11 +258,25 @@ export function FulfillmentForm() {
               inputMode="numeric"
               value={values.numeroCliente}
               error={errors.numeroCliente}
-              maxLength={10}
+              maxLength={NUMERO_CLIENTE_LARGO}
               onChange={setDigits('numeroCliente')}
             />
           </div>
         ) : null}
+
+        {/* Sólo aparece con el caso de uso "error de formulario" activo, y
+            recién después de pulsar Enviar. Siempre montado —nunca
+            `formError ? <p> : null`— para que la altura y la opacidad puedan
+            animarse con una transición de CSS: una transición no anima un
+            elemento que recién se agrega al DOM, sólo un cambio de valor en
+            uno que ya estaba. */}
+        <div className={styles.formErrorWrap} data-visible={Boolean(formError)}>
+          <div className={styles.formErrorInner}>
+            <p className={styles.formError} role="alert" aria-hidden={!formError}>
+              {formError}
+            </p>
+          </div>
+        </div>
 
         <div className={styles.action}>
           <Button type="submit" size="pill" className={styles.submit}>
