@@ -23,9 +23,9 @@ strategy:
   current_focus: "Una sola propuesta vigente, la v3: la landing replicada con el acceso a una pantalla de Fulfillment de front propio (Figma 13284:7345) que termina en el formulario. Las versiones v1 y v2 se retiraron el 2026-09-14 a pedido del usuario, con copia de seguridad previa"
   intervention: "greenfield-local"
   recommended_next:
-    - "Confirmar con el área solicitante los tres límites de longitud que contradicen al documento formal: razón social y nombre a 64 (documento: 40 y 60), mail a 64 y número de cliente de 10 dígitos exactos (documento: 'hasta' 10)"
     - "Validar el texto del mensaje de confirmación del formulario"
     - "Optimizar 'banner ff formulario.png' (5,4 MB, versión confirmada por el usuario el 2026-09-14) antes de cualquier publicación real"
+    - "Decidir si la maqueta debe reflejar la URL final /FF (hoy la pantalla vive en /prototipo/v3/fulfillment por la estructura de módulos)"
     - "Validar con el usuario el guion y las capturas del deck de presentación (public/presentacion/presentacion.html), primera versión sin revisar"
     - "Las capturas del deck (public/presentacion/assets/screens/, 888 KB en dos archivos) están sin optimizar; conviene comprimirlas si el deck se comparte fuera de este entorno"
   deferred:
@@ -33,6 +33,7 @@ strategy:
     - "Scripts de terceros: GTM, Meta Pixel, chat de Wcentrix"
     - "Qué muestra '¿Dónde encuentro mi código de seguimiento?' (en la landing original tampoco abre nada)"
     - "Qué hacer con la imagen del hero de la v3 en mobile: por ahora se oculta"
+    - "Google reCAPTCHA: el documento de Propuesta v1.2 lo pide, pero el usuario lo dejó fuera del alcance actual (2026-09-14) — resuelve por detrás y no hay nada que UX tenga que mostrar por ahora"
 
 knowledge:
   confirmed:
@@ -41,7 +42,7 @@ knowledge:
     - "Los estilos de la réplica se obtuvieron de los estilos computados de https://micorreo.correoargentino.com.ar/landing (2026-09-10, viewport 1440x900, sesión sin loguear)"
     - "La landing declara Gilroy sin @font-face; el prototipo la embebe desde los .ttf del proyecto de Envío Internacional"
     - "El bundle original de MiCorreo sólo renderiza si se lo sirve en la ruta /landing"
-    - "Campos, obligatoriedad y validaciones del formulario salen del documento formal 'Solicitud Inicial_Formulario FF' v1.0. 'Número de cliente' aparece sólo si responde 'Sí' y no es obligatorio"
+    - "Campos, obligatoriedad, formatos y longitudes del formulario salen del documento 'Propuesta Inicial_Formulario FF' v1.2 (14/09/2026), punto 3 — VERIFICADO contra la fuente el 2026-09-14. El de 'Solicitud Inicial' v1.0 NO contiene esas reglas: sólo la lista de campos. 'Número de cliente' aparece sólo si responde 'Sí'; él y Razón Social son los dos únicos campos no obligatorios"
     - "El listado de rubros es el desplegable real de MiCorreo, provisto por Correo Argentino: no se puede inventar ni editar por cuenta propia (2026-09-11)"
     - "Las versiones v1 (layout original con el formulario en una columna) y v2 (carrusel de servicios en panel navy) se borraron el 2026-09-14 a pedido del usuario, que ya tenía copia de seguridad. Lo que la v3 usaba se movió con git mv a v3/ (components, data, useContactForm, LandingPage.module.css); el resto se eliminó junto con sus rutas y el documento 08-PROPUESTA-V2.md"
     - "La réplica de la landing no se duplica para las propuestas: los componentes compartidos reciben props opcionales con el valor de la landing original por defecto, y la piel propia de cada variante se aísla con un atributo"
@@ -51,7 +52,7 @@ knowledge:
     - "En la v3 la imagen del hero no se muestra en pantallas de hasta 900px: queda sólo el mensaje"
     - "Hay una sola pantalla de Fulfillment: la de la v3, con front propio"
     - "El botón flotante del prototipo es un menú con dos caminos: 'Volver al hub' y 'Simular casos de uso', que abre un panel de tweaks con chips. Casos: happy path (envío real) y error de formulario (el envío nunca prospera y el mensaje general aparece después de pulsar Enviar). El caso viaja por contexto (components/simulation.ts) y no cambia ninguna regla de validación (pedido del usuario, 2026-09-14)"
-    - "Límites de longitud pedidos por el usuario el 2026-09-14, que CONTRADICEN al documento formal y hay que confirmar: razón social 64 (documento: 40), nombre y apellido 64 (documento: 60), mail 64 (documento: sin tope) y número de cliente de 10 dígitos exactos, sólo números (documento: 'hasta' 10). El rubro 'Otros' sigue en 30. Los valores se exportan desde useContactForm y el JSX los usa como maxLength"
+    - "LÍMITES DE LONGITUD RESUELTOS (2026-09-14): son los del documento de Propuesta v1.2 — razón social hasta 40, nombre y apellido hasta 60, número de cliente hasta 10 dígitos (tope, no largo exacto) y mail SIN tope, sólo validación de formato. Estuvieron unas horas en 64/64/64 y 10 exactos por un pedido del usuario; al verificar contra la fuente se confirmó que la contradecían y el usuario resolvió dejar lo que dice el documento. El formulario ya no se aparta del documento en ningún punto"
     - "v3: el ancho máximo del contenido se amplió de 1010px (el del diseño) a 1320px (el de la landing), porque a 1010px se veía angosto en pantallas grandes (feedback del usuario, 2026-09-14). Las columnas de servicios e inputs son grillas fijas a 2, así que el cambio sólo las ensancha"
     - "v3: 'Número de cliente' se corrigió para aparecer justo debajo de '¿Ya sos cliente de MiCorreo?' al responder 'Sí', en vez de sumarse arriba al grid de inputs (feedback del usuario, 2026-09-14)"
     - "v3: los encabezados de columna ('¿Qué incluye...' / 'Distribución rápida...') pasaron de 16px a 20px, que es lo que pedía el diseño (feedback del usuario, 2026-09-14)"
@@ -67,6 +68,9 @@ knowledge:
     - "Se agregó el módulo Presentación al Hub (2026-09-14), primer pedido del usuario tras releer el estado del proyecto. El deck (public/presentacion/presentacion.html) es un HTML autocontenido con capturas reales del prototipo, generado con la skill presentacion-proyecto y servido como archivo estático bajo la misma URL y el mismo build — no es una ruta de React"
     - "Al armar el módulo Presentación se encontró y corrigió un bloque fijo en HubPage.tsx ('Todavía sin contenido — Presentación') que ya no era cierto una vez agregado el módulo: no era un dato derivado, sino texto hardcodeado (2026-09-14)"
     - "ALCANCE DEL DECK (pedido del usuario, 2026-09-14): la presentación habla únicamente del requerimiento y de cómo se ven las propuestas finales. El Hub, las landings de módulo y la documentación son el andamiaje de la maqueta con la que se muestra el trabajo al cliente y al equipo — NO son tema de la presentación. Se eliminaron los seis slides que los mostraban y el deck pasó de 16 a 10 slides"
+    - "REQUERIMIENTO v1.2 (14/09/2026), leído el 2026-09-14: la página de Fulfillment es una landing INDEPENDIENTE con URL pública propia, micorreo.correoargentino.com.ar/FF, preparada para parámetros UTM y desacoplada del dominio de usuarios de MiCorreo. Debe servir para tráfico de Google Ads, redes, banners del sitio institucional y Email Marketing. Esto resuelve la ambigüedad que la documentación arrastraba sobre si se creaba o no una landing aparte: sí se crea"
+    - "El documento v1.2 pide reutilizar el Google reCAPTCHA de la plataforma y un aviso al usuario sobre el almacenamiento de sus datos. El aviso ya está (texto debajo de Enviar). El reCAPTCHA queda FUERA DEL ALCANCE de UX por decisión del usuario (2026-09-14): resuelve por detrás y no hay nada que mostrar en pantalla por ahora — no agregarlo al prototipo"
+    - "El flujo funcional del documento v1.2 confirma decisiones ya tomadas en el prototipo: el acceso disponible para usuarios no logueados, el CTA 'Conocer más' en la tarjeta de Fulfillment, el flyer y el formulario en una misma pantalla, y los campos condicionales de rubro 'Otros' y número de cliente"
     - "Panel Beneficios de la v3 (pedido del usuario, 2026-09-14): el detalle de cada beneficio pasa de 13px regular a 14px medium, por legibilidad; el título ya estaba en 16px bold y no se tocó. Es una divergencia deliberada del diseño de Figma, que dibuja el detalle en 13px. El cambio subió el alto de la pantalla de 2200 a 2323px, así que se rehizo la captura del deck y el recorte del slide del formulario pasó de 54% a 52%"
     - "TIPOGRAFÍA RESUELTA (confirmado por el usuario, 2026-09-14): la pantalla de Fulfillment usa Gilroy, la tipografía del sistema. El diseño de Figma la dibuja con Poppins en el hero, los encabezados de columna y los beneficios, pero esa era una hipótesis sin confirmar y quedó descartada. Se cambió el token --ffv3-font-display y se retiró la carga de Google Fonts de index.html: el proyecto ya no depende de ningún recurso externo. El layout no cambió de alto (2200px), así que las capturas del deck siguen usando los mismos recortes"
   assumptions:
@@ -77,7 +81,7 @@ knowledge:
     - "Si los límites de longitud de 64 caracteres y el número de cliente de 10 dígitos exactos reemplazan a lo que dice el documento formal"
     - "Texto definitivo del mensaje de confirmación del formulario"
     - "Comportamiento ante error de envío real, cuando exista backend (el caso simulado sólo muestra la forma del error)"
-    - "El guion y las capturas del deck de presentación (10 slides) todavía no fueron validados por el usuario"
+    - "El guion y las capturas del deck de presentación (13 slides) todavía no fueron validados por el usuario"
 
 sources:
   - id: envio-internacional
@@ -97,12 +101,20 @@ sources:
     access: read-only
     captured_at: "2026-09-10"
     used_for: "estilos computados reales — fuente de verdad de la réplica"
+  - id: propuesta-inicial
+    kind: document
+    path: "C:/MLOF 01/VORTEX/CORREO ARGENTINO/Formulario FF/Propuesta Inicial_Formulario FF_10092026.docx"
+    access: read-only
+    version: "1.2 (14/09/2026)"
+    captured_at: "2026-09-14"
+    used_for: "FUENTE REAL de campos, formatos, longitudes y obligatoriedad del formulario (punto 3), del flujo funcional pantalla por pantalla, del criterio de URL pública propia con UTM y de la modificación de requerimiento del 14/9"
+    notes: "Movido desde Downloads a la carpeta del proyecto el 2026-09-14, a pedido del usuario, para que no se pierda. Hasta ese día la documentación atribuía estas reglas al documento de 'Solicitud Inicial', que no las contiene"
   - id: solicitud-inicial
     kind: document
     path: "C:/MLOF 01/VORTEX/CORREO ARGENTINO/Formulario FF/Solicitud Inicial_Formulario FF_10092026.docx"
     url: "https://docs.google.com/document/d/1OXfjHoUCptr2RVdWdQEgJBFAMqr7vVx2"
     access: read-only
-    used_for: "requerimiento formal v1.0: campos, validaciones y obligatoriedad del formulario. Tres de sus límites de longitud fueron sobrescritos por pedido del usuario el 2026-09-14 y están pendientes de confirmar"
+    used_for: "la solicitud original del área: objetivo, alcance y lista de campos. NO contiene longitudes ni formatos — esas reglas vienen del documento de Propuesta (ver fuente propuesta-inicial), verificado el 2026-09-14"
   - id: figma-mi-correo
     kind: figma
     file_key: "wN6vAlF1TgGc2AJdJJvsAU"
@@ -284,7 +296,7 @@ modules:
         route: "/presentacion/presentacion.html"
         path: "public/presentacion/presentacion.html"
         status: review
-        note: "10 slides. Alcance acotado el 2026-09-14 a pedido del usuario: el deck habla SÓLO del requerimiento y de la propuesta final. El Hub, los módulos y la documentación son el andamiaje de la maqueta y quedaron fuera. Capturas reales del prototipo (public/presentacion/assets/screens/), tomadas con Chrome headless. Sin validar por el usuario todavía."
+        note: "13 slides. Alcance acotado el 2026-09-14 a pedido del usuario: el deck habla SÓLO del requerimiento y de la propuesta final. El Hub, los módulos y la documentación son el andamiaje de la maqueta y quedaron fuera. Capturas reales del prototipo (public/presentacion/assets/screens/), tomadas con Chrome headless. Sin validar por el usuario todavía."
 
 figma:
   status: partial

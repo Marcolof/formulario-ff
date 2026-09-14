@@ -44,20 +44,38 @@ distintos: pedía "Nombre de la empresa" como obligatorio, "Celular" como un sol
 y "Número de cliente" como obligatorio al responder "Sí" — los tres corregidos para reflejar
 el documento.
 
-### Divergencias deliberadas con el documento formal (14-09-2026)
+### Los límites de longitud, resueltos (14-09-2026)
 
-Tres límites de longitud **no** son los del documento: el usuario pidió cambiarlos
-explícitamente. Quedan registrados acá porque contradicen la fuente formal y hay que
-confirmarlos con el área solicitante antes de desarrollo.
+Durante unas horas los topes estuvieron en 64/64/64 y el número de cliente en 10 dígitos
+exactos, por un pedido del usuario. Al verificar contra la fuente se confirmó que **esos
+valores contradecían al documento**, y el usuario resolvió **dejarlos como dice el
+documento**. Hoy no hay ninguna divergencia abierta en este punto.
 
-| Campo | Documento formal | Implementado | Motivo |
+| Campo | Documento | Estuvo en | **Vigente** |
 |---|---|---|---|
-| Razón social | 40 caracteres | **64** | Pedido del usuario |
-| Nombre y apellido | 60 caracteres | **64** | Pedido del usuario |
-| Correo electrónico | sin tope explícito | **64** | Pedido del usuario |
-| Número de cliente | "hasta" 10 dígitos | **exactamente 10** | Pedido del usuario: "ni más ni menos" |
+| Razón social | hasta 40 | 64 | **40** |
+| Nombre y apellido | hasta 60 | 64 | **60** |
+| Correo electrónico | sin tope, sólo formato | 64 | **sin tope** |
+| Número de cliente | "hasta" 10 dígitos | exactamente 10 | **hasta 10** |
 
-El tope de 30 caracteres del rubro "Otros" sí coincide con lo que ya estaba implementado.
+El mail es el único campo sin tope de largo: el documento sólo pide validar el formato, con
+"el mismo comportamiento que MiCorreo". Si MiCorreo impone un máximo, hay que traerlo de ahí
+en vez de inventar uno.
+
+**La fuente, textualmente:**
+
+> Nombre de la empresa / Razón social: **hasta 40 caracteres** alfanumérico, debe permitir
+> símbolos: ".", "-", "/", "&", "´"
+> Nombre y apellido: **hasta 60 caracteres** alfabéticos
+> Mail: debe validar que el formato sea correcto. Mismo comportamiento que MiCorreo
+> […] número de cliente usuario (ID), **hasta 10 dígitos numéricos como máximo**
+> Todos los campos deben ser obligatorios, **a excepción de Razón Social y n° de cliente**
+
+**El resto de las reglas también coincide** con el documento: los símbolos permitidos en razón
+social, "sólo letras" en nombre, el código de área de 2 a 4 dígitos y el celular de 6 a 8 que
+deben sumar 10, el rubro tomado del desplegable real de MiCorreo, el tope de 30 caracteres de
+"Otros", y que Razón Social y Número de cliente sean los dos únicos campos no obligatorios.
+**Hoy el formulario no se aparta del documento en ningún punto.**
 
 El label del código de área es "Cod. área" y no "Código de área": en un campo de 108px el
 texto completo se partía en dos renglones. La abreviatura viene del diseño de Figma.
@@ -197,10 +215,16 @@ Del requerimiento, todavía sin resolver en el prototipo porque no hay backend:
 
 - `contexto_inicial_formulario_fulfillment.md`: resumen informal, usado para el primer punto
   de partida del proyecto.
-- **`Solicitud Inicial_Formulario FF_10092026.docx`** (Google Doc, v1.0, 10/09/2026): el
-  documento formal del área de Marketing Digital. Es la fuente que definió los campos,
-  validaciones y obligatoriedad de esta versión. De ahí salió también el flyer y un wireframe
-  de tres pantallas, usados como referencia de contenido.
+- **`Propuesta Inicial_Formulario FF_10092026.docx`** (v1.2, 14/09/2026, Marcela Demichelis y
+  Marco Loforte): **la fuente real de los campos, formatos, longitudes y obligatoriedad.**
+  Su punto "3. Datos a solicitar en el formulario" es el que fija cada regla, y su capítulo
+  "Flujo Funcional" describe el recorrido pantalla por pantalla. Incluye además el flyer y el
+  wireframe de baja fidelidad.
+- `Solicitud Inicial_Formulario FF_10092026.docx` (v1.0, 10/09/2026, Agustina Gualco): la
+  solicitud original del área. **No contiene longitudes ni formatos** — sólo la lista de
+  campos y el comportamiento esperado. Durante un tiempo esta documentación le atribuyó a
+  este archivo las reglas de detalle; el 14-09-2026 se verificó que vienen del documento de
+  *Propuesta*, y se corrigió la cita.
 - **Figma "Mi Correo 2.0", nodo `13217:34295`**: el diseño visual de la página y del
   formulario. Es la fuente de los textos de la tarjeta, del orden de los elementos y del
   tratamiento visual de los controles.

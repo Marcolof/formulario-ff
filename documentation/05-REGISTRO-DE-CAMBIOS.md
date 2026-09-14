@@ -470,3 +470,54 @@ sirviendo sin cambios.
 Conviene recordar la cuenta, porque se repite cada vez que cambia el alto de esa pantalla:
 con una ventana de 900px sobre una imagen de alto `H`, el porcentaje que centra una franja
 que empieza en `y` es `(y - 450 + alto_franja / 2) / (H - 900)`.
+
+## Los límites de longitud vuelven al documento (14/09/2026)
+
+Al verificar contra la fuente real —el documento de **Propuesta**, no el de *Solicitud*— se
+confirmó que los topes implementados la contradecían. El usuario resolvió **dejar lo que dice
+el documento**, así que se revirtieron.
+
+| Campo | Estuvo en | Vigente | Fuente |
+|---|---|---|---|
+| Razón social | 64 | **40** | "hasta 40 caracteres alfanumérico" |
+| Nombre y apellido | 64 | **60** | "hasta 60 caracteres alfabéticos" |
+| Correo electrónico | 64 | **sin tope** | "debe validar que el formato sea correcto. Mismo comportamiento que MiCorreo" |
+| Número de cliente | exactamente 10 | **hasta 10** | "hasta 10 dígitos numéricos como máximo" |
+
+**Qué cambió en el código** (`v3/fulfillment/`):
+
+- `useContactForm.ts`: `TEXTO_MAX = 64` —un único tope para tres campos— se separó en
+  `EMPRESA_MAX = 40` y `NOMBRE_MAX = 60`. El mail se quedó sin constante: no tiene tope.
+  `NUMERO_CLIENTE_LARGO` pasó a llamarse `NUMERO_CLIENTE_MAX`, porque es un máximo y no un
+  largo fijo, y su patrón pasó de `\d{10}` a `\d{1,10}`.
+- Los mensajes de error acompañan: "Máximo 40 caracteres…", "Máximo 60 caracteres, sólo
+  letras.", "Hasta 10 dígitos numéricos.". Se eliminó la validación de largo del mail.
+- `FulfillmentForm.tsx`: cada campo usa ahora su propio `maxLength`, y el del mail se quitó.
+
+**El mail es el único sin tope.** El documento sólo le pide formato válido, delegando en "el
+mismo comportamiento que MiCorreo". Inventar un número acá sería agregar una regla que la
+fuente no tiene; si MiCorreo impone un máximo, hay que traerlo de ahí.
+
+Con esto **el formulario ya no se aparta del documento en ningún punto.**
+
+### El deck suma las validaciones (14/09/2026)
+
+Pedido del usuario junto con la reversión de los límites: que la presentación cubra **todo lo
+referido a las validaciones de los inputs**. El deck pasó de 10 a **13 slides**.
+
+| # | Slide nuevo | Qué muestra |
+|---|---|---|
+| 5 | Las reglas de cada campo | Tabla con la regla de los 7 campos y los dos marcados como opcionales |
+| 10 | Validación · Obligatorios | Captura del formulario con los 6 errores de obligatoriedad |
+| 11 | Validación · Formato | Captura con errores de formato en mail y celular, y los campos válidos sin marcar |
+
+El slide 4 ("Los datos que se piden") suma además los topes a cada campo de la lista.
+
+**Cómo se capturaron los estados de error.** Chrome headless no puede interactuar con la
+página, así que se extendió el HTML temporal de recorte: además de posicionar el `<iframe>`,
+ahora puede ejecutar acciones dentro de él antes de la captura —completar campos con valores
+inválidos y pulsar "Enviar"—, aprovechando que es *same-origin*. Como siempre, el archivo se
+borró después de usarlo.
+
+De paso se rehicieron las dos capturas que ya existían, para que todas correspondan al mismo
+estado del prototipo.

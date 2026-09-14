@@ -25,9 +25,10 @@ export function PresentationHome() {
             <span className={styles.review}>Vigente · en revisión</span>
           </div>
           <p className={styles.summary}>
-            10 slides. Primero el requerimiento —qué se pidió, el flujo esperado y los datos
-            que pide el formulario—, después la propuesta final con capturas reales: el
-            acceso, la página del servicio, el formulario y el cierre. Termina con lo que
+            13 slides. Primero el requerimiento —qué se pidió, el flujo esperado, los datos
+            que pide el formulario y las reglas de validación campo por campo—, después la
+            propuesta final con capturas reales: el acceso, la página del servicio, el
+            formulario y cómo avisa cuando falta algo o el dato no sirve. Termina con lo que
             falta definir. Se navega con los botones del pie, las flechas del teclado o
             deslizando en mobile.
           </p>

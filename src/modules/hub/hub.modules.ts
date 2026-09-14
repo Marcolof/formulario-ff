@@ -37,7 +37,7 @@ export const modules: ModuleCard[] = [
     title: 'Presentación',
     summary:
       'El deck para mostrarle la propuesta al cliente y al equipo: qué pidió el requerimiento y cómo se ve la solución, con capturas reales de las pantallas.',
-    meta: '10 slides · en revisión',
+    meta: '13 slides · en revisión',
     route: '/presentacion',
     state: 'review',
     stateLabel: 'En revisión',

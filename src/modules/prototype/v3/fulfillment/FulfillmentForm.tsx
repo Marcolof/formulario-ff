@@ -5,7 +5,7 @@ import { Button } from '../components/Button'
 import { OutlinedField, OutlinedSelect } from '../components/OutlinedField'
 import { useSimulation } from '../../components/simulation'
 import { form, RUBRO_OTROS, rubros } from '../data/fulfillment.content'
-import { NUMERO_CLIENTE_LARGO, RUBRO_OTRO_MAX, TEXTO_MAX, useContactForm } from './useContactForm'
+import { EMPRESA_MAX, NOMBRE_MAX, NUMERO_CLIENTE_MAX, RUBRO_OTRO_MAX, useContactForm } from './useContactForm'
 import styles from './FulfillmentForm.module.css'
 
 /** Tiene que coincidir con la duración de salida de `.formLeaving` y
@@ -146,7 +146,7 @@ export function FulfillmentForm() {
             label="Nombre de la empresa / Razón social"
             value={values.empresa}
             error={errors.empresa}
-            maxLength={TEXTO_MAX}
+            maxLength={EMPRESA_MAX}
             onChange={set('empresa')}
           />
           <OutlinedField
@@ -155,7 +155,7 @@ export function FulfillmentForm() {
             label="Nombre y apellido"
             value={values.nombre}
             error={errors.nombre}
-            maxLength={TEXTO_MAX}
+            maxLength={NOMBRE_MAX}
             onChange={set('nombre')}
           />
           <OutlinedField
@@ -165,7 +165,6 @@ export function FulfillmentForm() {
             type="email"
             value={values.mail}
             error={errors.mail}
-            maxLength={TEXTO_MAX}
             onChange={set('mail')}
           />
           <div className={styles.phone}>
@@ -258,7 +257,7 @@ export function FulfillmentForm() {
               inputMode="numeric"
               value={values.numeroCliente}
               error={errors.numeroCliente}
-              maxLength={NUMERO_CLIENTE_LARGO}
+              maxLength={NUMERO_CLIENTE_MAX}
               onChange={setDigits('numeroCliente')}
             />
           </div>

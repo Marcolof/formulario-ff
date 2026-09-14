@@ -53,12 +53,25 @@ Confirmación en pantalla, almacenamiento en base de datos, reporte semanal y se
 Google Analytics. Desde UX hay que contemplar validaciones, errores de campo, envío en
 progreso, envío exitoso y errores de servidor o conectividad.
 
-## Ambigüedad registrada
+## Ambigüedad resuelta (14/09/2026)
 
-El documento del cliente dice que no se creará una landing independiente, pero pide una
-página de destino específica. **Interpretación de trabajo:** no se crea una landing
-institucional paralela; sí una página de Fulfillment dentro del ecosistema MiCorreo. Queda
-por confirmar.
+Durante un tiempo quedó como duda si se creaba o no una landing independiente. **El documento
+de Propuesta (v1.2) lo resuelve:** sí es una página con URL propia.
+
+> **Criterio de aceptación principal:** La página de destino […] deberá contar con una URL
+> pública, absoluta y de acceso directo.
+> **Objetivo de negocio:** Garantizar que esta nueva pantalla no dependa exclusivamente del
+> flujo de la Landing de MiCorreo, permitiendo que funcione como una landing page
+> independiente para captar leads desde múltiples orígenes.
+
+La URL definida es **`micorreo.correoargentino.com.ar/FF`**, y debe soportar parámetros UTM
+para que Analytics identifique el origen del tráfico (campañas de Google Ads y redes, banners
+en el sitio institucional, Email Marketing). La solución queda además **desacoplada del
+dominio de usuarios de MiCorreo**, porque son potenciales clientes que no necesariamente
+tienen cuenta.
+
+En el prototipo la pantalla vive en `/prototipo/v3/fulfillment` por la estructura de módulos
+de esta maqueta; la ruta final de producción es `/FF`.
 
 ## Estado actual
 
@@ -83,6 +96,18 @@ qué se fueron está en [05-REGISTRO-DE-CAMBIOS.md](05-REGISTRO-DE-CAMBIOS.md).
    eventos de Analytics.
 3. Resolver los límites de longitud que hoy contradicen al documento formal — ver
    [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md).
+
+## Requisitos del documento fuera del alcance de UX
+
+- **Google reCAPTCHA.** El documento (v1.2) pide reutilizar "el mecanismo de Google reCAPTCHA
+  actualmente utilizado en la plataforma" para proteger el formulario de accesos
+  automatizados. **Queda fuera del alcance** por decisión del usuario del proyecto
+  (14/09/2026): resuelve por detrás y no hay nada que UX tenga que mostrar por ahora. No se
+  agrega al prototipo.
+- **URL `/FF`.** Ver la sección anterior: es un requisito de entrega, no del prototipo.
+
+El **aviso sobre el almacenamiento de datos** que pide el mismo párrafo del documento sí está
+resuelto: es el texto debajo del botón "Enviar".
 
 ## Pendientes de definición
 

@@ -27,12 +27,14 @@ Hub, siguiendo el mismo patrón que Prototipo y Documentación (`ModuleLayout`).
   de cómo se ven las propuestas finales**. El Hub, las landings de módulo y la documentación
   son el **andamiaje de la maqueta** con la que le mostramos el trabajo al cliente y al
   equipo: **no son tema de la presentación y no deben volver a aparecer en los slides.** Es un
-  pedido explícito del usuario (14-09-2026), que hizo pasar el deck de 16 a **10 slides**.
-- Los 10 slides: portada · el requerimiento · el flujo esperado (4 momentos) · los datos que
-  pide el formulario · divider "La propuesta final" · el acceso desde la landing · la página
-  (hero y servicios) · el formulario · beneficios y cierre · lo que falta definir. Las
-  capturas son del prototipo real corriendo en `localhost:4320` (Chrome headless, no
-  simuladas).
+  pedido explícito del usuario (14-09-2026), que hizo pasar el deck de 16 a 10 slides.
+- Los **13 slides** de hoy: portada · el requerimiento · el flujo esperado (4 momentos) · los
+  datos que pide el formulario · **las reglas de validación campo por campo** · divider "La
+  propuesta final" · el acceso desde la landing · la página (hero y servicios) · el formulario ·
+  **validación de obligatorios** · **validación de formato** · beneficios y cierre · lo que
+  falta definir. Los tres slides en negrita se sumaron el 14-09-2026, a pedido del usuario, para
+  cubrir las validaciones de los inputs. Las capturas son del prototipo real corriendo en
+  `localhost:4320` (Chrome headless, no simuladas).
 - **Dos trucos de captura, por si hay que rehacerlas:**
   - *La pantalla de Fulfillment* usa **una sola captura de página completa**
     (`fulfillment-full.png`, 1440×**2323**, con `--virtual-time-budget` alto para que el
@@ -78,13 +80,13 @@ Hub, siguiendo el mismo patrón que Prototipo y Documentación (`ModuleLayout`).
   formulario* (el envío nunca prospera y el mensaje general aparece **después** de pulsar
   "Enviar"). El caso viaja por contexto desde `components/simulation.ts`; el formulario sólo
   recibe `forceError`. No cambia ninguna regla de validación.
-- **Nuevos límites de longitud del formulario**, pedidos por el usuario: razón social, nombre
-  y mail a **64** caracteres, número de cliente de **10 dígitos exactos** (sólo números),
-  rubro "Otros" en 30. **Ojo:** los tres primeros y el "exactamente 10" **contradicen al
-  documento formal** (40, 60, y "hasta" 10). Está registrado como divergencia deliberada en
-  `documentation/07-FORMULARIO-FULFILLMENT.md` y hay que confirmarlo con el área solicitante.
-  Los valores se exportan desde `useContactForm` (`TEXTO_MAX`, `RUBRO_OTRO_MAX`,
-  `NUMERO_CLIENTE_LARGO`) y el JSX los usa como `maxLength`: no los dupliques a mano.
+- **Límites de longitud del formulario: los del documento**, tras una ida y vuelta. Estuvieron
+  unas horas en 64/64/64 y número de cliente de 10 dígitos exactos por un pedido del usuario;
+  al verificar contra la fuente se confirmó que la contradecían y el usuario resolvió dejar lo
+  que dice el documento. **Vigente:** razón social **40**, nombre y apellido **60**, mail
+  **sin tope** (sólo formato), número de cliente **hasta 10**, rubro "Otros" en 30. Se exportan
+  desde `useContactForm` (`EMPRESA_MAX`, `NOMBRE_MAX`, `RUBRO_OTRO_MAX`, `NUMERO_CLIENTE_MAX`)
+  y el JSX los usa como `maxLength`: no los dupliques a mano.
 - Se activó el **botón terciario del sistema** (`--button-tertiary-*` en `tokens.css`, ya
   definido pero sin usar) para los CTA de texto tipo "Conocer más"/"Ingresá": subrayado
   amarillo, agregado como `.tertiary` en `Button.module.css` y aplicado con `composes` desde
@@ -149,8 +151,19 @@ con acceso a Fulfillment y una página con formulario de contacto. Cliente: Corr
   - `C:\MLOF 01\VORTEX\CORREO ARGENTINO\Formulario FF\html reference` (HTML guardado de la
     landing, sin estilos utilizables — ver por qué en
     [documentation/02-FUENTES.md](documentation/02-FUENTES.md)).
-  - Google Doc `docs.google.com/document/d/1OXfjHoUCptr2RVdWdQEgJBFAMqr7vVx2` — el
-    documento formal de requerimiento ("Solicitud Inicial_Formulario FF"). Solo lectura.
+  - **`Propuesta Inicial_Formulario FF_10092026.docx` (v1.2, 14/09/2026)** — **el documento
+    formal que manda.** Su punto 3 fija campos, formatos, longitudes y obligatoriedad, y su
+    capítulo "Flujo Funcional" describe el recorrido pantalla por pantalla. Vive en la carpeta
+    padre, junto al otro `.docx` (se movió ahí desde Downloads el 14-09-2026).
+    **Dos cosas de ese documento que NO hay que reabrir:**
+    - El **reCAPTCHA** que pide queda fuera del alcance de UX por decisión del usuario:
+      resuelve por detrás y no hay nada que mostrar en pantalla. No agregarlo al prototipo.
+    - El documento incluye capturas del propio prototipo y una imagen vieja de la landing;
+      **no son observaciones a registrar** — el usuario pidió omitirlas.
+  - `Solicitud Inicial_Formulario FF_10092026.docx` (v1.0) y el Google Doc
+    `docs.google.com/document/d/1OXfjHoUCptr2RVdWdQEgJBFAMqr7vVx2` — la solicitud original.
+    **No tiene longitudes ni formatos.** Hasta el 14-09-2026 la documentación le atribuía por
+    error las reglas de detalle; se verificó y se corrigió. Solo lectura.
 - Cualquier cambio a algo "de origen" se hace como copia local trazable dentro de esta
   carpeta, nunca editando el original.
 
@@ -248,10 +261,9 @@ Para entender una entrada vieja del registro de cambios: lo que decía `v1/compo
 
 ## Formulario de Fulfillment — lo más importante para no romper
 
-- Campos, validaciones y obligatoriedad salen del documento formal ("Solicitud Inicial
-  Formulario FF" v1.0) — no inventar reglas nuevas sin confirmarlas ahí. **Excepción vigente:**
-  los cuatro límites de longitud que el usuario pidió el 14-09-2026 (64 caracteres y número de
-  cliente de 10 dígitos exactos) contradicen al documento y están pendientes de confirmación.
+- Campos, validaciones, formatos y longitudes salen del documento formal **"Propuesta Inicial
+  Formulario FF" v1.2**, punto 3 — no inventar reglas nuevas sin confirmarlas ahí. Desde el
+  14-09-2026 **el formulario no se aparta del documento en ningún punto.**
 - **El listado de rubros es el desplegable REAL de MiCorreo, provisto por Correo
   Argentino.** No es una lista que este proyecto pueda inventar, agregar o editar por
   cuenta propia. Vive en `v3/data/fulfillment.content.ts` (`export const rubros`). Si hace
@@ -294,7 +306,7 @@ Para entender una entrada vieja del registro de cambios: lo que decía `v1/compo
 
 ## Dónde seguir (recomendado, no obligatorio)
 
-1. Confirmar con el área los cuatro límites de longitud que contradicen al documento formal.
+1. Validar el texto del mensaje de confirmación del formulario, que sigue sin aprobar.
 2. Optimizar `banner ff formulario.png`: pesa 5,4 MB, mucho para web.
 3. Validar con el usuario el guion del deck de presentación.
 4. Releer `.project/project.yaml` → `knowledge.open_questions` antes de tomar decisiones de

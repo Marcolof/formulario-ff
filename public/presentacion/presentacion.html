@@ -163,6 +163,23 @@
   .module-item strong { display: block; margin-bottom: 3px; font-size: 1.0625rem; }
   .module-item p { margin: 0; font-size: .9375rem; color: var(--text-muted); }
 
+  /* ---------- Tabla de reglas ---------- */
+  .rules { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: .9375rem; }
+  .rules th, .rules td { padding: 9px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border-card); }
+  .rules thead th { background: var(--color-brand-dark); color: #fff; font-weight: 700; border-bottom: 0; }
+  .rules thead th:first-child { border-top-left-radius: var(--radius-md); }
+  .rules thead th:last-child { border-top-right-radius: var(--radius-md); }
+  .rules tbody tr:nth-child(even) { background: var(--gray-100); }
+  .rules td:first-child { font-weight: 700; color: var(--color-brand-dark); white-space: nowrap; }
+  .rules td { color: var(--text-muted); }
+  .rules .opt { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: var(--radius-pill); background: var(--color-brand); color: var(--color-brand-dark); font-size: .75rem; font-weight: 700; }
+  .rules-note { margin-top: 16px; font-size: .875rem; }
+
+  @media (max-width: 900px) {
+    .rules { font-size: .8125rem; }
+    .rules th, .rules td { padding: 7px 9px; }
+  }
+
   /* ---------- Footer de navegación ---------- */
   .deck-progress { flex: 0 0 auto; height: 3px; background: var(--gray-200); }
   .deck-progress__bar { height: 100%; background: var(--color-brand); transition: width .25s ease; }
@@ -323,19 +340,74 @@
             volumen estimado de envíos. No se incorporan sin validación del área.</p>
           </div>
           <div class="obj-list">
-            <span>Nombre de la empresa</span>
-            <span>Nombre y apellido</span>
+            <span>Nombre de la empresa · hasta 40</span>
+            <span>Nombre y apellido · hasta 60</span>
             <span>Correo electrónico</span>
             <span>Rubro de la empresa</span>
-            <span>Cod. área + Celular</span>
+            <span>Cod. área + Celular · 10 dígitos</span>
             <span>¿Ya sos cliente de MiCorreo?</span>
-            <span>Número de cliente, si corresponde</span>
+            <span>Número de cliente · hasta 10</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 5 · Divider: La propuesta final -->
+    <!-- 5 · Las reglas de cada campo -->
+    <section class="slide screen-slide-wrap">
+      <div class="screen-topbar">
+        <div class="screen-topbar__stripe"></div>
+        <div class="screen-topbar__band">
+          <img class="screen-topbar__logo" src="assets/logo-mi-correo.svg" alt="Marca" />
+          <span class="screen-topbar__label">Las reglas</span>
+          <a class="slide-back slide-back--band" href="/"><svg class="lucide-icon" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Volver al hub</a>
+        </div>
+      </div>
+      <div class="plain-body">
+        <span class="slide-eyebrow">Validaciones, campo por campo</span>
+        <h2>Qué se acepta en cada campo</h2>
+        <p>Todas las reglas salen del punto 3 del documento. Los dos campos con la etiqueta
+        <strong>opcional</strong> son las únicas excepciones a la obligatoriedad general.</p>
+        <table class="rules">
+          <thead>
+            <tr><th>Campo</th><th>Regla</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Razón social <span class="opt">opcional</span></td>
+              <td>Hasta 40 caracteres. Letras, números y los símbolos <code>. - / &amp; ´</code></td>
+            </tr>
+            <tr>
+              <td>Nombre y apellido</td>
+              <td>Hasta 60 caracteres, sólo letras</td>
+            </tr>
+            <tr>
+              <td>Correo electrónico</td>
+              <td>Formato de mail válido. Sin tope de largo: el documento pide el mismo comportamiento que MiCorreo</td>
+            </tr>
+            <tr>
+              <td>Cod. área + Celular</td>
+              <td>Dos campos, sólo números: 2 a 4 dígitos y 6 a 8 dígitos. <strong>Entre los dos deben sumar 10</strong></td>
+            </tr>
+            <tr>
+              <td>Rubro de la empresa</td>
+              <td>Desplegable real de MiCorreo. Con "Otros" se abre un campo libre de hasta 30 caracteres, sólo letras</td>
+            </tr>
+            <tr>
+              <td>¿Ya sos cliente?</td>
+              <td>Sí o No. Hay que elegir una</td>
+            </tr>
+            <tr>
+              <td>Número de cliente <span class="opt">opcional</span></td>
+              <td>Sólo aparece al responder "Sí". Hasta 10 dígitos numéricos</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="rules-note">Los campos numéricos <strong>filtran mientras se escribe</strong>:
+        no dejan entrar letras. El resto se revisa al enviar.</p>
+      </div>
+    </section>
+
+    <!-- 6 · Divider: La propuesta final -->
     <section class="slide cover-slide">
       <a class="slide-back slide-back--light" href="/"><svg class="lucide-icon" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Volver al hub</a>
       <div class="cover-slide__bar"></div>
@@ -346,7 +418,7 @@
       </div>
     </section>
 
-    <!-- 6 · El acceso desde la landing -->
+    <!-- 7 · El acceso desde la landing -->
     <section class="slide screen-slide-wrap">
       <div class="screen-topbar">
         <div class="screen-topbar__stripe"></div>
@@ -376,7 +448,7 @@
       </div>
     </section>
 
-    <!-- 7 · La página: hero y servicios -->
+    <!-- 8 · La página: hero y servicios -->
     <section class="slide screen-slide-wrap">
       <div class="screen-topbar">
         <div class="screen-topbar__stripe"></div>
@@ -406,7 +478,7 @@
       </div>
     </section>
 
-    <!-- 8 · El formulario -->
+    <!-- 9 · El formulario -->
     <section class="slide screen-slide-wrap">
       <div class="screen-topbar">
         <div class="screen-topbar__stripe"></div>
@@ -427,7 +499,6 @@
               <li>Al enviar, la tarjeta <strong>conserva su altura</strong> y pasa al mensaje de confirmación, sin que la página salte.</li>
               <li>Todavía no hay backend: el envío no viaja a ningún lado.</li>
             </ul>
-            <span class="role-tag role-tag--pendiente">3 límites de longitud a confirmar</span>
           </div>
           <div class="screen-frame-wrap">
             <div class="screen-frame screen-frame--img"><img src="assets/screens/fulfillment-full.png" alt="Formulario de contacto de la página de Fulfillment" style="object-position: center 52%;" /></div>
@@ -436,7 +507,67 @@
       </div>
     </section>
 
-    <!-- 9 · Beneficios y cierre de la página -->
+    <!-- 10 · Validación: campos obligatorios -->
+    <section class="slide screen-slide-wrap">
+      <div class="screen-topbar">
+        <div class="screen-topbar__stripe"></div>
+        <div class="screen-topbar__band">
+          <img class="screen-topbar__logo" src="assets/logo-mi-correo.svg" alt="Marca" />
+          <span class="screen-topbar__label">Validaciones</span>
+          <a class="slide-back slide-back--band" href="/"><svg class="lucide-icon" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Volver al hub</a>
+        </div>
+      </div>
+      <div class="screen-slide-body">
+        <div class="screen-slide reverse">
+          <div class="screen-frame-wrap">
+            <div class="screen-frame screen-frame--img"><img src="assets/screens/form-obligatorios.png" alt="Formulario mostrando los errores de campos obligatorios" /></div>
+          </div>
+          <div class="screen-text">
+            <span class="slide-eyebrow">Validación · Obligatorios</span>
+            <h2>Se avisa al enviar, no antes</h2>
+            <p>Mientras se completa por primera vez no aparece ningún error. Recién al tocar
+            "Enviar" se muestran todos juntos; desde ahí, cada campo se revalida al corregirlo.</p>
+            <ul>
+              <li>Cada error va <strong>debajo de su campo</strong>, con el borde en rojo: se ve cuál falta sin tener que buscarlo.</li>
+              <li><strong>Razón social no da error</strong> — es una de las dos excepciones del documento.</li>
+              <li>Los textos dicen qué hacer ("Ingresá tu mail."), no qué pasó.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 · Validación: formato -->
+    <section class="slide screen-slide-wrap">
+      <div class="screen-topbar">
+        <div class="screen-topbar__stripe"></div>
+        <div class="screen-topbar__band">
+          <img class="screen-topbar__logo" src="assets/logo-mi-correo.svg" alt="Marca" />
+          <span class="screen-topbar__label">Validaciones</span>
+          <a class="slide-back slide-back--band" href="/"><svg class="lucide-icon" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Volver al hub</a>
+        </div>
+      </div>
+      <div class="screen-slide-body">
+        <div class="screen-slide">
+          <div class="screen-text">
+            <span class="slide-eyebrow">Validación · Formato</span>
+            <h2>Y cuando el dato no sirve</h2>
+            <p>Un campo completo también puede estar mal. El aviso es del mismo tipo, pero
+            explica el formato que se espera.</p>
+            <ul>
+              <li>El mail avisa por <strong>formato</strong>, no por largo: no tiene tope.</li>
+              <li>El celular recuerda su rango: <strong>6 a 8 dígitos</strong>, y que con el código de área deben sumar 10.</li>
+              <li>Lo que ya está bien <strong>no se marca</strong>: sólo se señala lo que hay que corregir.</li>
+            </ul>
+          </div>
+          <div class="screen-frame-wrap">
+            <div class="screen-frame screen-frame--img"><img src="assets/screens/form-formato.png" alt="Formulario mostrando errores de formato en mail y celular" /></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 · Beneficios y cierre de la página -->
     <section class="slide screen-slide-wrap">
       <div class="screen-topbar">
         <div class="screen-topbar__stripe"></div>
@@ -465,7 +596,7 @@
       </div>
     </section>
 
-    <!-- 10 · Cierre -->
+    <!-- 13 · Cierre -->
     <section class="slide cover-slide">
       <a class="slide-back slide-back--light" href="/"><svg class="lucide-icon" viewBox="0 0 24 24"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>Volver al hub</a>
       <div class="cover-slide__bar"></div>
@@ -474,7 +605,6 @@
         <h1 class="cover-title">Lo que falta definir</h1>
         <p class="cover-subtitle">La propuesta cubre el recorrido completo que pide el requerimiento. Estos puntos necesitan una definición del área antes de pasar a desarrollo.</p>
         <div class="crumb">
-          <span>3 límites de longitud</span><span class="crumb-sep">›</span>
           <span>Mensaje de confirmación sin aprobar</span>
         </div>
       </div>

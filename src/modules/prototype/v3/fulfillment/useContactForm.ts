@@ -8,10 +8,15 @@ import { RUBRO_OTROS } from '../data/fulfillment.content'
  * los errores queden separados del layout: una sola fuente de verdad, revisable
  * sin leer el JSX.
  *
- * Los límites de longitud salen del documento formal, salvo tres que el usuario
- * pidió cambiar el 2026-09-14 y que lo contradicen a propósito: razón social,
- * nombre y apellido y mail pasan a 64 caracteres (el documento dice 40 y 60), y
- * el número de cliente pasa a ser exactamente 10 dígitos.
+ * **Los límites de longitud son los del documento formal** ("Propuesta Inicial
+ * Formulario FF", v1.2, punto 3), verificados contra la fuente el 2026-09-14:
+ * razón social hasta 40, nombre y apellido hasta 60, número de cliente hasta 10
+ * dígitos. Entre el 14-09 y esa verificación estuvieron en 64/64/64 y en 10
+ * exactos por un pedido que resultó contradecir al documento; se revirtieron.
+ *
+ * El mail es el único sin tope de longitud: el documento sólo pide validar el
+ * formato, "mismo comportamiento que MiCorreo". Si MiCorreo impone un máximo,
+ * hay que traerlo de ahí — no inventarlo acá.
  */
 
 export type ContactValues = {
@@ -40,19 +45,21 @@ export const EMPTY_CONTACT: ContactValues = {
   numeroCliente: '',
 }
 
-/** El mismo tope para los tres campos de texto largo. */
-export const TEXTO_MAX = 64
+/* Topes del documento. El mail no tiene: sólo se le valida el formato. */
+export const EMPRESA_MAX = 40
+export const NOMBRE_MAX = 60
 export const RUBRO_OTRO_MAX = 30
-export const NUMERO_CLIENTE_LARGO = 10
+/** "Hasta 10 dígitos numéricos como máximo": es un tope, no un largo fijo. */
+export const NUMERO_CLIENTE_MAX = 10
 
 const MAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 // Nombre de la empresa: alfanumérico + los símbolos que pide el documento.
-const EMPRESA_PATTERN = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.\-/&´]{1,64}$/
-const NOMBRE_PATTERN = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,64}$/
+const EMPRESA_PATTERN = /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s.\-/&´]{1,40}$/
+const NOMBRE_PATTERN = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,60}$/
 const CODIGO_AREA_PATTERN = /^\d{2,4}$/
 const CELULAR_PATTERN = /^\d{6,8}$/
 const RUBRO_OTRO_PATTERN = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,30}$/
-const NUMERO_CLIENTE_PATTERN = /^\d{10}$/
+const NUMERO_CLIENTE_PATTERN = /^\d{1,10}$/
 
 export function validateContact(values: ContactValues): ContactErrors {
   const errors: ContactErrors = {}
@@ -60,15 +67,15 @@ export function validateContact(values: ContactValues): ContactErrors {
   // Nombre de la empresa / Razón social: no es obligatorio, según excepción
   // explícita del documento formal.
   if (values.empresa.trim() && !EMPRESA_PATTERN.test(values.empresa.trim())) {
-    errors.empresa = 'Máximo 64 caracteres. Se admiten letras, números y . - / & ´'
+    errors.empresa = 'Máximo 40 caracteres. Se admiten letras, números y . - / & ´'
   }
 
   if (!values.nombre.trim()) errors.nombre = 'Ingresá tu nombre y apellido.'
   else if (!NOMBRE_PATTERN.test(values.nombre.trim()))
-    errors.nombre = 'Máximo 64 caracteres, sólo letras.'
+    errors.nombre = 'Máximo 60 caracteres, sólo letras.'
 
+  // Sin tope de longitud: el documento sólo pide validar el formato.
   if (!values.mail.trim()) errors.mail = 'Ingresá tu mail.'
-  else if (values.mail.trim().length > TEXTO_MAX) errors.mail = 'Máximo 64 caracteres.'
   else if (!MAIL_PATTERN.test(values.mail.trim())) errors.mail = 'Revisá el formato del mail.'
 
   if (!values.codigoArea.trim()) errors.codigoArea = 'Ingresá el código de área.'
@@ -91,13 +98,14 @@ export function validateContact(values: ContactValues): ContactErrors {
 
   // Número de cliente: aparece si responde "Sí", pero el documento lo excluye
   // explícitamente de los campos obligatorios. Sólo se valida el formato si se
-  // completa — y desde el 2026-09-14 son 10 dígitos exactos, ni más ni menos.
+  // completa, y el documento fija un tope —"hasta 10 dígitos"—, no un largo
+  // exacto: un número más corto es válido.
   if (
     values.esCliente === 'si' &&
     values.numeroCliente.trim() &&
     !NUMERO_CLIENTE_PATTERN.test(values.numeroCliente.trim())
   ) {
-    errors.numeroCliente = 'Son 10 dígitos numéricos.'
+    errors.numeroCliente = 'Hasta 10 dígitos numéricos.'
   }
 
   return errors
