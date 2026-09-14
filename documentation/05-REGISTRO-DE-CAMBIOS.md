@@ -136,6 +136,73 @@ el campo se movió fuera de `.fields`, a después del `<fieldset>` de la pregunt
 justo debajo de "Sí" / "No", acotado al ancho de una columna (`.numeroCliente`, media
 columna en escritorio; ancho completo en mobile, como el resto de los campos).
 
+## Botón terciario reutilizable para los CTA de texto (14/09/2026)
+
+Los CTA de tipo "Conocer más" / "Ingresá" (en "Conocé nuestros servicios" y "Accesos
+directos"/"Accesos rápidos") no llevaban subrayado, salvo la variante v2 de "Accesos rápidos",
+que sí lo tenía con una regla propia (feedback del usuario, con imagen de referencia de la
+tarjeta de Fulfillment). El sistema de tokens (`src/styles/tokens.css`) ya define un botón
+**terciario** (`--button-tertiary-*`: subrayado inferior, sin fondo) que no se estaba usando
+en ningún lado — es el que corresponde acá.
+
+Se agregó `.tertiary` a
+[`Button.module.css`](../src/modules/prototype/v1/components/Button.module.css), la hoja
+compartida de botones del sistema, y se aplicó con `composes` (CSS Modules) desde los tres
+lugares que tienen este tipo de CTA, en vez de repetir la regla:
+
+| Dónde | Cómo se aplicó |
+|---|---|
+| `ServicesSection.module.css` ("Conocé nuestros servicios", v1 y v3) | `.ctaLabel` en el `<p>` del CTA, con `composes: tertiary` |
+| `ShortcutsSection.module.css` ("Accesos directos"/"Accesos rápidos", v1 y v2) | Mismo `.ctaLabel`, ahora en la regla base — se quitó el bloque `[data-variant='v2']` que quedó redundante |
+| `QuickAccessCarousel.module.css` (carrusel de la v2) | `.ctaText`, en un `<span>` nuevo alrededor del texto — así el subrayado no se extiende debajo del ícono de flecha |
+
+`composes` exige que el selector sea una única clase local (no `.cta p`), así que en
+`ServicesSection.tsx` y `ShortcutsSection.tsx` el `<p>` del CTA pasó a llevar la clase
+`ctaLabel` directamente, en vez de heredar el estilo por selector descendiente.
+
+**Esto también corrige el CTA de la v1** ("Conocé nuestros servicios" y "Accesos directos"),
+que hasta ahora no tenía subrayado. La v1 es la réplica fiel de la landing de producción,
+verificada pixel a pixel contra `micorreo.correoargentino.com.ar/landing` — ese sitio real no
+tiene este subrayado. El cambio es una decisión de diseño explícita del usuario para unificar
+el sistema hacia adelante, no una corrección de fidelidad: **la v1 deja de coincidir con la
+producción real en este detalle.**
+
+## Micro interacciones de la pantalla de Fulfillment de la v3 (14/09/2026)
+
+Tres pedidos del usuario sobre la misma pantalla:
+
+1. **Texto de confirmación.** `form.success.body`, en
+   [`fulfillment.content.ts`](../src/modules/prototype/v1/data/fulfillment.content.ts), pasa
+   de "...un asesor comercial **de Correo Argentino** se va a comunicar..." a "...un asesor
+   comercial se va a comunicar...". Es un dato compartido por las tres versiones, así que el
+   cambio se propaga solo.
+2. **Transición del formulario al estado de éxito, en los dos sentidos.** Antes era un
+   reemplazo directo (una condición, dos JSX distintos). Ahora, al enviar: salida animada de
+   los campos seguida de entrada animada del bloque de éxito, con el botón "Cargar otra
+   consulta" llegando de abajo hacia arriba. Al tocar ese botón: la misma transición al revés
+   —el bloque de éxito se desvanece y, recién entonces, vuelven a aparecer los campos vacíos
+   (pedido de seguimiento del usuario, mismo día). Detalle completo en
+   [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md#transición-y-micro-interacciones-14-09-2026).
+   - **Bug encontrado y corregido en el camino:** el primer intento tenía un `useEffect` con
+     `[sent, phase]` como dependencias. Al cambiar `phase` a `'leaving'`, React volvía a
+     ejecutar el efecto y limpiaba (`clearTimeout`) el timer que acababa de programar, antes
+     de que llegara a disparar el paso a `'success'` — la transición se quedaba trabada a
+     mitad de camino. Se corrigió dejando la dependencia sólo en `sent`; la vuelta usa su
+     propio timer, en el handler del botón, en vez de reaccionar a `sent`.
+3. **Aparición con el scroll.** Cada sección de la pantalla (menos el hero) se desvanece hacia
+   arriba la primera vez que entra en pantalla, con
+   [`useReveal.ts`](../src/modules/prototype/v3/fulfillment/useReveal.ts) (nuevo,
+   `IntersectionObserver`, sin librerías). Detalle en
+   [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md#micro-interacciones-de-scroll-14-09-2026).
+
+## Escala de la imagen del hero de la v3 (14/09/2026)
+
+La imagen del hero estaba al 146% de su caja, la proporción exacta del diseño de Figma, pero
+recortaba bastante arriba y abajo. Se bajó un 15% —al **124%**— a pedido del usuario, para que
+se vea más alto del banner en la versión de escritorio a ancho completo. Ajuste en
+`.heroMedia img` de
+[`FulfillmentPage.module.css`](../src/modules/prototype/v3/fulfillment/FulfillmentPage.module.css).
+
 ## Tamaño de los encabezados de columna en la v3 (14/09/2026)
 
 "¿Qué incluye nuestro fulfillment?" y "Distribución rápida y confiable" usaban

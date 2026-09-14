@@ -6,6 +6,29 @@ un changelog de cada commit (eso vive en `documentation/05-REGISTRO-DE-CAMBIOS.m
 
 **Última actualización:** 2026-09-14.
 
+**Cambios recientes sin commitear:**
+
+- Se activó el **botón terciario del sistema** (`--button-tertiary-*` en `tokens.css`, ya
+  definido pero sin usar) para los CTA de texto tipo "Conocer más"/"Ingresá": subrayado
+  amarillo, agregado como `.tertiary` en `Button.module.css` y aplicado con `composes` desde
+  `ServicesSection`, `ShortcutsSection` y `QuickAccessCarousel`. **Esto también afecta a la
+  v1**: sus CTA no tenían subrayado y coincidían con la landing real; ahora dejan de coincidir
+  en ese detalle, por decisión explícita del usuario.
+- Se bajó un 15% la escala de la imagen del hero de la v3 (146% → 124%).
+- El texto de confirmación del formulario ya no menciona "de Correo Argentino" (dato
+  compartido: cambió en las tres versiones a la vez).
+- **Micro interacciones en la pantalla de Fulfillment de la v3**: la transición entre los
+  campos y el estado de éxito ahora es en dos pasos **en cada sentido** —salida animada,
+  entrada animada— en vez de un reemplazo directo: al enviar (campos salen, éxito entra con
+  el botón subiendo de abajo hacia arriba) y al tocar "Cargar otra consulta" (éxito sale,
+  campos vuelven a entrar). Además, cada sección menos el hero aparece con un fundido hacia
+  arriba al entrar en pantalla (`useReveal.ts`, nuevo, `IntersectionObserver`, sin
+  librerías).
+
+Ver
+[documentation/04-REPLICA-LANDING.md#diferencias-conocidas](documentation/04-REPLICA-LANDING.md)
+y [documentation/05-REGISTRO-DE-CAMBIOS.md](documentation/05-REGISTRO-DE-CAMBIOS.md).
+
 ## Qué es este proyecto
 
 Página de captación de **Fulfillment** dentro de **MiCorreo** (Correo Argentino): una landing
@@ -30,10 +53,11 @@ con acceso a Fulfillment y una página con formulario de contacto. Cliente: Corr
 
 - **Local:** verificado (`npm run typecheck` y `npm run build` limpios; navegación, formulario
   y responsive probados en el navegador).
-- **Git:** al día con `main`. Se subió la reformulación completa de la v3 (pantalla propia de
-  Fulfillment) más tres ajustes de esa misma sesión: el ancho del contenido, la posición del
-  campo "Número de cliente" y el tamaño de los encabezados de columna. No hacer commit ni push
-  sin que el usuario lo pida explícitamente ("subir a github" es la frase que usa).
+- **Git:** el último commit subido es `a6aeb30` (reformulación de la v3 + tres ajustes de esa
+  sesión: ancho, "Número de cliente" y tamaño de encabezados). **Hay cambios sin commitear**:
+  la escala de la imagen del hero de la v3 y el botón terciario reutilizable (ver arriba). No
+  hacer commit ni push sin que el usuario lo pida explícitamente ("subir a github" es la frase
+  que usa).
 - **Remoto:** `https://github.com/Marcolof/formulario-ff`, rama `main`. Deploy automático
   en Vercel (`formulario-ff.vercel.app`, proyecto `marcos-projects-c934fa75/formulario-ff`)
   en cada push a `main`.

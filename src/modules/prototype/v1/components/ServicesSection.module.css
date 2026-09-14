@@ -84,8 +84,8 @@
   text-decoration: none;
 }
 
-.cta p {
-  color: var(--color-accent);
+.ctaLabel {
+  composes: tertiary from './Button.module.css';
   font-size: var(--landing-font-size-cta);
   font-weight: var(--font-weight-semibold);
   line-height: 27px;

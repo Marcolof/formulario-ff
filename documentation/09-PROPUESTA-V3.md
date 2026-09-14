@@ -43,10 +43,11 @@ De arriba hacia abajo, como en el diseño:
 
 La imagen es `src/assets/img/banner ff formulario.png`, provista por el usuario.
 
-En el diseño no entra completa: mide 736px dentro de una caja de 505 —el **146%**— pegada a
-la izquierda y centrada en vertical, de modo que se recorta arriba, abajo y a la derecha. Se
-reprodujo esa misma proporción, que es lo que hace que la caja y la cinta "Próximamente" se
-vean del tamaño de la referencia en vez de quedar chicas.
+En el diseño no entra completa: mide 736px dentro de una caja de 505 —el 146%— pegada a la
+izquierda y centrada en vertical, de modo que se recorta arriba, abajo y a la derecha. Esa
+escala se bajó un **15%, al 124%**, a pedido del usuario (2026-09-14): con menos escala se
+recorta menos verticalmente y se ve más alto del banner, a costa de alejarse un poco de la
+proporción exacta de Figma.
 
 **En pantallas de hasta 900px la imagen no se muestra**: queda sólo el mensaje. Es lo que pidió
 el requerimiento, y está planteado como algo provisorio ("por ahora").
@@ -98,6 +99,43 @@ salto al enviar ni se reacomoda lo que está alrededor. Verificado: 413px antes 
 
 **Pendiente:** el texto del mensaje sigue siendo el mismo de las otras versiones y sigue sin
 estar aprobado por el área solicitante.
+
+### Transición y micro interacciones (14/09/2026)
+
+El cambio entre los campos y el estado de éxito no es un reemplazo directo: es una transición
+en dos pasos, con la altura de la tarjeta fija durante todo el proceso para que la página no
+salte.
+
+1. **Salida.** Al enviar, los campos se desvanecen hacia arriba (`opacity` 1→0,
+   `translateY` 0→-14px, 220ms). Mientras salen, `inert` los deja sin poder editarse ni
+   recibir foco.
+2. **Entrada del éxito.** Recién terminada la salida entra el bloque de éxito: el conjunto
+   sube y aparece (420ms), el ícono lo sigue con un pequeño *pop* de escala, y el botón
+   "Cargar otra consulta" llega último, de abajo hacia arriba (460ms) — el detalle puntual
+   que pidió el usuario.
+3. **Vuelta ("Cargar otra consulta").** La transición es simétrica: el bloque de éxito se
+   desvanece (220ms, mismo tiempo que la salida de los campos) y, recién terminado, vuelven a
+   aparecer los campos —ya vacíos— con la misma entrada de abajo hacia arriba que usa el
+   bloque de éxito. Los valores del formulario se limpian justo en ese momento, no antes: si
+   se limpiaran al tocar el botón, se verían en blanco durante la salida animada del bloque de
+   éxito.
+
+Toda la lógica de la transición —en los dos sentidos— vive en `phase`
+(`'form' | 'leaving' | 'success' | 'returning'`), un estado propio del componente. La mitad de
+ida la dispara `sent` (de `useContactForm`); la vuelta la maneja el propio botón, porque tiene
+que retrasar el `reset()` del hook hasta que termine la animación de salida.
+
+### Micro interacciones de scroll (14/09/2026)
+
+Cada sección de la pantalla que no es el hero aparece de abajo hacia arriba —opacidad 0 a
+100— la primera vez que entra en pantalla: las dos columnas de servicios (una detrás de la
+otra), la tarjeta del formulario, cada beneficio (escalonados) y el cierre. El hero se ve
+completo desde el arranque, sin animar — así lo pidió el usuario.
+
+Se resuelve con [`useReveal`](../src/modules/prototype/v3/fulfillment/useReveal.ts), un hook
+propio basado en `IntersectionObserver`: no hace falta escuchar el evento `scroll` a mano ni
+sumar ninguna librería. Respeta "reducir movimiento" (se muestra todo directo, sin animar) y
+cada elemento sólo anima una vez, la primera vez que aparece.
 
 ## Decisiones de implementación
 

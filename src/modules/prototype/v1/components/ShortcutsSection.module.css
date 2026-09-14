@@ -70,8 +70,8 @@
   text-decoration: none;
 }
 
-.cta p {
-  color: var(--color-accent);
+.ctaLabel {
+  composes: tertiary from './Button.module.css';
   font-size: var(--landing-font-size-cta);
   font-weight: var(--font-weight-semibold);
   line-height: 27px;
@@ -124,7 +124,7 @@
     margin-block: var(--space-1);
   }
 
-  .cta p {
+  .ctaLabel {
     font-size: var(--landing-font-size-body-mobile);
     line-height: 24.5px;
   }
@@ -132,9 +132,10 @@
 
 /* --- Variante v2 --------------------------------------------------------- *
  * Misma estructura que la v1; cambia sólo la piel, según la referencia de
- * diseño: tarjeta blanca sobre el fondo de página, ícono alineado al centro
- * del texto y CTA con subrayado amarillo. No hay colores nuevos: la superficie
- * y el trazo salen de los tokens del módulo. */
+ * diseño: tarjeta blanca sobre el fondo de página e ícono alineado al centro
+ * del texto. El CTA con subrayado amarillo (botón terciario) ya es la base
+ * para las dos variantes — ver `.ctaLabel` arriba. No hay colores nuevos: la
+ * superficie y el trazo salen de los tokens del módulo. */
 
 .section[data-variant='v2'] {
   background-color: var(--landing-surface-page);
@@ -158,14 +159,6 @@
 .section[data-variant='v2'] .iconBox {
   align-items: center;
   flex-basis: 120px;
-}
-
-/* El subrayado es un borde y no `text-decoration`, para poder darle el grosor
- * y el color de marca de la referencia. */
-.section[data-variant='v2'] .cta p {
-  display: inline-block;
-  border-bottom: 3px solid var(--color-brand);
-  padding-bottom: 2px;
 }
 
 @media (max-width: 900px) {

@@ -79,7 +79,7 @@ export const form = {
   submit: 'Enviar',
   success: {
     title: '¡Gracias por contactarnos!',
-    body: 'Recibimos tus datos. Un asesor comercial de Correo Argentino se va a comunicar con vos a la brevedad.',
+    body: 'Recibimos tus datos. Un asesor comercial se va a comunicar con vos a la brevedad.',
   },
 }
 

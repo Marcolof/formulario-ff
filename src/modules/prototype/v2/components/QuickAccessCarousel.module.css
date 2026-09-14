@@ -117,7 +117,10 @@
   line-height: var(--landing-line-height-body);
 }
 
-/* El CTA secundario repite el de "Conocé nuestros servicios" de la v1. */
+/* El CTA secundario repite el de "Conocé nuestros servicios" de la v1: mismo
+ * botón terciario del sistema (subrayado de marca), acá con el ícono de flecha
+ * al lado. El subrayado va sólo en `.ctaText` —ver el `<span>` en el JSX—, no
+ * en todo el `<a>`, para que no se extienda debajo de la flecha. */
 .cta {
   display: inline-flex;
   align-items: center;
@@ -130,8 +133,8 @@
   text-decoration: none;
 }
 
-.cta:hover {
-  text-decoration: underline;
+.ctaText {
+  composes: tertiary from '../../v1/components/Button.module.css';
 }
 
 .ctaPrimary {

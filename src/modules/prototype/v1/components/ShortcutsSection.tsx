@@ -42,7 +42,7 @@ export function ShortcutsSection({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <p>{shortcut.cta}</p>
+                    <p className={styles.ctaLabel}>{shortcut.cta}</p>
                   </a>
                 </div>
               </div>

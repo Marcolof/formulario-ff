@@ -56,6 +56,12 @@ knowledge:
     - "v3: el ancho máximo del contenido se amplió de 1010px (el del diseño) a 1320px (el de la landing), porque a 1010px se veía angosto en pantallas grandes (feedback del usuario, 2026-09-14). Las columnas de servicios e inputs son grillas fijas a 2, así que el cambio sólo las ensancha"
     - "v3: 'Número de cliente' se corrigió para aparecer justo debajo de '¿Ya sos cliente de MiCorreo?' al responder 'Sí', en vez de sumarse arriba al grid de inputs (feedback del usuario, 2026-09-14)"
     - "v3: los encabezados de columna ('¿Qué incluye...' / 'Distribución rápida...') pasaron de 16px a 20px, que es lo que pedía el diseño (feedback del usuario, 2026-09-14)"
+    - "v3: la escala de la imagen del hero se bajó un 15% (146% → 124% de su caja) para que se vea más alto del banner en escritorio, a costa de alejarse de la proporción exacta de Figma (feedback del usuario, 2026-09-14)"
+    - "Se activó el botón terciario del sistema (--button-tertiary-* en tokens.css, ya definido pero sin uso) para los CTA de texto tipo 'Conocer más'/'Ingresá': subrayado inferior amarillo, agregado a Button.module.css como .tertiary y aplicado con composes desde ServicesSection, ShortcutsSection y QuickAccessCarousel (feedback del usuario, 2026-09-14)"
+    - "Ese cambio alcanza también a la v1: sus CTA de texto no tenían subrayado y coincidían así con la landing real. Es una decisión de diseño del usuario, no una corrección de fidelidad — la v1 deja de calcar ese detalle de producción. Ver documentation/04-REPLICA-LANDING.md#diferencias-conocidas"
+    - "El texto de confirmación del formulario ('...un asesor comercial se va a comunicar...') ya no menciona 'de Correo Argentino'. Es un dato compartido por las tres versiones (fulfillment.content.ts), así que cambió en todas a la vez (feedback del usuario, 2026-09-14)"
+    - "En la pantalla de Fulfillment de la v3, el cambio de los campos al estado de éxito —y la vuelta con 'Cargar otra consulta'— es una transición en dos pasos en cada sentido (salida animada, luego entrada animada), no un reemplazo directo (feedback del usuario, 2026-09-14, en dos pedidos seguidos). Bug encontrado y corregido en el camino: un useEffect con [sent, phase] como dependencias se autocancelaba el timer al cambiar de fase; se corrigió dejando sólo [sent] para la ida, y la vuelta usa su propio timer en el handler del botón"
+    - "En la pantalla de Fulfillment de la v3, cada sección menos el hero aparece con un fundido hacia arriba la primera vez que entra en pantalla, con un hook propio (useReveal.ts, IntersectionObserver, sin librerías). El hero se ve completo desde el arranque (feedback del usuario, 2026-09-14)"
   assumptions:
     - "Los assets de marca de Fulfillment (logo e ilustración) de la v1 son provisorios: se dibujaron con la paleta de MiCorreo hasta que el cliente entregue los oficiales"
     - "No se crea una landing institucional paralela; sí una página de Fulfillment dentro de MiCorreo"
@@ -324,6 +330,6 @@ delivery:
   public_url: "https://formulario-ff.vercel.app"
   status: deployed
   last_verified: "2026-09-14"
-  pending_push: none
+  pending_push: "Ajustes posteriores a a6aeb30: escala de la imagen del hero de la v3, el botón terciario reutilizable para los CTA de texto (afecta v1, v2 y v3), texto de confirmación del formulario, y micro interacciones de la pantalla de Fulfillment de la v3 (transición de éxito, aparición con el scroll)."
   create_vercel_project: false
   notes: "El repositorio ya tenía la integración de Vercel conectada (deploy automático en cada push a main). vercel.json hace rewrite a index.html porque, sin él, recargar una ruta interna de la SPA daba 404."

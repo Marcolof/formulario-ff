@@ -45,11 +45,11 @@ export function ServicesSection({ hrefs }: Props) {
                 <p className={styles.body}>{service.body}</p>
                 {internal ? (
                   <Link className={styles.cta} to={href}>
-                    <p>{service.cta}</p>
+                    <p className={styles.ctaLabel}>{service.cta}</p>
                   </Link>
                 ) : (
                   <a className={styles.cta} href={href}>
-                    <p>{service.cta}</p>
+                    <p className={styles.ctaLabel}>{service.cta}</p>
                   </a>
                 )}
               </div>

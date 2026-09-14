@@ -109,11 +109,13 @@ function QuickAccessCard({ item, onOpenReturns }: { item: QuickAccess; onOpenRet
   // se distinga fuera de contexto. Empieza por el texto visible.
   const label = `${item.cta}: ${item.title}`
   const className = featured ? `${buttonStyles.pill} ${styles.ctaPrimary}` : styles.cta
+  // El texto va en su propio span para que el subrayado de marca (botón
+  // terciario) quede sólo debajo de la palabra y no de la flecha.
   const content = featured ? (
     item.cta
   ) : (
     <>
-      {item.cta}
+      <span className={styles.ctaText}>{item.cta}</span>
       <ChevronRight size={18} aria-hidden />
     </>
   )

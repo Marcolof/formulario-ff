@@ -29,10 +29,44 @@
   line-height: normal;
 }
 
+/* Duración del fade-out (220ms) sincronizada a mano con `LEAVE_MS` en
+ * FulfillmentForm.tsx: quien dispara el cambio de fase es el timer de React,
+ * así que las dos tienen que coincidir para que no haya un salto entre el
+ * final de esta transición y la entrada del estado de éxito. */
 .form {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 220ms ease-in, transform 220ms ease-in;
+}
+
+.formLeaving {
+  opacity: 0;
+  transform: translateY(-14px);
+  pointer-events: none;
+}
+
+/* Vuelta desde el estado de éxito ("Cargar otra consulta"): los campos
+ * reaparecen de abajo hacia arriba, igual que entra el bloque de éxito. Es una
+ * animación —no la `transition` de arriba— porque el `<form>` se vuelve a
+ * montar desde cero en ese momento (viene de la rama de JSX del estado de
+ * éxito), y una `transition` no anima un elemento recién montado: necesita un
+ * cambio de valor mientras ya está en el DOM, que acá no hay. */
+.formEnter {
+  animation: formEnter 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes formEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Dos columnas en escritorio; en mobile se apila todo. */
@@ -134,7 +168,12 @@
 
 /* --- Estado de éxito -------------------------------------------------------
  * Conserva la altura que tenía el formulario para que la página no salte al
- * enviar: la altura se mide antes de reemplazar el contenido. */
+ * enviar: la altura se mide antes de arrancar la salida (ver `.formLeaving`
+ * arriba). Entra con su propia animación una vez que la salida terminó —el
+ * conjunto sube y aparece, el ícono lo sigue con un pequeño pop y el botón
+ * llega último, de abajo hacia arriba, como pidió el usuario. `both` mantiene
+ * cada elemento en su estado inicial hasta que le toca animar, para que no
+ * haya un parpadeo a pantalla completa antes del delay. */
 
 .success {
   display: flex;
@@ -144,6 +183,7 @@
   justify-content: center;
   gap: var(--space-4);
   text-align: center;
+  animation: successRise 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .successIcon {
@@ -155,6 +195,65 @@
   border-radius: var(--radius-full);
   background-color: var(--ffv3-yellow);
   color: var(--ffv3-navy);
+  animation: successIconPop 420ms 80ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.successButton {
+  animation: buttonRise 460ms 220ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Vuelta al formulario ("Cargar otra consulta"): reemplaza la animación de
+ * entrada por la de salida mientras dura `phase === 'returning'`. Declarada
+ * después de `.success` para que, con las dos clases puestas a la vez, ésta
+ * gane (mismo peso de selector, último en la hoja) — `animation` es una
+ * propiedad shorthand y no se mezclan las dos declaraciones, se reemplaza
+ * entera. 220ms para que coincida con `LEAVE_MS`. */
+.successLeaving {
+  animation: successLeave 220ms ease-in both;
+}
+
+@keyframes successLeave {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+}
+
+@keyframes successRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes successIconPop {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes buttonRise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .successTitle {

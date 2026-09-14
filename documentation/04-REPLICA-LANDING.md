@@ -223,6 +223,12 @@ Sin scroll horizontal en ninguno de los dos viewports.
 6. **Títulos de sección.** El original cambia la etiqueta del título de `h2` en escritorio a
    `h5` en mobile. La v1 mantiene `h2` en ambos y sólo cambia el estilo: el nivel de
    encabezado no debería depender del ancho de pantalla.
+7. **CTA con subrayado (14/09/2026).** Los enlaces "Conocer más" / "Ingresá" de "Conocé
+   nuestros servicios" y "Accesos directos" pasaron a llevar el subrayado amarillo del botón
+   terciario del sistema (`--button-tertiary-*` en `tokens.css`). El sitio real no tiene ese
+   subrayado. A diferencia de las diferencias 1-6, que son limitaciones de la réplica, ésta es
+   una decisión de diseño explícita del usuario para unificar el estilo de CTA en todo el
+   producto — ver [05-REGISTRO-DE-CAMBIOS.md](05-REGISTRO-DE-CAMBIOS.md#botón-terciario-reutilizable-para-los-cta-de-texto-14-09-2026).
 
 ## Cómo levantarlo
 

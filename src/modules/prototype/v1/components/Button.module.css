@@ -44,3 +44,20 @@
 .pill:hover {
   background-color: var(--button-primary-bg-hover);
 }
+
+/* Terciario del sistema (`--button-tertiary-*` en tokens.css): enlace de texto
+ * con subrayado de marca, sin fondo. No es un `<button>` con `size` como los de
+ * arriba — se aplica con `composes` desde el `.cta` de cada lugar que lo usa
+ * ("Conocé nuestros servicios", "Accesos directos"/"Accesos rápidos", el
+ * carrusel de la v2), para que el subrayado sea uno solo en todo el proyecto y
+ * no una regla repetida por componente.
+ *
+ * No usa `--button-tertiary-padding-x`: ese padding lateral es para un botón
+ * suelto, y acá el link vive alineado al texto de arriba dentro de una lista;
+ * agregarlo correría el texto y rompería ese alineado. */
+.tertiary {
+  display: inline-block;
+  padding-bottom: 2px;
+  border-bottom: var(--button-tertiary-border-width) solid var(--button-tertiary-border);
+  color: var(--button-tertiary-text);
+}

@@ -53,9 +53,11 @@
   line-height: 1.1;
 }
 
-/* La imagen es bastante más grande que su caja y se recorta: en el diseño mide
- * 736px dentro de una caja de 505 (146%), pegada a la izquierda y centrada en
- * vertical. Así la caja y la cinta quedan del tamaño de la referencia. */
+/* La imagen es más grande que su caja y se recorta: en el diseño mide 736px
+ * dentro de una caja de 505 (146%), pegada a la izquierda y centrada en
+ * vertical. Se bajó un 15% de esa escala (146% → 124%, feedback del usuario,
+ * 2026-09-14) para que se recorte menos arriba y abajo y se vea más alto del
+ * banner, a costa de alejarse un poco de la proporción exacta del diseño. */
 .heroMedia {
   position: relative;
   flex: 1 1 0;
@@ -70,7 +72,7 @@
   position: absolute;
   top: 50%;
   left: 0;
-  width: 146%;
+  width: 124%;
   max-width: none;
   height: auto;
   transform: translateY(-50%);
