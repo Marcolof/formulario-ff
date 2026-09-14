@@ -1,0 +1,246 @@
+/* Carrusel "Conocé nuestros servicios" de la v2. Ocupa el lugar que en la v1
+ * tenían "Gestionar Devolución" y "Conocé nuestros servicios". Según la
+ * referencia de diseño: panel navy redondeado, título blanco a la izquierda y
+ * tarjetas blancas con el ícono en una columna propia. Superficies, radios y
+ * tipografía son tokens del módulo: no hay colores ni trazos nuevos. */
+
+.section {
+  padding: var(--space-8) 64px var(--space-12);
+  background-color: var(--landing-surface-page);
+}
+
+/* El panel navy es el marco del bloque: reemplaza al fondo gris que la v1
+ * usaba para la sección de servicios. */
+.panel {
+  max-width: var(--landing-container-max);
+  padding: 40px;
+  border-radius: var(--landing-radius-shortcut);
+  margin-inline: auto;
+  background-color: var(--color-accent);
+}
+
+.heading {
+  margin-bottom: var(--space-6);
+  color: var(--text-inverse);
+  font-size: var(--landing-font-size-display);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--landing-line-height-display);
+}
+
+/* Los márgenes laterales reservan la calle de las flechas: así no se apoyan
+ * sobre las tarjetas de los extremos, como en la referencia. */
+.viewport {
+  position: relative;
+  margin-inline: 26px;
+}
+
+.track {
+  display: flex;
+  gap: var(--space-6);
+  /* Aire vertical para que el foco del teclado no quede recortado. */
+  padding: var(--space-2) 0;
+  margin: 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Cuatro tarjetas por vista en escritorio. */
+.slide {
+  display: flex;
+  flex: 0 0 calc((100% - 3 * var(--space-6)) / 4);
+  scroll-snap-align: start;
+}
+
+/* Ícono a la izquierda, alineado al centro del bloque de texto. */
+.card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  padding: 22px;
+  border-radius: var(--landing-radius-media);
+  background-color: var(--landing-surface-plain);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  flex: 1;
+  /* Sin esto, un título largo estira la tarjeta en vez de cortar. */
+  min-width: 0;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--ff-radius-icon);
+  background-color: var(--ff-icon-surface);
+  color: var(--color-accent);
+}
+
+.title {
+  color: var(--color-accent);
+  font-size: var(--landing-font-size-lead);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.25;
+}
+
+/* En flujo bajo el título, no superpuesto: así no tapa un título de dos
+ * líneas ni depende del padding de la tarjeta. */
+.badge {
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-full);
+  background-color: var(--color-accent);
+  color: var(--text-inverse);
+  font-size: var(--landing-font-size-meta);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.5;
+}
+
+/* Empuja el CTA al pie: todas las tarjetas lo tienen a la misma altura. */
+.body {
+  flex: 1;
+  color: var(--landing-text-body);
+  font-size: var(--landing-font-size-body);
+  line-height: var(--landing-line-height-body);
+}
+
+/* El CTA secundario repite el de "Conocé nuestros servicios" de la v1. */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-1);
+  color: var(--color-accent);
+  font-size: var(--landing-font-size-cta);
+  font-weight: var(--font-weight-semibold);
+  line-height: 27px;
+  text-decoration: none;
+}
+
+.cta:hover {
+  text-decoration: underline;
+}
+
+.ctaPrimary {
+  margin-top: var(--space-1);
+  text-decoration: none;
+}
+
+.ctaPrimary:hover {
+  text-decoration: none;
+}
+
+/* --- Flechas ------------------------------------------------------------- *
+ * Van en la calle que el viewport reserva a los lados, dentro del panel. La
+ * del inicio sólo aparece cuando hay algo hacia atrás. */
+
+.prev,
+.next {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background-color: var(--landing-surface-plain);
+  box-shadow: var(--ff-card-shadow);
+  color: var(--color-accent);
+  transform: translateY(-50%);
+  transition: opacity var(--transition-fast);
+}
+
+.prev {
+  left: -44px;
+}
+
+.next {
+  right: -44px;
+}
+
+.prev:disabled,
+.next:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.prev:focus-visible,
+.next:focus-visible {
+  outline: var(--border-width-base) solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* --- Responsive ---------------------------------------------------------- */
+
+@media (max-width: 1200px) {
+  .slide {
+    flex-basis: calc((100% - 2 * var(--space-6)) / 3);
+  }
+}
+
+/* En mobile no hay flechas: la tarjeta siguiente asoma por el borde y se
+ * arrastra con el dedo. El panel pierde el radio y va de borde a borde. */
+@media (max-width: 900px) {
+  .section {
+    padding: var(--space-8) 0 var(--space-12);
+  }
+
+  .panel {
+    padding: var(--space-6) 0;
+    border-radius: 0;
+  }
+
+  .heading {
+    padding-inline: var(--landing-gutter-mobile);
+    margin-bottom: var(--space-4);
+    font-size: var(--landing-font-size-display-mobile);
+  }
+
+  /* Sin flechas no hace falta la calle: el track vuelve a ir de borde a borde. */
+  .viewport {
+    margin-inline: 0;
+  }
+
+  .track {
+    gap: var(--space-4);
+    padding-inline: var(--landing-gutter-mobile);
+    scroll-padding-inline: var(--landing-gutter-mobile);
+  }
+
+  .slide {
+    flex-basis: 280px;
+  }
+
+  .prev,
+  .next {
+    display: none;
+  }
+
+  .title {
+    font-size: var(--landing-font-size-lead-mobile);
+  }
+
+  .body {
+    font-size: var(--landing-font-size-body-mobile);
+    line-height: var(--landing-line-height-body-mobile);
+  }
+
+  .cta {
+    font-size: var(--landing-font-size-body);
+  }
+}

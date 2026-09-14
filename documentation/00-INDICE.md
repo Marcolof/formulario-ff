@@ -2,8 +2,10 @@
 
 Proyecto: **Formulario de contacto Fulfillment (Formulario FF)**
 Producto: **MiCorreo — Correo Argentino**
-Estado: réplica de la landing terminada, con el acceso a Fulfillment y la página del
-formulario incorporados sobre el diseño actual.
+Estado: tres versiones navegables de la landing — la v1 replica el layout original con el
+acceso a Fulfillment incorporado; la v2 propone un carrusel de servicios; la v3 abre el flyer
+del cliente en un visor. Las v1 y v2 llevan a la misma página con el formulario; la v3 no
+tiene formulario.
 
 ## Documentos
 
@@ -16,13 +18,15 @@ formulario incorporados sobre el diseño actual.
 | [05-REGISTRO-DE-CAMBIOS.md](05-REGISTRO-DE-CAMBIOS.md) | Qué se tomó de cada fuente externa y qué se modificó al portarlo. |
 | [06-ARQUITECTURA-Y-RUTAS.md](06-ARQUITECTURA-Y-RUTAS.md) | Cómo está armado el monorepo, el Hub y el mapa de rutas. |
 | [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md) | Campos, validaciones, estados y textos del formulario de contacto. |
+| [08-PROPUESTA-V2.md](08-PROPUESTA-V2.md) | Versión 2: carrusel de servicios, modal de devolución y qué queda por validar. |
+| [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md) | Versión 3: el flyer del cliente en un visor a pantalla completa, con zoom y gestos. |
 
 ## Módulos del proyecto
 
 | Módulo | Ruta en la app | Código | Estado |
 |---|---|---|---|
 | Hub | `/` | `src/modules/hub/` | Vigente |
-| Prototipo navegable | `/prototipo` | `src/modules/prototype/` | Réplica de la landing, en revisión |
+| Prototipo navegable | `/prototipo` | `src/modules/prototype/` | v1 en revisión · v2 y v3 en borrador |
 | Documentación | `/documentacion` | `src/modules/documentation/` + `documentation/` | Vigente |
 | Presentación | — | `presentation/` | Vacío, sin tarjeta en el Hub |
 

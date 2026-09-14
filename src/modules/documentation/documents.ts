@@ -4,6 +4,8 @@
  */
 import arquitectura from '../../../documentation/06-ARQUITECTURA-Y-RUTAS.md?raw'
 import formulario from '../../../documentation/07-FORMULARIO-FULFILLMENT.md?raw'
+import propuestaV2 from '../../../documentation/08-PROPUESTA-V2.md?raw'
+import propuestaV3 from '../../../documentation/09-PROPUESTA-V3.md?raw'
 import cambios from '../../../documentation/05-REGISTRO-DE-CAMBIOS.md?raw'
 import color from '../../../documentation/03-COLOR-Y-TOKENS.md?raw'
 import contexto from '../../../documentation/01-CONTEXTO.md?raw'
@@ -82,6 +84,24 @@ export const documents: Doc[] = [
       'Especificación funcional del formulario: campos, validaciones, estados, textos, dependencia del número de cliente y qué falta definir.',
     fileName: '07-FORMULARIO-FULFILLMENT.md',
     content: formulario,
+  },
+  {
+    id: 'propuesta-v2',
+    index: '08',
+    title: 'Versión 2 — Carrusel de servicios',
+    summary:
+      'Qué cambia en la landing de la v2: el carrusel de servicios en panel navy, el modal de devolución, los accesos rápidos, qué se mantiene y qué queda por validar.',
+    fileName: '08-PROPUESTA-V2.md',
+    content: propuestaV2,
+  },
+  {
+    id: 'propuesta-v3',
+    index: '09',
+    title: 'Versión 3 — Flyer en visor',
+    summary:
+      'La propuesta de mínimo cambio: la landing de la v1 y el flyer del cliente en un visor a pantalla completa con zoom y gestos. Qué cubre y qué deja afuera.',
+    fileName: '09-PROPUESTA-V3.md',
+    content: propuestaV3,
   },
 ]
 

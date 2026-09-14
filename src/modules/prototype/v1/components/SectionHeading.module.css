@@ -65,3 +65,19 @@
     font-size: var(--landing-font-size-display-mobile);
   }
 }
+
+/* Sin reglas laterales (v2): el título deja de necesitar la calle de 120px que
+ * lo separaba de los trazos y queda centrado por el flex del contenedor. */
+.heading[data-rules='false'] .title {
+  margin-inline: 0;
+}
+
+/* En mobile el bloque con reglas usa `space-between` para empujar los dos
+ * trazos a los bordes. Sin reglas ese reparto deja el título contra el borde
+ * izquierdo: vuelve a centrarse y recupera el gutter de la landing. */
+@media (max-width: 900px) {
+  .heading[data-rules='false'] {
+    justify-content: center;
+    padding-inline: var(--landing-gutter-mobile);
+  }
+}

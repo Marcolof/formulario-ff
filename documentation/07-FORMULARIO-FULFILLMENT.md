@@ -32,7 +32,7 @@ requerimiento.
 | 2 | Nombre y apellido | Sí | Máx. 60 caracteres, sólo letras |
 | 3 | Correo electrónico | Sí | Mismo formato que MiCorreo |
 | 4 | Cod. área + Celular | Sí | Dos campos: código de área (2 a 4 dígitos) + celular (6 a 8 dígitos); la suma debe dar 10 dígitos |
-| 5 | Rubro de la empresa | Sí | Desplegable (lista **pendiente** de relevar) + "Otros" con texto libre, máx. 30 caracteres |
+| 5 | Rubro de la empresa | Sí | Desplegable (22 rubros + "Otros" con texto libre, máx. 30 caracteres) |
 | 6 | ¿Ya sos cliente de MiCorreo? | Sí | Sí / No |
 | 7 | Número de cliente | **No** | Hasta 10 dígitos numéricos. Aparece sólo si responde "Sí" a la pregunta 6 |
 
@@ -58,9 +58,8 @@ explícita de excepciones a la obligatoriedad general.
 ### Rubro "Otros"
 
 Al elegir "Otros" se abre un campo de texto libre (máx. 30 caracteres, sólo letras) para que
-la persona indique su rubro. El desplegable en sí debería ser "el mismo que en MiCorreo al
-crear una nueva cuenta" — **pendiente**: no se relevó ese desplegable real, así que se
-mantiene una lista de referencia con 9 rubros más "Otros".
+la persona indique su rubro. El resto del desplegable es el listado que se detalla en
+[Rubros](#rubros) más abajo.
 
 ### Fuera del alcance inicial
 
@@ -121,14 +120,20 @@ propuesta de trabajo, no un texto aprobado. El diseño de Figma no incluye esa p
 
 ## Rubros
 
-Lista de referencia, no la definitiva:
-
-Indumentaria y calzado · Electrónica y tecnología · Hogar y muebles · Salud y belleza ·
-Alimentos y bebidas · Deportes y aire libre · Juguetería y bebés · Librería y papelería ·
-Automotor y repuestos · Otros
+Alimentos y Bebidas · Arte y Música · Bazar y Cocina · Bebes · Belleza y Perfumería ·
+Botánica · Centros Comerciales y Supermercados · Deco y Hogar · Deportes ·
+Electrodomésticos · Ferretería y Construcción · Indumentaria, Calzado y Accesorios ·
+Industrias y Oficinas · Juguetería y Librería · Limpieza · Mascotas · Salud · SexShop ·
+Tabaquería · Tecnología e Informática · Textil · Vehículos y Accesorios · Otros
+(espacio a completar por el usuario)
 
 Vive en [`fulfillment.content.ts`](../src/modules/prototype/v1/data/fulfillment.content.ts).
-Reemplazarla cuando se releve el desplegable real de rubros de MiCorreo.
+
+**Importante — origen del listado.** Éste es el desplegable real que usa MiCorreo al crear
+una nueva cuenta, provisto por Correo Argentino. **No es un listado que este proyecto pueda
+inventar ni editar por su cuenta:** cualquier alta, baja o cambio de nombre de un rubro tiene
+que salir de Correo Argentino. Si en algún momento hace falta modificar esta lista, hay que
+pedir la actualización al área solicitante — no completarla a criterio propio.
 
 ## Accesibilidad
 
@@ -161,6 +166,9 @@ Del requerimiento, todavía sin resolver en el prototipo porque no hay backend:
 - **Figma "Mi Correo 2.0", nodo `13217:34295`**: el diseño visual de la página y del
   formulario. Es la fuente de los textos de la tarjeta, del orden de los elementos y del
   tratamiento visual de los controles.
+- **Listado de rubros**: provisto directamente por el usuario del proyecto como el
+  desplegable real de MiCorreo, en reemplazo del listado de referencia que se usaba antes.
+  Ver la nota de origen en [Rubros](#rubros).
 
 El documento formal también fija un criterio de aceptación (URL pública propia para la página
 de Fulfillment, preparada para UTM) y sugiere evaluar un acceso posterior a MiCorreo después

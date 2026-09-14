@@ -40,8 +40,9 @@ La página debe admitir otros puntos de entrada en el futuro.
 - ¿Ya sos cliente de MiCorreo? (Sí / No)
 - Número de cliente, cuando corresponda
 
-**Hipótesis a validar:** el campo *Número de cliente* aparece y pasa a ser obligatorio sólo
-si la respuesta a "¿Ya sos cliente?" es Sí.
+**Confirmado por el documento formal:** el campo *Número de cliente* aparece sólo si la
+respuesta a "¿Ya sos cliente?" es Sí, y aun así **no** es obligatorio. Los campos, formatos y
+validaciones definitivos están en [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md).
 
 **Fuera del alcance inicial:** CUIT, plataforma de eCommerce, volumen estimado de envíos.
 No incorporarlos sin validación del área solicitante.
@@ -61,21 +62,36 @@ por confirmar.
 
 ## Estado actual
 
-Se completó el **punto de partida**: una réplica de la landing actual, sin aplicar ningún
-requerimiento. Ver [04-REPLICA-LANDING.md](04-REPLICA-LANDING.md).
+El punto de partida —la réplica de la landing, ver
+[04-REPLICA-LANDING.md](04-REPLICA-LANDING.md)— ya está terminado, y sobre él hay **tres
+propuestas de acceso a Fulfillment**, navegables y comparables entre sí:
+
+| Versión | Qué propone | Documento |
+|---|---|---|
+| v1 | Layout original + tarjeta de Fulfillment en "Conocé nuestros servicios" y la página con el formulario | [04-REPLICA-LANDING.md](04-REPLICA-LANDING.md) · [07](07-FORMULARIO-FULFILLMENT.md) |
+| v2 | El bloque central pasa a un carrusel de servicios en panel navy, con Fulfillment destacado; la devolución va a un modal | [08-PROPUESTA-V2.md](08-PROPUESTA-V2.md) |
+| v3 | Landing igual a la v1; el acceso abre el flyer del cliente en un visor. **No tiene formulario** | [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md) |
+
+La página de Fulfillment con el formulario es una sola y la comparten la v1 y la v2.
 
 ## Próximos pasos sugeridos
 
-1. Leer `Solicitud Inicial_Formulario FF_10092026.docx` para cerrar detalles del requerimiento.
-2. Cerrar el pase responsive de la réplica (mobile difiere bastante del escritorio).
-3. Definir arquitectura de información y jerarquía de la página Fulfillment **antes** de
-   pasar a diseño visual.
-4. Definir dónde y con qué formato entra el acceso a Fulfillment en la landing.
-5. Armar el Hub que reúna prototipo, documentación y presentación bajo una sola URL.
+1. **Elegir cuál de las tres versiones se adopta.** Ojo con la v3: al no tener formulario, por
+   sí sola no cumple el objetivo principal de captar contactos.
+2. Validar con el área los textos breves, el orden y el destacado de las tarjetas del carrusel
+   de la v2, marcados como hipótesis en el documento 08.
+3. Validar el texto del mensaje de confirmación del formulario, que hoy es una propuesta de
+   trabajo.
+4. Definir qué pasa después del envío del lado del negocio: base de datos, reporte semanal y
+   eventos de Analytics.
 
 ## Pendientes de definición
 
-Ubicación y formato del acceso Fulfillment; CTA principal; arquitectura de la página;
-balance entre contenido y formulario; listado de rubros; validaciones por campo; copy final;
-mensaje de confirmación; comportamiento ante errores; diseño responsive; eventos de
-Analytics; alcance exacto de las mejoras de la landing; lineamientos visuales del cliente.
+Cuál de las tres propuestas se adopta; si Fulfillment se comunica sólo como pieza informativa
+o tiene que captar contactos; CTA principal; copy final; mensaje de confirmación;
+comportamiento ante errores de servidor; eventos de Analytics; alcance exacto de las mejoras
+de la landing.
+
+Ya están definidos: el listado de rubros —ver
+[07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md#rubros)—, los campos y sus
+validaciones, y el responsive de la réplica.

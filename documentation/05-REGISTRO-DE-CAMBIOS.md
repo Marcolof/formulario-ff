@@ -48,3 +48,54 @@ desarrollo sin tener que reconstruir el razonamiento.
 Durante la reconstrucción hubo un middleware de Vite que servía el HTML guardado en
 `/landing` para compararlo contra la réplica. Se retiró: el archivo no conserva los estilos,
 así que abrirlo no aportaba nada, y su copia de assets pesaba 14 MB dentro de `public/`.
+
+## Versión 2 de la landing (11/09/2026)
+
+La v2 no toca fuentes externas: se arma sobre la v1. Estos son los cambios que hizo falta
+hacer en código existente para que las dos versiones compartan contenido sin duplicarlo. En
+ningún caso cambia lo que se ve en la v1.
+
+| Qué | Dónde | Cambio |
+|---|---|---|
+| Contenido de "Gestionar Devolución" | `v1/components/ReturnsForm.tsx` (nuevo) | Textos, campo y botón salen de `ReturnsSection` a un componente propio, con sus estilos movidos tal cual. La sección de la v1 y el modal de la v2 lo usan. La v1 mantiene el `<p>` del título original; el modal lo usa como `<h2>` del diálogo. |
+| Contenedor de la sección | `v1/components/ReturnsSection.*` | Queda sólo con la sección, el contenedor y el panel. |
+| Datos de servicios | `v1/data/landing.content.ts` | Cada servicio suma un `id` estable, para que la v2 tome los enlaces de ahí sin copiarlos. |
+| Reset de scroll | `app/ScrollToTop.tsx` | Reacciona sólo al cambio de ruta, ya no al del hash: en la v2 el hash abre y cierra el modal, y cerrarlo mandaba la página arriba. |
+| Rutas | `app/router.tsx` | Se suman `/prototipo/v2` y `/prototipo/v2/fulfillment`. La segunda monta la misma página de Fulfillment. |
+
+Lo nuevo de la v2 vive en `src/modules/prototype/v2/`. El detalle funcional está en
+[08-PROPUESTA-V2.md](08-PROPUESTA-V2.md).
+
+## Rediseño del bloque central de la v2 (11/09/2026)
+
+A partir de una imagen de diseño provista por el usuario (captura de su Figma; la cuenta con
+la que se trabaja hoy no tiene acceso a ese archivo). Otra vez, ningún cambio altera lo que
+se ve en la v1: los componentes compartidos recibieron props **opcionales** cuyo valor por
+defecto es el comportamiento de la landing original, y la piel de la v2 se aplica con un
+`data-variant` en la sección, fuera del alcance de la v1.
+
+| Qué | Dónde | Cambio |
+|---|---|---|
+| Título de sección | `v1/components/SectionHeading.tsx` | Prop `rules` (por defecto `true`). En `false` se omiten las reglas laterales; en mobile el título vuelve a centrarse, porque el `space-between` del layout con reglas lo dejaba contra el borde. |
+| Accesos directos | `v1/components/ShortcutsSection.tsx` | Props `title`, `items`, `variant` y `headingRules`, todas con el valor de la v1 por defecto. La variante `v2` (tarjeta blanca con sombra, ícono centrado, CTA con subrayado amarillo) vive bajo `[data-variant='v2']`. |
+| ¿Por qué elegirnos? | `v1/components/WhyUsSection.tsx` | Prop `headingRules`. |
+| Carrusel | `v2/components/QuickAccessCarousel.*` | Pasa a panel navy redondeado con el título en blanco a la izquierda; la tarjeta lleva el ícono en una columna propia y la etiqueta "¡Nuevo!" en flujo bajo el título. Las flechas van en la calle que el panel reserva, sin apoyarse sobre las tarjetas. |
+| Flechas del carrusel | `v2/components/QuickAccessCarousel.tsx` | **Corrección:** los extremos se calculaban una sola vez, en el primer render, cuando el track todavía medía 0 — la flecha de avance nacía deshabilitada y las últimas tres tarjetas quedaban inalcanzables en escritorio. Ahora un `ResizeObserver` recalcula cuando el track o las tarjetas cambian de tamaño. |
+| Orden de accesos rápidos | `v2/data/quickAccess.content.ts` | `shortcutsV2` deriva el orden (Sucursales primero) de los datos de la v1 por título, sin copiarlos. |
+| Títulos | `v2/data/quickAccess.content.ts` | El carrusel conserva "Conocé nuestros servicios"; "Accesos rápidos" pasa a nombrar la sección de Sucursales y Seguimiento. |
+
+## Versión 3 de la landing (14/09/2026)
+
+La v3 es la landing de la v1 sin ningún cambio visual: sólo cambia el destino del CTA de
+Fulfillment, que abre el flyer del cliente en un visor. Un único cambio en código existente,
+otra vez con una prop opcional que por defecto no altera la v1.
+
+| Qué | Dónde | Cambio |
+|---|---|---|
+| CTA de servicios | `v1/components/ServicesSection.tsx` | Prop opcional `actions`: un mapa de servicio → función. El servicio que figura ahí muestra su CTA como botón (`aria-haspopup="dialog"`) en vez de enlace. Sin la prop —la v1— todos los CTA navegan igual que antes. |
+| Rutas | `app/router.tsx` | Se suma `/prototipo/v3`. **No** hay `/prototipo/v3/fulfillment`: en esta propuesta Fulfillment no tiene pantalla propia. |
+| Asset | `src/assets/img/Fulfillment.jpeg` | Flyer provisto por el cliente (1010 × 1600, 285 KB). Se usa tal cual, sin retocar. |
+
+Lo nuevo de la v3 vive en `src/modules/prototype/v3/`. El visor no suma ninguna dependencia:
+el zoom, el arrastre y el pinch se resuelven con eventos de puntero. El detalle funcional está
+en [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md).

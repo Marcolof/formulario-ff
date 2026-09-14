@@ -2,10 +2,15 @@ import { reasons } from '../data/landing.content'
 import { SectionHeading } from './SectionHeading'
 import styles from './WhyUsSection.module.css'
 
-export function WhyUsSection() {
+type Props = {
+  /** Ver `SectionHeading`: la v2 muestra el título sin reglas laterales. */
+  headingRules?: boolean
+}
+
+export function WhyUsSection({ headingRules = true }: Props = {}) {
   return (
     <section className={styles.section}>
-      <SectionHeading>¿Por qué elegirnos?</SectionHeading>
+      <SectionHeading rules={headingRules}>¿Por qué elegirnos?</SectionHeading>
 
       <div className={styles.container}>
         <div className={styles.list}>

@@ -129,3 +129,56 @@
     line-height: 24.5px;
   }
 }
+
+/* --- Variante v2 --------------------------------------------------------- *
+ * Misma estructura que la v1; cambia sólo la piel, según la referencia de
+ * diseño: tarjeta blanca sobre el fondo de página, ícono alineado al centro
+ * del texto y CTA con subrayado amarillo. No hay colores nuevos: la superficie
+ * y el trazo salen de los tokens del módulo. */
+
+.section[data-variant='v2'] {
+  background-color: var(--landing-surface-page);
+}
+
+.section[data-variant='v2'] .list {
+  gap: var(--space-12);
+}
+
+.section[data-variant='v2'] .card {
+  flex-basis: calc((100% - var(--space-12)) / 2);
+  padding: 32px;
+  background-color: var(--landing-surface-plain);
+  box-shadow: var(--ff-card-shadow);
+}
+
+.section[data-variant='v2'] .row {
+  align-items: center;
+}
+
+.section[data-variant='v2'] .iconBox {
+  align-items: center;
+  flex-basis: 120px;
+}
+
+/* El subrayado es un borde y no `text-decoration`, para poder darle el grosor
+ * y el color de marca de la referencia. */
+.section[data-variant='v2'] .cta p {
+  display: inline-block;
+  border-bottom: 3px solid var(--color-brand);
+  padding-bottom: 2px;
+}
+
+@media (max-width: 900px) {
+  .section[data-variant='v2'] .list {
+    gap: var(--space-6);
+  }
+
+  .section[data-variant='v2'] .card {
+    flex-basis: 100%;
+    padding: 22px;
+  }
+
+  .section[data-variant='v2'] .iconBox {
+    flex-basis: 78px;
+  }
+}

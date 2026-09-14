@@ -1,0 +1,73 @@
+/* Estilos del contenido de "Gestionar Devolución". Se movieron tal cual desde
+ * ReturnsSection.module.css cuando el contenido pasó a ser compartido con el
+ * modal de la v2: las medidas son las de la landing original. */
+
+.title {
+  font-size: var(--landing-font-size-title);
+  line-height: 36px;
+  text-align: center;
+}
+
+.lead {
+  max-width: 520px;
+  font-size: var(--landing-font-size-lead);
+  line-height: 30px;
+  text-align: center;
+}
+
+.note {
+  line-height: var(--landing-line-height-body);
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.fieldColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.helpLink {
+  margin-top: var(--space-2);
+  color: var(--color-accent);
+  font-size: var(--landing-font-size-meta);
+  line-height: 21px;
+}
+
+.submit {
+  flex: 0 0 120px;
+}
+
+@media (max-width: 900px) {
+  .title {
+    font-size: 22px;
+    line-height: 33px;
+  }
+
+  .lead {
+    font-size: var(--landing-font-size-lead-mobile);
+    line-height: 27px;
+  }
+
+  .note {
+    font-size: 15px;
+    line-height: 22.5px;
+  }
+
+  .form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .submit {
+    flex: none;
+    align-self: center;
+    width: 60%;
+  }
+}

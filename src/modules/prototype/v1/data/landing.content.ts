@@ -64,7 +64,17 @@ export const heroSlides = [
   },
 ]
 
+export type ServiceId =
+  | 'paqar'
+  | 'mis-comunicaciones-digitales'
+  | 'punto-correo'
+  | 'rotulador'
+  | 'oficios-judiciales'
+  | 'fulfillment'
+
 type Service = {
+  /** Identificador estable: la v2 lo usa para tomar el enlace de acá sin copiarlo. */
+  id: ServiceId
   /** Logo del producto. Fulfillment todavía no tiene uno y usa `logoText`. */
   logo?: string
   logoText?: string
@@ -80,6 +90,7 @@ type Service = {
 
 export const services: Service[] = [
   {
+    id: 'paqar',
     logo: logoPaqar,
     logoWidth: 141,
     image: serviceImage1,
@@ -88,6 +99,7 @@ export const services: Service[] = [
     href: '#scroll-container',
   },
   {
+    id: 'mis-comunicaciones-digitales',
     logo: logoDigitales,
     logoWidth: 430,
     image: serviceImage2,
@@ -96,6 +108,7 @@ export const services: Service[] = [
     href: 'https://miscomunicacionesdigitales.com.ar/',
   },
   {
+    id: 'punto-correo',
     logo: logoPuntoCorreo,
     logoWidth: 211,
     image: serviceImage3,
@@ -104,6 +117,7 @@ export const services: Service[] = [
     href: 'https://www.correoargentino.com.ar/MiCorreo/public/puntopaqar',
   },
   {
+    id: 'rotulador',
     logo: logoRotulador,
     logoWidth: 186,
     image: serviceImage4,
@@ -112,6 +126,7 @@ export const services: Service[] = [
     href: 'https://www.correoargentino.com.ar/MiCorreo/public/regisadic',
   },
   {
+    id: 'oficios-judiciales',
     logo: logoOficios,
     logoWidth: 274,
     image: serviceImage5,
@@ -120,6 +135,7 @@ export const services: Service[] = [
     href: 'https://www.correoargentino.com.ar/MiCorreo/public/oficiosJudiciales',
   },
   {
+    id: 'fulfillment',
     // Todavía no hay logo oficial de Fulfillment: se resuelve con un lockup
     // tipográfico que replica el tratamiento de los logos existentes, hasta que
     // el cliente entregue el asset.

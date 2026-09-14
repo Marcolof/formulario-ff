@@ -1,11 +1,14 @@
 import {
   BadgeDollarSign,
+  Clock,
   ClipboardList,
+  Map,
   PackageCheck,
   ThumbsUp,
   Timer,
   Truck,
   Warehouse,
+  Zap,
 } from 'lucide-react'
 
 export const hero = {
@@ -40,17 +43,19 @@ export const distribution = {
   title: 'Distribución rápida y confiable',
   items: [
     {
-      icon: Warehouse,
+      // Entrega en el día: se distingue de "Resto de AMBA" con un ícono de
+      // rapidez en vez de repetir el de almacenamiento de la lista de arriba.
+      icon: Zap,
       title: 'CABA y Corredor Norte AMBA',
       body: 'Entrega en el día al precio del PAQ.AR Clásico Zona 1.',
     },
     {
-      icon: ClipboardList,
+      icon: Clock,
       title: 'Resto de AMBA',
       body: 'Entrega al día siguiente.',
     },
     {
-      icon: Truck,
+      icon: Map,
       title: 'Resto del país',
       body: 'PAQ.AR Clásico o PAQ.AR Prioritario para Zonas 2, 3 y 4.',
     },
@@ -79,21 +84,34 @@ export const form = {
 }
 
 /**
- * Listado provisorio: el documento formal pide que sea "el mismo desplegable
- * que en MiCorreo al crear una nueva cuenta", que todavía no se relevó. Se
- * mantiene este listado de referencia y la opción "Otros" con texto libre,
- * que sí está definida. Reemplazar cuando se releve el desplegable real.
+ * Listado real de rubros, provisto por Correo Argentino (el mismo desplegable
+ * que usa MiCorreo al crear una nueva cuenta). No es una lista inventada por
+ * este proyecto: si hace falta modificarla, el cambio tiene que salir de
+ * Correo Argentino, no del equipo de UX/desarrollo.
  */
 export const rubros = [
-  'Indumentaria y calzado',
-  'Electrónica y tecnología',
-  'Hogar y muebles',
-  'Salud y belleza',
-  'Alimentos y bebidas',
-  'Deportes y aire libre',
-  'Juguetería y bebés',
-  'Librería y papelería',
-  'Automotor y repuestos',
+  'Alimentos y Bebidas',
+  'Arte y Música',
+  'Bazar y Cocina',
+  'Bebes',
+  'Belleza y Perfumería',
+  'Botánica',
+  'Centros Comerciales y Supermercados',
+  'Deco y Hogar',
+  'Deportes',
+  'Electrodomésticos',
+  'Ferretería y Construcción',
+  'Indumentaria, Calzado y Accesorios',
+  'Industrias y Oficinas',
+  'Juguetería y Librería',
+  'Limpieza',
+  'Mascotas',
+  'Salud',
+  'SexShop',
+  'Tabaquería',
+  'Tecnología e Informática',
+  'Textil',
+  'Vehículos y Accesorios',
   'Otros',
 ]
 

@@ -42,7 +42,41 @@ registra acá con su procedencia.
 
 ## 4. Documento del cliente
 
-- `Solicitud Inicial_Formulario FF_10092026.docx` (un nivel por encima de la carpeta de
-  trabajo, sólo lectura). Todavía no fue leído.
-- `contexto_inicial_formulario_fulfillment.md` — resumen del requerimiento, ya incorporado
+- **`Solicitud Inicial_Formulario FF_10092026.docx`** (v1.0, un nivel por encima de la
+  carpeta de trabajo; también como Google Doc, sólo lectura). Es el requerimiento formal del
+  área de Marketing Digital. **Ya fue leído**: de ahí salieron los campos del formulario, sus
+  formatos, la obligatoriedad y las validaciones — ver
+  [07-FORMULARIO-FULFILLMENT.md](07-FORMULARIO-FULFILLMENT.md). Incluye además un flyer y un
+  wireframe de tres pantallas, usados como referencia de contenido.
+- `contexto_inicial_formulario_fulfillment.md` — resumen informal previo, ya incorporado
   en [01-CONTEXTO.md](01-CONTEXTO.md).
+
+## 5. Figma — "Mi Correo 2.0"
+
+- **Archivo:** `wN6vAlF1TgGc2AJdJJvsAU`, página "GDD-2735 - Formulario FF (Fulfillment)".
+- **Qué se tomó:** el diseño de la página de Fulfillment (nodo `13217:34295`), hecho por el
+  propio equipo del proyecto. Es la fuente de verdad visual de esa pantalla: de ahí salen su
+  layout, sus textos y el tratamiento de los controles del formulario.
+- Los íconos son del set Lucide de la librería "Design System" del mismo archivo.
+- **Limitación actual:** el conector de Figma pide volver a autenticarse, así que hoy no se
+  puede leer ni escribir en el archivo.
+
+## 6. Imagen de referencia de la versión 2
+
+- Captura del Figma del usuario, enviada por chat el 11/09/2026.
+- **Qué se tomó:** el rediseño del bloque central de la v2 — panel navy, tarjeta con el ícono
+  en columna propia, etiqueta en flujo, títulos sin reglas laterales, y el renombre y orden de
+  los accesos rápidos.
+- **Limitación:** la cuenta con la que se trabaja hoy no tiene acceso a ese archivo de Figma,
+  así que las medidas se derivaron de la imagen y de los tokens existentes. Conviene
+  contrastarlas al recuperar el acceso.
+
+## 7. Flyer de Fulfillment
+
+- **Archivo:** `src/assets/img/Fulfillment.jpeg`, provisto por el usuario el 14/09/2026.
+  1010 × 1600 px, 285 KB.
+- **Qué es:** la pieza gráfica de Fulfillment con la marca "Próximamente". Es todo el
+  contenido de la versión 3: al tocar el acceso, es lo único que se muestra.
+- Se usa tal cual, sin retocar. Dice "Gestión depedidos" donde debería decir "Gestión de
+  pedidos" — está anotado en [09-PROPUESTA-V3.md](09-PROPUESTA-V3.md) para avisar al área que
+  lo produjo.
