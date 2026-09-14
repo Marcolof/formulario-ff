@@ -26,7 +26,7 @@ strategy:
     - "Confirmar con el área solicitante los tres límites de longitud que contradicen al documento formal: razón social y nombre a 64 (documento: 40 y 60), mail a 64 y número de cliente de 10 dígitos exactos (documento: 'hasta' 10)"
     - "Confirmar si la tipografía Poppins de la v3 es definitiva o un borrador del diseño: es la única fuente fuera del sistema actual"
     - "Validar el texto del mensaje de confirmación del formulario"
-    - "Optimizar 'banner ff formulario.png' (4,7 MB) antes de cualquier publicación real, y resolver si la versión de 5,4 MB que apareció en disco reemplaza a la anterior"
+    - "Optimizar 'banner ff formulario.png' (5,4 MB, versión confirmada por el usuario el 2026-09-14) antes de cualquier publicación real"
   deferred:
     - "Menú de usuario logueado de la landing (oculto en el DOM sin sesión)"
     - "Scripts de terceros: GTM, Meta Pixel, chat de Wcentrix"
@@ -72,7 +72,6 @@ knowledge:
     - "Si los límites de longitud de 64 caracteres y el número de cliente de 10 dígitos exactos reemplazan a lo que dice el documento formal"
     - "Texto definitivo del mensaje de confirmación del formulario"
     - "Comportamiento ante error de envío real, cuando exista backend (el caso simulado sólo muestra la forma del error)"
-    - "Si la versión de 'banner ff formulario.png' que apareció en disco el 2026-09-14 (5,4 MB) reemplaza a la commiteada (4,7 MB)"
 
 sources:
   - id: envio-internacional
@@ -116,7 +115,7 @@ sources:
     access: read-only
     captured_at: "2026-09-14"
     origin: "provisto por el usuario del proyecto"
-    used_for: "imagen del hero de la pantalla de la v3. 2765x2248, 4,7 MB: conviene optimizarla"
+    used_for: "imagen del hero de la pantalla de Fulfillment. Reemplazada el 2026-09-14 por una versión de 5,4 MB, confirmada por el usuario; conviene optimizarla antes de publicación real"
   - id: flyer-fulfillment
     kind: image
     path: "src/assets/img/Fulfillment.jpeg"

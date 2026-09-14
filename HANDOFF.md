@@ -6,7 +6,10 @@ un changelog de cada commit (eso vive en `documentation/05-REGISTRO-DE-CAMBIOS.m
 
 **Última actualización:** 2026-09-14.
 
-**Cambios recientes sin commitear:**
+**Estado de git:** todo lo de más abajo está commiteado y pusheado a `main`
+(`35c3309`). No hay cambios pendientes en el árbol de trabajo.
+
+**Cambios recientes (commiteados):**
 
 - **Limpieza grande (14-09-2026): se borraron las versiones v1 y v2; queda sólo la v3.** El
   usuario lo pidió y ya tenía copia de seguridad. Lo que la v3 usaba se movió con `git mv` a
@@ -61,11 +64,15 @@ un changelog de cada commit (eso vive en `documentation/05-REGISTRO-DE-CAMBIOS.m
   campos vuelven a entrar). Además, cada sección menos el hero aparece con un fundido hacia
   arriba al entrar en pantalla (`useReveal.ts`, nuevo, `IntersectionObserver`, sin
   librerías).
-
-**Pendiente de confirmar con el usuario, no incluido en el commit:** el asset
-`src/assets/img/banner ff formulario.png` cambió en disco (4,7 MB → 5,4 MB) fuera de esta
-sesión — no lo edité yo. No sé si es un reemplazo intencional del usuario o un efecto de otra
-herramienta. Quedó sin commitear a propósito hasta que se confirme.
+- **Mensaje de error de formulario animado (14-09-2026)**: el mensaje general del caso de uso
+  "error de formulario" pasó de aparecer/desaparecer de golpe a una transición de altura +
+  opacidad + `translateY`. El contenedor está siempre montado (`data-visible` en vez de
+  `formError ? <p> : null`) para que la `transition` de CSS tenga algo que animar; la altura
+  usa el truco `grid-template-rows: 0fr → 1fr`, que sigue el alto real del contenido sin
+  medirlo con JS. Ver `FulfillmentForm.module.css` (`.formErrorWrap`).
+- **`banner ff formulario.png` actualizado**: el archivo que había cambiado en disco fuera de
+  sesión (4,7 MB → 5,4 MB) fue confirmado por el usuario como reemplazo intencional y ya está
+  commiteado y pusheado.
 
 Ver
 [documentation/04-REPLICA-LANDING.md#diferencias-conocidas](documentation/04-REPLICA-LANDING.md)
@@ -95,10 +102,9 @@ con acceso a Fulfillment y una página con formulario de contacto. Cliente: Corr
 
 - **Local:** verificado (`npm run typecheck` y `npm run build` limpios; navegación, formulario
   y responsive probados en el navegador).
-- **Git:** el último commit subido es `17ae77a`. **Hay bastantes cambios sin commitear** (ver
-  la lista de arriba: limpieza de v1/v2, menú del prototipo, límites del formulario y los
-  ajustes previos). No hacer commit ni push sin que el usuario lo pida explícitamente ("subir
-  a github" es la frase que usa).
+- **Git:** el último commit subido es `35c3309`. Árbol de trabajo limpio, nada pendiente de
+  commitear. No hacer commit ni push sin que el usuario lo pida explícitamente ("subir a
+  github" es la frase que usa).
 - **Remoto:** `https://github.com/Marcolof/formulario-ff`, rama `main`. Deploy automático
   en Vercel (`formulario-ff.vercel.app`, proyecto `marcos-projects-c934fa75/formulario-ff`)
   en cada push a `main`.
@@ -228,8 +234,7 @@ Para entender una entrada vieja del registro de cambios: lo que decía `v1/compo
 
 1. Confirmar con el área los cuatro límites de longitud que contradicen al documento formal.
 2. Confirmar si Poppins es definitiva o un borrador del diseño de la v3.
-3. Optimizar `banner ff formulario.png`: pesa 4,7 MB. Y resolver la versión de 5,4 MB que
-   apareció en disco.
+3. Optimizar `banner ff formulario.png`: pesa 5,4 MB, mucho para web.
 4. Releer `.project/project.yaml` → `knowledge.open_questions` antes de tomar decisiones de
    producto nuevas: ahí está la lista viva de lo que falta definir.
 

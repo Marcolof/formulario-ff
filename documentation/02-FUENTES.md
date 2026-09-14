@@ -77,11 +77,11 @@ registra acá con su procedencia.
 
 Las dos las entregó el usuario el 14/09/2026 y viven en `src/assets/img/`.
 
-- **`banner ff formulario.png`** — 2765 × 2248 px, 4,7 MB. Es la imagen del hero de la
-  pantalla de Fulfillment. Se usa tal cual; **conviene optimizarla** antes de cualquier
-  publicación real, porque para una web es muy pesada. El archivo cambió en disco el
-  14-09-2026 (pasó a 5,4 MB) fuera de la sesión de trabajo: esa versión nueva **no está
-  commiteada**, a la espera de que el usuario confirme si reemplaza a la anterior.
+- **`banner ff formulario.png`** — es la imagen del hero de la pantalla de Fulfillment. Se usa
+  tal cual; **conviene optimizarla** antes de cualquier publicación real, porque para una web
+  es muy pesada. El archivo cambió en disco el 14-09-2026 (de 4,7 MB a 5,4 MB) fuera de la
+  sesión de trabajo; el usuario confirmó que el reemplazo es intencional y esa versión ya está
+  commiteada.
 - **`Fulfillment.jpeg`** — 1010 × 1600 px, 285 KB. El flyer completo del servicio, con la
   marca "Próximamente". Lo usaba la primera propuesta de la v3, que quedó descartada, así que
   hoy **ningún front lo referencia**. Se conserva por si se necesita más adelante. Dice
